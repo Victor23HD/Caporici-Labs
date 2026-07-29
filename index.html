@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Caporici Labs: developer-first automotive engineering demos."
+    />
+    <title>CAN Frame Explorer · Caporici Labs</title>
+    <link rel="stylesheet" href="./styles.css" />
+    <script src="./app.js" defer></script>
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="./">Caporici Labs</a>
+      <span class="status">Automotive · Lab 001</span>
+    </header>
+
+    <main>
+      <section class="hero">
+        <p class="eyebrow">Developer-first automotive engineering</p>
+        <h1>CAN frames, without the fog.</h1>
+        <p class="lede">
+          Inspect a Classical CAN data frame before adding J1939, a DBC file, or
+          vendor tooling. Start with what is actually on the bus.
+        </p>
+      </section>
+
+      <section class="lab" aria-labelledby="lab-title">
+        <div class="lab-copy">
+          <p class="step">Hello, automotive world.</p>
+          <h2 id="lab-title">11-bit CAN Frame Explorer</h2>
+          <p>
+            Enter an arbitration ID and up to eight data bytes. This demo
+            exposes the frame representation but deliberately does not invent
+            signal meanings: that belongs to a network specification or DBC.
+          </p>
+
+          <form id="frame-form">
+            <label for="can-id">Arbitration ID (hex)</label>
+            <div class="input-row">
+              <span aria-hidden="true">0x</span>
+              <input
+                id="can-id"
+                name="can-id"
+                value="18F"
+                maxlength="3"
+                inputmode="text"
+                autocomplete="off"
+              />
+            </div>
+
+            <label for="payload">Payload bytes (hex)</label>
+            <input
+              id="payload"
+              name="payload"
+              value="48 45 4C 4C 4F 00 00 01"
+              maxlength="23"
+              inputmode="text"
+              autocomplete="off"
+            />
+
+            <button type="submit">Inspect frame</button>
+            <p id="error" class="error" role="alert" aria-live="polite"></p>
+          </form>
+        </div>
+
+        <div class="results" aria-live="polite">
+          <div class="metric">
+            <span>Identifier</span>
+            <strong id="id-hex">0x18F</strong>
+          </div>
+          <div class="metric">
+            <span>Decimal ID</span>
+            <strong id="id-decimal">399</strong>
+          </div>
+          <div class="metric">
+            <span>DLC</span>
+            <strong id="dlc">8 bytes</strong>
+          </div>
+          <div class="metric">
+            <span>Arbitration</span>
+            <strong id="priority">Higher than ID 0x190</strong>
+          </div>
+
+          <div class="data-block">
+            <span>Binary identifier</span>
+            <code id="id-binary">00110001111</code>
+          </div>
+          <div class="data-block">
+            <span>Payload · decimal</span>
+            <code id="payload-decimal">72 69 76 76 79 0 0 1</code>
+          </div>
+          <div class="data-block">
+            <span>Payload · ASCII preview</span>
+            <code id="payload-ascii">HELLO...</code>
+          </div>
+
+          <aside class="note">
+            <strong>Why lower IDs win arbitration</strong>
+            <p>
+              CAN uses dominant zero bits. When two nodes transmit together,
+              the frame that first sends a recessive 1 against another node's
+              dominant 0 stops transmitting. Lower numerical IDs therefore
+              receive higher bus priority.
+            </p>
+          </aside>
+        </div>
+      </section>
+
+      <section class="roadmap">
+        <p class="eyebrow">Where this goes next</p>
+        <h2>From one frame to a complete vehicle-data path.</h2>
+        <ol>
+          <li><span>01</span> CAN frames and bus behavior</li>
+          <li><span>02</span> J1939 PGNs, SPNs, and transport protocol</li>
+          <li><span>03</span> DBC-backed signal decoding</li>
+          <li><span>04</span> Linux edge logger and MQTT bridge</li>
+        </ol>
+      </section>
+    </main>
+
+    <footer>
+      <p>
+        Built by
+        <a href="https://victor23hd.github.io/" rel="author">Victor Caporici</a>
+        — C++ and mission-critical systems.
+      </p>
+      <nav aria-label="Author links">
+        <a href="https://github.com/Victor23HD">GitHub</a>
+        <a href="https://linkedin.com/in/victor23hd">LinkedIn</a>
+        <a href="mailto:xitornet.23@gmail.com">Email</a>
+      </nav>
+    </footer>
+  </body>
+</html>
