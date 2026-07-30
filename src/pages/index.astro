@@ -13,108 +13,126 @@ const trilhasAtivas = trilhas.filter((t) => t.publicados > 0).length;
 
 const areas = [
   {
-    path: "automotivo/",
+    path: "automotivo",
     titulo: "Automotivo",
-    flag: "ok",
+    estado: "aberto",
     href: "/automotivo/",
-    texto: `${publicados.length} textos · CAN, UDS, AUTOSAR`,
+    texto: `${publicados.length} textos publicados · CAN, UDS, AUTOSAR`,
   },
   {
-    path: "aviacao/",
+    path: "aviacao",
     titulo: "Aviação",
-    flag: "wait",
-    texto: "Linha de pesquisa",
+    estado: "pesquisa",
+    texto: "Linha de pesquisa — ainda sem corpus publicado",
   },
   {
-    path: "ferroviario/",
+    path: "ferroviario",
     titulo: "Ferroviário",
-    flag: "wait",
-    texto: "Linha de pesquisa",
+    estado: "pesquisa",
+    texto: "Linha de pesquisa — ainda sem corpus publicado",
   },
   {
-    path: "agro/",
+    path: "agro",
     titulo: "Agro",
-    flag: "wait",
-    texto: "Linha de pesquisa",
+    estado: "pesquisa",
+    texto: "Linha de pesquisa — ainda sem corpus publicado",
   },
   {
-    path: "nautico/",
+    path: "nautico",
     titulo: "Náutico",
-    flag: "wait",
-    texto: "Linha de pesquisa",
+    estado: "pesquisa",
+    texto: "Linha de pesquisa — ainda sem corpus publicado",
   },
   {
-    path: "core/",
+    path: "fundamentos",
     titulo: "Fundamentos",
-    flag: "base",
-    texto: "Base transversal",
+    estado: "base",
+    texto: "Base transversal entre os eixos",
   },
 ];
 ---
 
 <BaseLayout
-  title="Caporici Labs: engenharia de sistemas embarcados, explicada de dev para dev"
-  description="Caporici Labs organiza, conecta e verifica conhecimento sobre sistemas embarcados críticos: automotivo, aviação, ferroviário, agrícola e náutico, de desenvolvedor para desenvolvedor."
+  title="Caporici Labs: síntese de engenharia embarcada crítica"
+  description="Caporici Labs reúne o conhecimento disperso sobre sistemas embarcados críticos e transforma em um corpus com fonte, limite e próximo passo — de desenvolvedor para desenvolvedor."
   active="home"
 >
   <main class="home">
-    <section class="term-hero">
-      <div class="wrap hero-grid">
-        <div class="hero-copy">
-          <h1 class="brand-mega">
-            Caporici<br />Labs<span class="cursor" aria-hidden="true"></span>
-          </h1>
-          <p class="term-lede">
-            Engenharia embarcada crítica, do sinal elétrico à nuvem, com fonte,
-            limite e ferramenta à vista.
-          </p>
-          <div class="acoes">
-            <a class="botao" href="#areas">Ver áreas</a>
-            <a class="botao secundario" href="/automotivo/">Abrir automotivo</a>
-          </div>
-        </div>
+    <section class="cyclorama-hero" aria-label="Abertura">
+      <div class="cyclorama-field" aria-hidden="true">
+        <img
+          class="cyclorama-image"
+          src="/images/cyclorama-dawn-hero.png"
+          alt=""
+          width="1536"
+          height="1024"
+          decoding="async"
+          fetchpriority="high"
+        />
+        <div class="cyclorama-wash"></div>
+      </div>
 
-        <aside class="hero-panel" aria-label="Status das áreas">
-          <div class="hero-panel-bar">
-            <span>áreas</span>
-            <span>{trilhasAtivas} ativa{trilhasAtivas === 1 ? "" : "s"} · {publicados.length} textos</span>
-          </div>
-          <div class="term-list compact" role="list">
-            {
-              areas.map((area) =>
-                area.href ? (
-                  <a class="term-row" href={area.href} role="listitem">
-                    <span class={`flag ${area.flag}`}>{area.flag}</span>
-                    <span class="path">{area.path}</span>
-                    <span class="meta">
-                      <strong>{area.titulo}</strong>
-                      <em>{area.texto}</em>
-                    </span>
-                  </a>
-                ) : (
-                  <div class="term-row dim" role="listitem">
-                    <span class={`flag ${area.flag}`}>{area.flag}</span>
-                    <span class="path">{area.path}</span>
-                    <span class="meta">
-                      <strong>{area.titulo}</strong>
-                      <em>{area.texto}</em>
-                    </span>
-                  </div>
-                ),
-              )
-            }
-          </div>
-        </aside>
+      <div class="wrap hero-stage">
+        <h1 class="brand-mega">Caporici Labs</h1>
+        <p class="hero-headline">
+          Eu sintetizo o que a internet espalha.
+        </p>
+        <p class="hero-lede">
+          Normas, fóruns, PDFs de fabricante e prática de produção viram um
+          corpus de engenharia crítica — com fonte, limite e o próximo passo
+          à vista.
+        </p>
+        <div class="acoes">
+          <a class="botao" href="#sintese">Ver como sintetizo</a>
+          <a class="botao secundario" href="/automotivo/">Entrar no automotivo</a>
+        </div>
       </div>
     </section>
 
     <div class="wrap home-body">
-      <section class="secao-home" id="areas">
+      <section class="secao-home" id="sintese">
         <div class="secao-cabecalho">
-          <h2>Do fio à nuvem</h2>
+          <h2>Do ruído disperso a um modelo que se segura</h2>
           <p>
-            Os setores mudam de nome; os problemas se repetem. Eu conecto as camadas
-            em vez de ensiná-las como ilhas.
+            O potencial que este site vende não é tipografia de terminal.
+            É a capacidade de reunir o confuso, cortar o que não se sustenta
+            e entregar um caminho legível.
+          </p>
+        </div>
+
+        <ol class="sintese-passos">
+          <li>
+            <strong>Reúno o disperso</strong>
+            <p>
+              Puxo o que está espalhado: edição de norma, nota de fabricante,
+              código de kernel, thread de fórum e o que a linha de produção
+              realmente faz.
+            </p>
+          </li>
+          <li>
+            <strong>Sintetizo o modelo</strong>
+            <p>
+              Conecto camadas — do sinal elétrico à nuvem — na ordem em que
+              um desenvolvedor precisa pensar, não na ordem em que os PDFs
+              foram publicados.
+            </p>
+          </li>
+          <li>
+            <strong>Marco o limite</strong>
+            <p>
+              Separo fato, prática industrial, simplificação didática e
+              hipótese. Ferramenta sem DBC não inventa sinal.
+            </p>
+          </li>
+        </ol>
+      </section>
+
+      <section class="secao-home" id="camadas">
+        <div class="secao-cabecalho">
+          <h2>Uma cena, várias camadas</h2>
+          <p>
+            Os setores mudam de nome; os problemas se repetem. Eu conecto as
+            camadas em vez de ensiná-las como ilhas.
           </p>
         </div>
 
@@ -127,62 +145,66 @@ const areas = [
         </ol>
       </section>
 
-      <section class="secao-home" id="metodo">
+      <section class="secao-home" id="areas">
         <div class="secao-cabecalho">
-          <h2>Como eu trabalho</h2>
+          <h2>Onde a síntese já existe</h2>
           <p>
-            Confiança vem de separar fato, interpretação e hipótese, não de layout
-            bonito.
+            Automotivo é o primeiro eixo aberto. As outras áreas ficam
+            marcadas como pesquisa até haver corpus de verdade —
+            {trilhasAtivas} eixo ativo, {publicados.length} textos publicados.
           </p>
         </div>
 
-        <ol class="metodo-limpo">
-          <li>
-            <strong>Encontro o disperso</strong>
-            <p>Normas, kernel, fabricantes e prática.</p>
-          </li>
-          <li>
-            <strong>Organizo o modelo</strong>
-            <p>Arquitetura → detalhe → aplicação.</p>
-          </li>
-          <li>
-            <strong>Marco o limite</strong>
-            <p>Fonte, versão e o que a ferramenta não faz.</p>
-          </li>
-        </ol>
+        <div class="area-lista" role="list">
+          {
+            areas.map((area) =>
+              area.href ? (
+                <a class="area-linha" href={area.href} role="listitem">
+                  <span class={`estado-pill ${area.estado}`}>{area.estado}</span>
+                  <span class="area-titulo">{area.titulo}</span>
+                  <span class="area-texto">{area.texto}</span>
+                </a>
+              ) : (
+                <div class="area-linha dim" role="listitem">
+                  <span class={`estado-pill ${area.estado}`}>{area.estado}</span>
+                  <span class="area-titulo">{area.titulo}</span>
+                  <span class="area-texto">{area.texto}</span>
+                </div>
+              ),
+            )
+          }
+        </div>
       </section>
 
       <section class="secao-home" id="publicado">
         <div class="secao-cabecalho">
-          <h2>Publicado</h2>
+          <h2>Já dá para ler e usar</h2>
           <p>Textos e ferramentas revisados. O restante fica no repositório.</p>
         </div>
 
-        <div class="term-list" role="list">
+        <div class="pub-lista" role="list">
           {
             publicados.slice(0, 4).map((artigo) => (
               <a
-                class="term-row"
+                class="pub-linha"
                 href={`/automotivo/${slugDoArtigo(artigo)}/`}
                 role="listitem"
               >
-                <span class="flag ok">ok</span>
-                <span class="path">
+                <span class="pub-ordem">
                   {String(artigo.data.ordem).padStart(2, "0")}
                 </span>
-                <span class="meta">
+                <span class="pub-corpo">
                   <strong>{artigo.data.titulo}</strong>
                   <em>{artigo.data.resumo}</em>
                 </span>
               </a>
             ))
           }
-          <a class="term-row" href="/ferramentas/quadro-can/" role="listitem">
-            <span class="flag live">live</span>
-            <span class="path">can</span>
-            <span class="meta">
+          <a class="pub-linha" href="/ferramentas/quadro-can/" role="listitem">
+            <span class="pub-ordem">CAN</span>
+            <span class="pub-corpo">
               <strong>Explorador de quadros CAN</strong>
-              <em>Identificador, DLC e prioridade, sem inventar DBC.</em>
+              <em>Identificador, DLC e prioridade — sem inventar DBC.</em>
             </span>
           </a>
         </div>
@@ -193,8 +215,10 @@ const areas = [
         <div>
           <h2>Victor Caporici</h2>
           <p class="autor-resumo">
-            Engenheiro de software sênior C/C++ na TOTVS. Trabalho em sistemas com
-            décadas de compatibilidade e pouco espaço para quebrar quem está na ponta.
+            Engenheiro de software sênior C/C++ na TOTVS. Trabalho em sistemas
+            com décadas de compatibilidade e pouco espaço para quebrar quem
+            está na ponta. Este laboratório é onde eu publico a síntese que
+            faço ao pesquisar.
           </p>
           <div class="acoes">
             <a class="botao secundario" href="https://github.com/Victor23HD">GitHub</a>
