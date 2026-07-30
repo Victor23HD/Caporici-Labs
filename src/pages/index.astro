@@ -1,6 +1,11 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import { listarArtigos, slugDoArtigo, trilhasComContagem } from "../lib/content";
+import {
+  listarArtigos,
+  rotuloDiataxis,
+  slugDoArtigo,
+  trilhasComContagem,
+} from "../lib/content";
 
 const artigos = await listarArtigos();
 const publicados = artigos.filter((item) => item.data.status === "publicado");
@@ -15,8 +20,7 @@ const trilhas = trilhasComContagem(artigos);
   <main class="home">
     <section class="home-hero">
       <div>
-        <p class="eyebrow">Engenharia crítica · organizada por Victor Caporici</p>
-        <h1>Conhecimento disperso.<br /><span>Engenharia conectada.</span></h1>
+        <h1>Conhecimento disperso.<br />Engenharia conectada.</h1>
         <p class="intro">
           Eu pesquiso, organizo e transformo sistemas embarcados complexos em mapas,
           explicações e ferramentas que um desenvolvedor consegue usar. Do sinal
@@ -56,7 +60,6 @@ const trilhas = trilhasComContagem(artigos);
     <section class="secao-home" id="areas">
       <div class="secao-cabecalho">
         <div>
-          <p class="eyebrow">O território</p>
           <h2>Um mapa da engenharia embarcada.</h2>
         </div>
         <p>
@@ -125,7 +128,6 @@ const trilhas = trilhasComContagem(artigos);
     <section class="secao-home">
       <div class="secao-cabecalho">
         <div>
-          <p class="eyebrow">Profundidade</p>
           <h2>Do fio à nuvem, sem saltar camadas.</h2>
         </div>
         <p>
@@ -147,7 +149,6 @@ const trilhas = trilhasComContagem(artigos);
     <section class="secao-home" id="metodo">
       <div class="secao-cabecalho">
         <div>
-          <p class="eyebrow">O método</p>
           <h2>Confiança não vem da aparência.</h2>
         </div>
         <p>
@@ -196,7 +197,6 @@ const trilhas = trilhasComContagem(artigos);
     <section class="secao-home">
       <div class="secao-cabecalho">
         <div>
-          <p class="eyebrow">Corpus automotivo</p>
           <h2>Onze trilhas. Um caminho progressivo.</h2>
         </div>
         <p>
@@ -228,7 +228,6 @@ const trilhas = trilhasComContagem(artigos);
     <section class="secao-home">
       <div class="secao-cabecalho">
         <div>
-          <p class="eyebrow">Agora no laboratório</p>
           <h2>Algo para ler. Algo para executar.</h2>
         </div>
         <p>
@@ -242,7 +241,9 @@ const trilhas = trilhasComContagem(artigos);
           publicados.slice(0, 4).map((artigo) => (
             <a class="recurso" href={`/automotivo/${slugDoArtigo(artigo)}/`}>
               <span class="recurso-numero">
-                GUIA / {artigo.data.trilha.toUpperCase()} {String(artigo.data.ordem).padStart(2, "0")}
+                {rotuloDiataxis(artigo.data.tipoDiataxis).toUpperCase()} /{" "}
+                {artigo.data.trilha.toUpperCase()}{" "}
+                {String(artigo.data.ordem).padStart(2, "0")}
               </span>
               <span class="estado">Publicado</span>
               <h3>{artigo.data.titulo}</h3>
@@ -262,7 +263,6 @@ const trilhas = trilhasComContagem(artigos);
     <section class="secao-autor" id="autor">
       <div class="autor-marca" aria-hidden="true">VC</div>
       <div>
-        <p class="eyebrow">Quem organiza isto</p>
         <h2>Victor Caporici</h2>
         <p class="autor-resumo">
           Sou engenheiro de software sênior C/C++ na TOTVS. Trabalho no núcleo de

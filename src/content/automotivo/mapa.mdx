@@ -1,0 +1,139 @@
+---
+titulo: "Como o software de um veículo se organiza"
+resumo: "O mapa de referência: o que é uma ECU, por que existem dezenas delas, quais barramentos ligam o quê e onde o seu código realmente roda."
+trilha: fundamentos
+ordem: 1
+nivel: introdutorio
+tipoDiataxis: explanation
+preRequisitos: []
+status: publicado
+objetivos:
+  - Explicar o que é uma ECU e por que o critério de qualidade é o pior caso, não a média.
+  - Mapear os domínios funcionais e as redes tipicamente usadas em veículos.
+  - Distinguir o mundo MCU+RTOS do mundo SoC+Linux e a migração para arquitetura zonal.
+normas:
+  - ISO 11898 (CAN)
+  - SAE J1939
+fontes:
+  - titulo: Documentação do SocketCAN no kernel Linux
+    url: https://docs.kernel.org/networking/can.html
+    tipo: documentacao
+    nota: Referência aberta para a interface CAN no Linux.
+  - titulo: Documentação do J1939 no kernel Linux
+    url: https://docs.kernel.org/networking/j1939.html
+    tipo: documentacao
+  - titulo: CAN in Automation (CiA)
+    url: https://www.can-cia.org/
+    tipo: documentacao
+    nota: Material de referência sobre CAN e CAN FD.
+  - titulo: AUTOSAR
+    url: https://www.autosar.org/
+    tipo: documentacao
+    nota: Especificações Classic e Adaptive disponíveis publicamente para download.
+  - titulo: ISO 11898 e SAE J1939
+    tipo: norma
+    nota: Normas pagas. Não foram consultadas linha por linha nesta página; faixas de velocidade são descritas como típicas de veículos em produção.
+limitacoes:
+  - Não cobre temporização em nível de bit, CRC nem confinamento de nó defeituoso.
+  - Não substitui o processo de segurança funcional da ISO 26262.
+  - Não detalha criptografia embarcada, boot seguro nem plataformas de fornecedor específico.
+laboratorio:
+  titulo: Diagrama vivo de uma rede veicular
+  objetivo: Representar, em texto e depois em código, cinco nós (motor, freio, cabine, gateway, telemetria) e as mensagens que cada um publica e consome.
+  dificuldade: basico
+  entradas: Lista de nós, identificadores CAN fictícios e frequência de publicação.
+  saida: Um arquivo que descreve topologia e um teste que falha se um nó crítico não receber mensagem dentro do prazo.
+  riscos: Não usar identificadores ou DBC de um veículo real sem autorização.
+revisao: "1.0"
+atualizadoEm: 2026-07-30
+---
+
+Antes de olhar um único bit de um quadro CAN, é preciso saber **quem** está conversando e **por quê**. Esta página é o mapa que os outros módulos assumem como conhecido.
+
+## Uma ECU é um computador com uma responsabilidade
+
+ECU significa *Electronic Control Unit*. Na prática é um computador embarcado dedicado a um trabalho: controlar injeção, decidir quando o freio libera pressão, acionar o vidro elétrico, desenhar a tela central.
+
+O ponto importante para quem vem de software de aplicação é que a ECU não é "um serviço". Ela tem um único conjunto de responsabilidades, prazo de resposta definido, e quase sempre menos memória do que uma aba de navegador. Um freio que responde em média rápido, mas ocasionalmente atrasa 200 milissegundos, é um freio defeituoso — mesmo que a média esteja ótima. O critério aqui é o **pior caso**, não a média.
+
+## Por que não existe um computador só
+
+A pergunta natural é por que não centralizar tudo em um processador potente. Existem quatro razões, e todas continuam valendo:
+
+1. **Física.** O sensor de rotação está no motor, o sensor de posição do pedal está na cabine, e o atuador do freio está na roda. Levar todo sinal analógico até um ponto central significa fios longos, caros e sujeitos a ruído.
+2. **Isolamento de falha.** Se o sistema de infotenimento travar, o carro precisa continuar freando. Separação física é a forma mais barata de garantir isso.
+3. **Certificação.** Software crítico é caro de validar. Manter a função crítica em uma peça pequena e auditável evita que a certificação engula o sistema inteiro.
+4. **Cadeia de fornecedores.** Módulos vêm de fornecedores diferentes, com ciclos de desenvolvimento diferentes. A montadora integra peças pela interface, não pelo código fonte.
+
+O resultado é uma rede: dezenas de ECUs em um carro de passeio comum, mais em veículos premium. Elas não compartilham memória. Tudo que uma sabe sobre a outra chegou por mensagem em um barramento.
+
+## Domínios funcionais
+
+As ECUs se agrupam em domínios com requisitos parecidos. Este agrupamento é o vocabulário usado em qualquer conversa técnica na área:
+
+| Domínio | Exemplos | O que domina o projeto |
+| --- | --- | --- |
+| Powertrain | Motor, transmissão, gestão de bateria | Malha de controle em tempo real, ciclos de milissegundos |
+| Chassi | Freio, direção, estabilidade, suspensão | Segurança funcional, latência de pior caso |
+| Carroceria | Portas, vidros, luzes, clima, acesso | Custo por nó e quantidade de pontos ligados |
+| Infotenimento | Tela central, áudio, navegação, conectividade | Interface, gráficos, ciclo rápido de software |
+| ADAS | Câmeras, radar, fusão de sensores | Largura de banda alta e processamento pesado |
+
+Repare no contraste entre as duas últimas linhas e as três primeiras. Um conjunto precisa de determinismo com pouca banda; o outro precisa de muita banda e tolera latência variável. Nenhum barramento único atende bem os dois, e é exatamente daí que vem a variedade de redes a seguir.
+
+## Como as ECUs conversam
+
+Cada rede automotiva existe porque resolve um ponto específico desse conflito entre custo, banda e previsibilidade. Os valores abaixo são as faixas típicas encontradas em veículos, **não** limites absolutos de norma:
+
+| Rede | Velocidade típica | Onde aparece |
+| --- | --- | --- |
+| LIN | até 20 kbit/s | Funções lentas e baratas de carroceria |
+| CAN clássico | 125 a 500 kbit/s (1 Mbit/s no limite da norma) | Espinha dorsal de powertrain, chassi e carroceria |
+| CAN FD | até 8 Mbit/s na fase de dados, payload de até 64 bytes | Mesmo papel do CAN, quando 8 bytes por quadro deixaram de bastar |
+| FlexRay | 10 Mbit/s | Controle sincronizado por tempo, em plataformas específicas |
+| Automotive Ethernet | 100 Mbit/s a 1 Gbit/s por par único | Câmeras, ADAS, atualização de software, comunicação por serviços |
+
+Um mesmo veículo carrega várias dessas redes ao mesmo tempo, em segmentos separados. É por isso que existe um **gateway**: alguém precisa decidir qual mensagem atravessa de um segmento para outro, traduzir formato quando necessário, e bloquear o resto.
+
+<Warning title="Onde a intuição de software de aplicação falha">
+
+CAN não tem endereço de destino. Um quadro carrega um identificador que diz *o que* ele é, e todo nó do segmento recebe todos os quadros; cada um filtra o que interessa. Não existe conexão, não existe handshake, não existe entrega garantida a um destinatário específico. Quem vem de TCP tende a procurar o destinatário no quadro e não encontra, porque a pergunta está errada.
+
+</Warning>
+
+## Onde o seu código realmente roda
+
+"Programar para automotivo" descreve dois mundos bem diferentes, e saber em qual você está muda tudo: linguagem, ferramenta de build, forma de depurar e o que conta como bug aceitável.
+
+- **MCU + RTOS** — Microcontrolador com kilobytes a poucos megabytes de RAM, sem MMU, frequentemente sem alocação dinâmica depois da inicialização. C, às vezes C++ restrito. É aqui que vive a função crítica, e onde determinismo vale mais que throughput.
+- **SoC + Linux/QNX** — Processador de aplicação com sistema operacional completo, memória virtual, sistema de arquivos e rede. Infotenimento, gateway e ADAS moram aqui. C++ moderno, Python para ferramental, e problemas que você reconhece de servidor: concorrência, latência de I/O, gestão de memória.
+- **Fora do veículo** — Backend de telemetria, frota, diagnóstico remoto e atualização. Nuvem convencional, com a diferença de que o cliente é um dispositivo que perde conexão em túnel e não pode perder evento por causa disso.
+
+AUTOSAR entra nessa divisão como padronização de arquitetura de software. A variante Classic mira o mundo MCU + RTOS; a variante Adaptive mira o mundo de sistemas operacionais POSIX e comunicação orientada a serviços. Vale saber que existem e o que cada uma tenta resolver antes de encarar a especificação, que é enorme.
+
+## A arquitetura está mudando
+
+Vale conhecer os três estágios, porque vaga e código real convivem com todos eles hoje:
+
+1. **Distribuída.** Uma ECU por função, ligadas por vários segmentos CAN. Muitos módulos, muito cabo, integração feita por catálogo de mensagens.
+2. **Por domínio.** Um controlador mais potente por domínio, com módulos menores subordinados. Menos nós no barramento principal e mais software concentrado por área.
+3. **Zonal e centralizada.** Controladores organizados por região física do veículo, ligados por Ethernet, com computação concentrada em poucos nós de alto desempenho. Reduz cabeamento e permite atualizar função por software.
+
+A consequência prática para carreira: a demanda cresce onde os dois mundos se encontram — quem entende barramento determinístico e também entende Linux, rede e ciclo de atualização de software. Ninguém troca CAN por Ethernet de um dia para o outro; os dois vão coexistir por muito tempo, e alguém precisa fazer a ponte.
+
+## Erros comuns de interpretação
+
+- Tratar ECU como "microserviço" e esperar reinício rápido e entrega at-least-once.
+- Assumir que Ethernet automotivo é "igual ao Ethernet do escritório" sem considerar PHY T1, switches e sincronização.
+- Achar que AUTOSAR Classic e Adaptive são o mesmo produto com nomes diferentes.
+- Começar pelo formato do quadro CAN sem saber em qual segmento, domínio e prazo aquela mensagem vive.
+
+## Resumo
+
+Um veículo é uma rede de computadores com responsabilidades isoladas, redes heterogêneas e critérios de tempo distintos. Seu trabalho de software só faz sentido quando você sabe em qual camada, domínio e plataforma ele roda.
+
+## Perguntas de verificação
+
+1. Por que um atraso ocasional de 200 ms pode ser aceitável em infotenimento e inaceitável em freio?
+2. Qual diferença conceitual existe entre um identificador CAN e um endereço IP?
+3. Em que mundo — MCU+RTOS ou SoC+Linux — você esperaria encontrar um gateway de telemetria moderno, e por quê?

@@ -45,10 +45,27 @@ test("páginas expõem navegação e acessibilidade básica", () => {
   assert.match(artigo, /Onde isto pode falhar/);
   assert.match(artigo, /Fontes/);
   assert.match(artigo, /aria-current="page"/);
+  assert.match(artigo, /Tipo Diátaxis/);
+  assert.match(artigo, /Explanation/);
+  assert.match(artigo, /callout/);
+});
+
+test("home e tipografia seguem o design system", () => {
+  const home = read("index.html");
+  assert.match(home, /IBM\+Plex\+Sans|IBM Plex Sans/);
+  assert.match(home, /JetBrains\+Mono|JetBrains Mono/);
+  assert.doesNotMatch(home, /class="eyebrow"/);
+  assert.match(home, /Conhecimento disperso/);
+  assert.match(home, /EXPLANATION/);
+  assert.doesNotMatch(home, /GUIA\s*\//);
 });
 
 test("assets da ferramenta CAN são publicados", () => {
   assert.ok(exists("ferramentas/quadro-can/core.js"));
   assert.ok(exists("ferramentas/quadro-can/app.js"));
   assert.ok(exists("tema.js"));
+
+  const ferramenta = read("ferramentas/quadro-can/index.html");
+  assert.match(ferramenta, /callout callout-note/);
+  assert.doesNotMatch(ferramenta, /class="obs"/);
 });

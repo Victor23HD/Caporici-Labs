@@ -81,3 +81,29 @@ export function rotuloNivel(nivel: Artigo["data"]["nivel"]): string {
       return "Avançado";
   }
 }
+
+export function rotuloDiataxis(tipo: Artigo["data"]["tipoDiataxis"]): string {
+  switch (tipo) {
+    case "tutorial":
+      return "Tutorial";
+    case "howto":
+      return "How-to";
+    case "reference":
+      return "Reference";
+    case "explanation":
+      return "Explanation";
+  }
+}
+
+export function descricaoDiataxis(tipo: Artigo["data"]["tipoDiataxis"]): string {
+  switch (tipo) {
+    case "tutorial":
+      return "Lição guiada para aprender fazendo.";
+    case "howto":
+      return "Passos para resolver uma tarefa concreta.";
+    case "reference":
+      return "Descrição técnica factual, com pouca interpretação.";
+    case "explanation":
+      return "Contexto e modelo mental — responde ao porquê.";
+  }
+}

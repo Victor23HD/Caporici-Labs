@@ -18,13 +18,14 @@ const laboratorioSchema = z.object({
 });
 
 const automotivo = defineCollection({
-  loader: glob({ pattern: "**/*.md", base: "./src/content/automotivo" }),
+  loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/automotivo" }),
   schema: z.object({
     titulo: z.string(),
     resumo: z.string().min(40),
     trilha: z.string(),
     ordem: z.number().int().positive(),
     nivel: z.enum(["introdutorio", "intermediario", "avancado"]),
+    tipoDiataxis: z.enum(["tutorial", "howto", "reference", "explanation"]),
     preRequisitos: z.array(z.string()).default([]),
     status: z.enum(["rascunho", "revisao", "publicado"]),
     objetivos: z.array(z.string()).min(1),

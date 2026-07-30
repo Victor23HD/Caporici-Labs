@@ -8,7 +8,7 @@ que programa precisa ter antes de encarar a norma.
 ## Stack
 
 - [Astro](https://astro.build/) para site estático
-- Conteúdo em Markdown com metadados editoriais
+- Conteúdo em MDX com metadados editoriais e tipos Diátaxis
 - Ferramentas no navegador sem dependências de runtime
 - Tema claro/escuro com preferência do sistema
 
@@ -64,6 +64,17 @@ Todo texto declara:
 Não decodifica sinais sem DBC. A lógica está em
 `public/ferramentas/quadro-can/core.js` e é coberta por testes.
 
+## Padrões do projeto
+
+| Artefato | Função |
+| --- | --- |
+| [`PRODUCT.md`](PRODUCT.md) | Verdade de produto (Impeccable) |
+| [`DESIGN.md`](DESIGN.md) | Sistema visual (Impeccable / UI·UX Pro Max) |
+| [`docs/EDITORIAL.md`](docs/EDITORIAL.md) | Diátaxis + contrato MDX |
+| [`.cursor/rules/caporici-labs.mdc`](.cursor/rules/caporici-labs.mdc) | Regras do agente |
+| `.cursor/skills/impeccable/` | Skill Impeccable |
+| `.cursor/skills/ui-ux-pro-max/` | Skill UI/UX Pro Max |
+
 ## Padrão editorial
 
 Toda afirmação relevante aponta para uma fonte. Quando a fonte é uma norma paga,
@@ -71,6 +82,9 @@ isso é dito explicitamente. Toda ferramenta declara o que não faz. Toda págin
 responde:
 
 > Como isso foi verificado, contra qual versão, e onde pode estar errado?
+
+Conteúdo usa Diátaxis (`tipoDiataxis`) e MDX só para callouts aprovados
+(`Note`, `Tip`, `Warning`, `Danger`).
 
 Este material não substitui SAE, ISO, CiA ou AUTOSAR. Ele existe para você
 chegar nesses documentos já entendendo o que está lendo.

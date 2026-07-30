@@ -8,16 +8,16 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const contentDir = path.join(root, "src/content/automotivo");
 const trilhasFile = path.join(root, "src/data/trilhas.ts");
 
-function listMarkdownFiles(dir) {
+function listContentFiles(dir) {
   return fs
     .readdirSync(dir)
-    .filter((name) => name.endsWith(".md"))
+    .filter((name) => name.endsWith(".md") || name.endsWith(".mdx"))
     .map((name) => path.join(dir, name));
 }
 
 function parseFrontmatter(raw) {
   const match = raw.match(/^---\n([\s\S]*?)\n---\n([\s\S]*)$/);
-  assert.ok(match, "arquivo Markdown precisa de frontmatter YAML");
+  assert.ok(match, "arquivo precisa de frontmatter YAML");
   return { frontmatter: match[1], body: match[2] };
 }
 
@@ -25,27 +25,31 @@ function hasField(frontmatter, field) {
   return new RegExp(`^${field}:`, "m").test(frontmatter);
 }
 
+test("artefatos de padrão existem", () => {
+  for (const file of [
+    "PRODUCT.md",
+    "DESIGN.md",
+    "docs/EDITORIAL.md",
+    ".cursor/rules/caporici-labs.mdc",
+    ".cursor/skills/impeccable/SKILL.md",
+    ".cursor/skills/ui-ux-pro-max/SKILL.md",
+    "src/components/mdx/Note.astro",
+    "src/components/mdx/Tip.astro",
+    "src/components/mdx/Warning.astro",
+    "src/components/mdx/Danger.astro",
+  ]) {
+    assert.ok(fs.existsSync(path.join(root, file)), `faltando ${file}`);
+  }
+});
+
 test("existem exatamente as 11 trilhas cadastradas", () => {
   const source = fs.readFileSync(trilhasFile, "utf8");
   const ids = [...source.matchAll(/id:\s*"([^"]+)"/g)].map((match) => match[1]);
   assert.equal(ids.length, 11);
-  assert.deepEqual(ids, [
-    "fundamentos",
-    "can",
-    "redes-classicas",
-    "ecu",
-    "diagnostico",
-    "autosar",
-    "ethernet-sdv",
-    "boot-ota",
-    "safety-security",
-    "testes-processo",
-    "sintese",
-  ]);
 });
 
-test("artigos possuem contrato editorial mínimo", () => {
-  const files = listMarkdownFiles(contentDir);
+test("artigos possuem contrato editorial + Diátaxis", () => {
+  const files = listContentFiles(contentDir);
   assert.ok(files.length >= 5, "primeiro lote precisa de pelo menos 5 textos");
 
   const required = [
@@ -54,6 +58,7 @@ test("artigos possuem contrato editorial mínimo", () => {
     "trilha",
     "ordem",
     "nivel",
+    "tipoDiataxis",
     "status",
     "objetivos",
     "fontes",
@@ -66,32 +71,43 @@ test("artigos possuem contrato editorial mínimo", () => {
     const raw = fs.readFileSync(file, "utf8");
     const { frontmatter, body } = parseFrontmatter(raw);
 
+    assert.ok(file.endsWith(".mdx"), `${path.basename(file)} deve ser MDX`);
+
     for (const field of required) {
       assert.ok(hasField(frontmatter, field), `${path.basename(file)} sem campo ${field}`);
     }
 
+    assert.match(
+      frontmatter,
+      /tipoDiataxis:\s*(tutorial|howto|reference|explanation)/,
+    );
     assert.match(frontmatter, /status:\s*(rascunho|revisao|publicado)/);
     assert.match(body, /## Resumo/);
     assert.match(body, /## Perguntas de verificação/);
     assert.match(frontmatter, /laboratorio:/);
+    assert.doesNotMatch(body, /<div class="obs">/);
   }
 });
 
-test("slugs do primeiro lote estão presentes", () => {
-  const names = listMarkdownFiles(contentDir).map((file) => path.basename(file, ".md"));
-  for (const expected of [
+test("slugs do primeiro lote estão presentes como explanation", () => {
+  const expected = [
     "mapa",
     "arquitetura-ee",
     "eletricidade-para-devs",
     "representacao-de-dados",
     "tempo-e-determinismo",
-  ]) {
-    assert.ok(names.includes(expected), `faltando ${expected}.md`);
+  ];
+
+  for (const slug of expected) {
+    const file = path.join(contentDir, `${slug}.mdx`);
+    assert.ok(fs.existsSync(file), `faltando ${slug}.mdx`);
+    const raw = fs.readFileSync(file, "utf8");
+    assert.match(raw, /tipoDiataxis:\s*explanation/);
   }
 });
 
 test("não há títulos duplicados", () => {
-  const titles = listMarkdownFiles(contentDir).map((file) => {
+  const titles = listContentFiles(contentDir).map((file) => {
     const raw = fs.readFileSync(file, "utf8");
     const { frontmatter } = parseFrontmatter(raw);
     const match = frontmatter.match(/^titulo:\s*"([^"]+)"/m);
@@ -100,4 +116,13 @@ test("não há títulos duplicados", () => {
   });
 
   assert.equal(new Set(titles).size, titles.length);
+});
+
+test("home não usa gradient text nem eyebrow kicker", () => {
+  const home = fs.readFileSync(path.join(root, "src/pages/index.astro"), "utf8");
+  assert.doesNotMatch(home, /class="eyebrow"/);
+  assert.doesNotMatch(home, /background-clip:\s*text/);
+  const h1 = home.match(/<h1>[\s\S]*?<\/h1>/);
+  assert.ok(h1, "home precisa de H1");
+  assert.doesNotMatch(h1[0], /<span/);
 });

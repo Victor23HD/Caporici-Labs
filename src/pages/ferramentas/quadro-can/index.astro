@@ -92,17 +92,19 @@ import BaseLayout from "../../../layouts/BaseLayout.astro";
       uma decisão de projeto de tempo real, não uma numeração arbitrária.
     </p>
 
-    <div class="obs">
-      <strong>O que esta ferramenta não faz</strong>
-      <p>
-        Ela não decodifica sinais. Transformar bytes crus em grandeza física —
-        rotação, temperatura, pressão — exige a definição do banco de sinais, em
-        geral um arquivo DBC, que informa bit inicial, tamanho, endianness, escala e
-        offset de cada sinal. Sem isso, qualquer interpretação de significado seria
-        invenção. Também não trata identificadores estendidos de 29 bits, CAN FD com
-        payload de até 64 bytes, cálculos de CRC nem os campos de controle e ACK.
-      </p>
-    </div>
+    <aside class="callout callout-note" role="note">
+      <strong class="callout-label">O que esta ferramenta não faz</strong>
+      <div class="callout-body">
+        <p>
+          Ela não decodifica sinais. Transformar bytes crus em grandeza física —
+          rotação, temperatura, pressão — exige a definição do banco de sinais, em
+          geral um arquivo DBC, que informa bit inicial, tamanho, endianness, escala e
+          offset de cada sinal. Sem isso, qualquer interpretação de significado seria
+          invenção. Também não trata identificadores estendidos de 29 bits, CAN FD com
+          payload de até 64 bytes, cálculos de CRC nem os campos de controle e ACK.
+        </p>
+      </div>
+    </aside>
 
     <div class="meta">
       <p>
