@@ -1,34 +1,32 @@
 ---
 name: Caporici Labs
-description: Documentary engineering hub — Swiss clarity with a calm technical accent
+description: Split-flap concourse board for critical embedded engineering knowledge
 colors:
-  bg: "#ffffff"
-  bg-soft: "#f6f8fa"
-  bg-raised: "#ffffff"
-  line: "#e6e8eb"
-  line-strong: "#cfd3d8"
-  text: "#191b1d"
-  muted: "#626970"
-  accent: "#315ee7"
-  accent-soft: "#eef2ff"
-  accent-secondary: "#16a579"
-  accent-contrast: "#ffffff"
-  danger: "#9b1c1c"
-  dark-bg: "#0b0d0f"
-  dark-bg-soft: "#121519"
-  dark-text: "#f0f2f3"
-  dark-muted: "#979fa7"
-  dark-accent: "#8ba8ff"
-  dark-accent-secondary: "#57d5ad"
+  bg: "#0a0b0d"
+  bg-soft: "#121418"
+  bg-raised: "#181b21"
+  line: "#2c3139"
+  line-strong: "#4a5160"
+  text: "#f3f0e8"
+  muted: "#a39e92"
+  accent: "#f0b429"
+  accent-soft: "#3a2e12"
+  accent-secondary: "#3dbe8c"
+  accent-contrast: "#0a0b0d"
+  danger: "#e07a7a"
+  flap: "#14171c"
+  flap-text: "#f3f0e8"
+  light-bg: "#e7e4dc"
+  light-text: "#121418"
 typography:
   display:
-    fontFamily: "IBM Plex Sans, ui-sans-serif, system-ui, sans-serif"
-    fontSize: "clamp(2.4rem, 5vw, 4.5rem)"
-    fontWeight: 600
-    lineHeight: 1.02
-    letterSpacing: "-0.04em"
+    fontFamily: "Barlow Condensed, Arial Narrow, ui-sans-serif, sans-serif"
+    fontSize: "clamp(2.4rem, 6vw, 4.2rem)"
+    fontWeight: 700
+    lineHeight: 1.05
+    letterSpacing: "0.04em"
   body:
-    fontFamily: "IBM Plex Sans, ui-sans-serif, system-ui, sans-serif"
+    fontFamily: "Atkinson Hyperlegible, ui-sans-serif, system-ui, sans-serif"
     fontSize: "17px"
     fontWeight: 400
     lineHeight: 1.65
@@ -40,9 +38,9 @@ typography:
     lineHeight: 1.5
     letterSpacing: "normal"
 rounded:
-  sm: "7px"
-  md: "10px"
-  lg: "14px"
+  sm: "3px"
+  md: "6px"
+  lg: "10px"
   pill: "999px"
 spacing:
   sm: "8px"
@@ -51,15 +49,15 @@ spacing:
   xl: "64px"
 components:
   button-primary:
-    backgroundColor: "{colors.text}"
-    textColor: "{colors.bg}"
-    rounded: "{rounded.pill}"
-    padding: "9px 16px"
+    backgroundColor: "{colors.accent}"
+    textColor: "{colors.accent-contrast}"
+    rounded: "{rounded.sm}"
+    padding: "10px 18px"
   button-secondary:
     backgroundColor: "transparent"
     textColor: "{colors.text}"
-    rounded: "{rounded.pill}"
-    padding: "9px 16px"
+    rounded: "{rounded.sm}"
+    padding: "10px 18px"
   callout:
     backgroundColor: "{colors.bg-soft}"
     textColor: "{colors.text}"
@@ -69,67 +67,63 @@ components:
 
 ## Overview
 
-Caporici Labs is a **Read**-first product with a Persuade home that still behaves like documentation, not a course funnel. Visual language: Swiss/minimal documentation — high contrast, calm blue accent, green secondary for “verified/available”, generous whitespace, grid discipline. Dark mode follows the OS (overrideable) with the same structure, not a neon theme.
+Caporici Labs wears a **split-flap departure board** visual world: matte flap faces, steel frame, amber status lamps, painted condensed destinations, green for on-time/publicado. Dark concourse is the primary night-desk scene; light mode is a daylight terminal inversion of the same grammar.
 
-Identity anchors: wordmark “Caporici Labs”, dual-tone mark (blue + green square), author section for Victor Caporici, Portuguese-first copy.
+Seed: `f48f179b`. Challenger built: `signals-instruments-split-flap-concourse` (won audience identification + product clarity over grounded schematic-wall #7).
+
+Home mode: Persuade. Docs/tools: Read/Operate inside the same board language.
 
 ## Colors
 
-- Neutrals carry hierarchy; accent is reserved for links, current nav, and verified/status chips.
-- Secondary green marks availability, labs, and “executable” cues — never decoration-only.
-- Danger red only for validation errors and destructive meaning.
-- Soft surfaces (`bg-soft`) hold meta blocks and callouts without heavy cards.
+- Neutrals are steel and flap black, not SaaS gray-lilac.
+- Amber (`accent`) marks attention, HOLD, and primary CTA lamp.
+- Green (`accent-secondary`) marks PUB / LIVE / on-time only.
+- No purple, no neon glow stacks, no cream+terracotta editorial costume.
 
 ## Typography
 
-- **IBM Plex Sans** for UI and body: technical, readable, not startup-default Inter.
-- **JetBrains Mono** for code, identifiers, IDs, and measurement labels.
-- Article measure ~68ch. Display tracking no tighter than -0.04em.
-- Headings carry weight; do not rely on eyebrows/kickers above H1.
+- **Barlow Condensed** for board destinations, nav, section titles on marketing surfaces.
+- **Atkinson Hyperlegible** for body reading.
+- **JetBrains Mono** for codes, IDs, clocks, status chips.
+- Docs headings drop forced all-caps so long Portuguese titles stay readable.
 
 ## Layout
 
-- Max content width ~1080px; reading column narrower.
-- Docs: sticky sidebar (240px) + content.
-- Home: one hero composition, then single-purpose sections.
-- Rhythm: more space above a section heading than below it.
-- Mobile: collapse sidebar above content; stack hero diagram under copy.
+- Home hero is a full-bleed board frame, not a two-column SaaS hero.
+- Lists of domains/tracks/resources are board rows (code | destination | status).
+- Docs: sticky platform sidebar + reading column (~68ch).
+- More space above section headings than below.
 
 ## Elevation & Depth
 
-- Prefer borders over shadows. Soft shadow only on interactive raised tools (CAN explorer) and the author panel.
-- No glow, no glass stacks, no nested cards.
-- Sticky topbar uses light blur for legibility, not spectacle.
-
-## Shapes
-
-- Radius 7–14px. Pills only for true toggles/buttons/status chips.
-- Callouts are full bordered soft panels — not thick colored side bars.
-- Diagram nodes on the home use monospace labels and a grid underlay.
+- Flap faces use a horizontal split highlight (lid seam), not glassmorphism.
+- Soft shadow on the board frame and tool panel only.
+- Borders over nested cards.
 
 ## Components
 
-- **Topbar:** brand + text nav + theme toggle. Nav uses muted → text hover; current page is weight, not underline noise.
-- **Buttons:** primary is high-contrast ink on paper (inverts in dark). Secondary is outline.
-- **Callouts (MDX):** `Note`, `Tip`, `Warning`, `Danger` — same shell, distinct label color.
-- **Lab idea:** dedicated panel after article body; never pretend the repo exists.
-- **Article meta:** definition grid for track, level, status, revision.
-- **Prev/next:** two plain linked panels at article end.
+- Wordmark: flap tile `CL` + condensed Caporici Labs.
+- Primary button: amber lamp slab, uppercase condensed.
+- Callouts: soft panels, label in condensed caps, no thick side bars.
+- Tool inputs sit on flap-black fields with mono digits.
+
+## Motion
+
+- Board rows and destination flaps drop with a short rotateX cascade.
+- Respect `prefers-reduced-motion`.
+- Clock on the board refreshes quietly.
 
 ## Do's and Don'ts
 
 **Do**
 
-- Declare sources, versions, and limits on every technical claim.
-- Keep Diátaxis types pure: don’t mix a tutorial and a reference in one page.
-- Prefer SVG/drawn marks over emoji icons.
-- Show hover, focus-visible, and error states.
-- Respect `prefers-reduced-motion`.
+- Keep statuses honest: HOLD for research tracks, PUB only for published work.
+- Preserve Portuguese technical voice and Diátaxis purity in content.
+- Treat the board as information architecture, not decoration.
 
 **Don't**
 
-- Purple gradients, glassmorphism, metric-stat hero strips, icon-card grids as IA.
-- Gradient text or decorative monospace costumes.
-- Fake “Available” domains or unspoken draft content in production.
-- Thick accent borders as the main callout style.
-- Marketing slogans that a neighboring SaaS could reuse unchanged.
+- Icon-card grids as the home IA.
+- Gradient text, eyebrow kickers, purple SaaS chrome.
+- Fake “Available” domains.
+- Soften HOLD into false completeness.

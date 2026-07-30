@@ -70,8 +70,16 @@ Alinhamento com `DESIGN.md`: já coincidia (Swiss docs, Plex + JetBrains, accent
 - Contexto de voz: `humanizer-context.md`
 - Aplicado: travessões, estados de UI quebrados, ajustes de voz na home/ferramentas
 
+## Redesign visual (2026-07-30, turno seguinte)
+
+- Motivo: auditoria anterior não alterou a identidade visual.
+- Impeccable `concept-seed.mjs --scope direction --mode persuade` → seed `f48f179b`, assigned grounded #7.
+- Challenger vencedor (audiência + clareza): `signals-instruments-split-flap-concourse`.
+- Home/docs/ferramenta refeitos no mundo split-flap; `DESIGN.md` reescrito a partir do build.
+- Site **ainda não está no ar** (sem deploy Vercel/GitHub Pages neste momento).
+
 ## Pendências conscientes (não bloqueiam)
 
-1. Busca no site (recomendação Pro Max para docs hub)
-2. Screenshots desktop/mobile ao vivo (detect estático feito; polish visual com browser fica para revisão humana)
+1. Deploy Vercel (repo tem `vercel.json`, mas não há deployment ativo)
+2. Busca no site (recomendação Pro Max para docs hub)
 3. Lote 2 do corpus (CAN) ainda não escrito

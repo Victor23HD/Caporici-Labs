@@ -8,8 +8,11 @@ const { active } = Astro.props;
 
 <header class="topbar">
   <div class="topbar-inner">
-    <a class="marca" href="/">Caporici Labs</a>
-    <nav>
+    <a class="marca" href="/">
+      <span class="marca-flap" aria-hidden="true">CL</span>
+      <span class="marca-nome">Caporici Labs</span>
+    </a>
+    <nav aria-label="Principal">
       <a href="/#areas" aria-current={active === "areas" ? "page" : undefined}>Áreas</a>
       <a href="/automotivo/" aria-current={active === "automotivo" ? "page" : undefined}>Automotivo</a>
       <a href="/#metodo" aria-current={active === "metodo" ? "page" : undefined}>Método</a>

@@ -10,6 +10,52 @@ import {
 const artigos = await listarArtigos();
 const publicados = artigos.filter((item) => item.data.status === "publicado");
 const trilhas = trilhasComContagem(artigos);
+
+const areas = [
+  {
+    codigo: "AUTO",
+    titulo: "Automotivo",
+    estado: "NO HORÁRIO",
+    estadoClass: "on-time",
+    href: "/automotivo/",
+    texto: `CAN, CAN FD, LIN, J1939, UDS, AUTOSAR, Linux embarcado, gateways e telemetria. ${publicados.length} textos no corpus.`,
+  },
+  {
+    codigo: "AIR",
+    titulo: "Aviação",
+    estado: "PLANEJADA",
+    estadoClass: "hold",
+    texto: "Avionics data buses, software determinístico, particionamento e conceitos de certificação.",
+  },
+  {
+    codigo: "RAIL",
+    titulo: "Ferroviário",
+    estado: "PLANEJADA",
+    estadoClass: "hold",
+    texto: "Redes de bordo, controle de trens, sinalização, redundância e operação segura.",
+  },
+  {
+    codigo: "AGRO",
+    titulo: "Máquinas agrícolas",
+    estado: "PLANEJADA",
+    estadoClass: "hold",
+    texto: "ISOBUS, integração entre implementos, controle distribuído e telemetria de campo.",
+  },
+  {
+    codigo: "SEA",
+    titulo: "Náutico",
+    estado: "PLANEJADA",
+    estadoClass: "hold",
+    texto: "NMEA, instrumentação, integração de bordo e edge resiliente em conectividade limitada.",
+  },
+  {
+    codigo: "CORE",
+    titulo: "Fundamentos compartilhados",
+    estado: "BASE",
+    estadoClass: "base",
+    texto: "C/C++, RTOS, Linux, concorrência, memória, protocolos, segurança e observabilidade.",
+  },
+];
 ---
 
 <BaseLayout
@@ -18,243 +64,206 @@ const trilhas = trilhasComContagem(artigos);
   active="home"
 >
   <main class="home">
-    <section class="home-hero">
-      <div>
-        <h1>Conhecimento disperso.<br />Engenharia conectada.</h1>
-        <p class="intro">
-          Eu pesquiso, organizo e transformo sistemas embarcados complexos em mapas,
-          explicações e ferramentas que um desenvolvedor consegue usar. Do sinal
-          elétrico à nuvem, sem esconder as decisões difíceis entre as camadas.
-        </p>
-        <div class="acoes">
-          <a class="botao" href="#areas">Explorar o mapa</a>
-          <a class="botao secundario" href="/automotivo/">Entrar no automotivo</a>
+    <section class="board-hero" aria-label="Quadro de partidas do Caporici Labs">
+      <div class="board-frame">
+        <div class="board-header">
+          <p class="board-station">CAPORICI LABS</p>
+          <p class="board-clock" id="board-clock" aria-live="polite">--:--</p>
         </div>
-      </div>
 
-      <div class="sistema-visual" aria-label="Mapa das áreas estudadas pelo Caporici Labs">
-        <div class="barramento" aria-hidden="true"></div>
-        <div class="no motor">Automotivo</div>
-        <div class="no freio">Aviação</div>
-        <div class="no central">Sistemas<br />críticos</div>
-        <div class="no cabine">Ferroviário</div>
-        <div class="no nuvem">Agro &amp;<br />náutico</div>
+        <h1 class="board-destination">
+          <span class="flap-line">CONHECIMENTO DISPERSO</span>
+          <span class="flap-line accent">ENGENHARIA CONECTADA</span>
+        </h1>
+
+        <p class="board-lede">
+          Eu pesquiso, organizo e verifico sistemas embarcados críticos para que um
+          desenvolvedor consiga ler o caminho inteiro: do sinal elétrico à nuvem,
+          com fonte, limite e ferramenta à vista.
+        </p>
+
+        <div class="acoes">
+          <a class="botao" href="#areas">Ver partidas</a>
+          <a class="botao secundario" href="/automotivo/">Embarcar no automotivo</a>
+        </div>
+
+        <div class="board-live" aria-label="Áreas em quadro">
+          <div class="board-cols" aria-hidden="true">
+            <span>CÓD</span>
+            <span>DESTINO</span>
+            <span>STATUS</span>
+          </div>
+          {
+            areas.slice(0, 4).map((area, i) => (
+              <div class={`board-row flip-in`} style={`--i:${i}`}>
+                <span class="cell code">{area.codigo}</span>
+                <span class="cell dest">{area.titulo}</span>
+                <span class={`cell status ${area.estadoClass}`}>{area.estado}</span>
+              </div>
+            ))
+          }
+        </div>
       </div>
     </section>
 
-    <div class="faixa-fatos" aria-label="Princípios do projeto">
-      <div class="fato">
-        <strong>Experiência de produção</strong>
-        <span>C/C++, runtime, legado e compatibilidade no mundo real.</span>
-      </div>
-      <div class="fato">
-        <strong>Síntese independente</strong>
-        <span>Conhecimento espalhado vira um modelo mental navegável.</span>
-      </div>
-      <div class="fato">
-        <strong>Confiança verificável</strong>
-        <span>Fonte, limite, código e teste ficam expostos.</span>
-      </div>
-    </div>
-
     <section class="secao-home" id="areas">
       <div class="secao-cabecalho">
-        <div>
-          <h2>Um mapa da engenharia embarcada.</h2>
-        </div>
+        <h2>Partidas por área</h2>
         <p>
           Os setores mudam de nome. Os problemas se repetem: comunicação determinística,
-          recurso escasso, segurança, diagnóstico, atualização e integração com o mundo
-          externo. Eu conecto essas áreas em vez de tratá-las como ilhas.
+          recurso escasso, segurança, diagnóstico, atualização e integração. Eu conecto
+          essas áreas em vez de tratá-las como ilhas.
         </p>
       </div>
 
-      <div class="grade-areas">
-        <a class="area area-destaque" href="/automotivo/">
-          <span class="area-icone">AUTO</span>
-          <div>
-            <span class="estado">Conteúdo publicado</span>
-            <h3>Automotivo</h3>
-            <p>
-              CAN, CAN FD, LIN, J1939, UDS, AUTOSAR, Linux embarcado, gateways e
-              telemetria, com {publicados.length} textos no corpus atual.
-            </p>
-          </div>
-        </a>
-        <article class="area">
-          <span class="area-icone">AIR</span>
-          <div>
-            <span class="estado">Linha de pesquisa</span>
-            <h3>Aviação</h3>
-            <p>Avionics data buses, software determinístico, particionamento e conceitos de certificação.</p>
-          </div>
-        </article>
-        <article class="area">
-          <span class="area-icone">RAIL</span>
-          <div>
-            <span class="estado">Linha de pesquisa</span>
-            <h3>Ferroviário</h3>
-            <p>Redes de bordo, controle de trens, sinalização, redundância e operação segura.</p>
-          </div>
-        </article>
-        <article class="area">
-          <span class="area-icone">AGRO</span>
-          <div>
-            <span class="estado">Linha de pesquisa</span>
-            <h3>Máquinas agrícolas</h3>
-            <p>ISOBUS, integração entre implementos, controle distribuído e telemetria de campo.</p>
-          </div>
-        </article>
-        <article class="area">
-          <span class="area-icone">SEA</span>
-          <div>
-            <span class="estado">Linha de pesquisa</span>
-            <h3>Náutico</h3>
-            <p>NMEA, instrumentação, integração de bordo e edge resiliente em conectividade limitada.</p>
-          </div>
-        </article>
-        <article class="area">
-          <span class="area-icone">CORE</span>
-          <div>
-            <span class="estado">Base transversal</span>
-            <h3>Fundamentos compartilhados</h3>
-            <p>C/C++, RTOS, Linux, concorrência, memória, protocolos, segurança e observabilidade.</p>
-          </div>
-        </article>
+      <div class="board-table" role="list">
+        {
+          areas.map((area) =>
+            area.href ? (
+              <a class="board-entry" href={area.href} role="listitem">
+                <span class="cell code">{area.codigo}</span>
+                <span class="cell dest">
+                  <strong>{area.titulo}</strong>
+                  <em>{area.texto}</em>
+                </span>
+                <span class={`cell status ${area.estadoClass}`}>{area.estado}</span>
+              </a>
+            ) : (
+              <div class="board-entry muted" role="listitem">
+                <span class="cell code">{area.codigo}</span>
+                <span class="cell dest">
+                  <strong>{area.titulo}</strong>
+                  <em>{area.texto}</em>
+                </span>
+                <span class={`cell status ${area.estadoClass}`}>{area.estado}</span>
+              </div>
+            ),
+          )
+        }
       </div>
     </section>
 
     <section class="secao-home">
       <div class="secao-cabecalho">
-        <div>
-          <h2>Do fio à nuvem, sem saltar camadas.</h2>
-        </div>
+        <h2>Itinerário da informação</h2>
         <p>
-          Entender um protocolo isolado não basta. A proposta é seguir a informação
-          inteira: como nasce no sensor, disputa o barramento, atravessa o gateway,
-          vira software e finalmente chega a uma ferramenta ou serviço.
+          Entender um protocolo isolado não basta. Siga a informação inteira: nasce no
+          sensor, disputa o barramento, atravessa o gateway, vira software e chega a
+          uma ferramenta.
         </p>
       </div>
 
       <ol class="pilha">
-        <li><span>01</span><strong>Física</strong><p>Sinal, ruído, terminação e limitações do meio.</p></li>
-        <li><span>02</span><strong>Rede</strong><p>Quadros, arbitragem, transporte e tratamento de erro.</p></li>
-        <li><span>03</span><strong>Plataforma</strong><p>MCU, RTOS, Linux, drivers, middleware e runtime.</p></li>
-        <li><span>04</span><strong>Aplicação</strong><p>Controle, diagnóstico, segurança e comportamento.</p></li>
-        <li><span>05</span><strong>Edge &amp; nuvem</strong><p>Gateway, telemetria, atualização e observabilidade.</p></li>
+        <li><span>01</span><strong>Física</strong><p>Sinal, ruído, terminação e limites do meio.</p></li>
+        <li><span>02</span><strong>Rede</strong><p>Quadros, arbitragem, transporte e erro.</p></li>
+        <li><span>03</span><strong>Plataforma</strong><p>MCU, RTOS, Linux, drivers e runtime.</p></li>
+        <li><span>04</span><strong>Aplicação</strong><p>Controle, diagnóstico e comportamento.</p></li>
+        <li><span>05</span><strong>Edge &amp; nuvem</strong><p>Gateway, telemetria, OTA e observabilidade.</p></li>
       </ol>
     </section>
 
     <section class="secao-home" id="metodo">
       <div class="secao-cabecalho">
-        <div>
-          <h2>Confiança não vem de layout bonito.</h2>
-        </div>
+        <h2>Confiança não vem de layout bonito</h2>
         <p>
-          Ela vem de conseguir separar fato, interpretação e hipótese. Cada módulo
-          é construído para que outro engenheiro possa discordar, reproduzir e
-          corrigir, sem depender da minha autoridade.
+          Vem de separar fato, interpretação e hipótese. Cada módulo deixa outro
+          engenheiro discordar, reproduzir e corrigir, sem depender da minha autoridade.
         </p>
       </div>
 
-      <div class="grade-metodo">
-        <article>
-          <span>01</span>
-          <h3>Eu encontro o que está disperso</h3>
-          <p>
-            Normas, documentação de kernel, material de fabricantes, código e
-            experiência prática raramente contam a história completa sozinhos.
-          </p>
-        </article>
-        <article>
-          <span>02</span>
-          <h3>Eu organizo o modelo mental</h3>
-          <p>
-            A ordem parte da arquitetura, desce até o detalhe e volta à aplicação.
-            O leitor entende por que algo existe antes de decorar como funciona.
-          </p>
-        </article>
-        <article>
-          <span>03</span>
-          <h3>Eu torno a explicação executável</h3>
-          <p>
-            Diagramas, laboratórios e ferramentas transformam abstração em algo que
-            pode ser inspecionado, quebrado e testado.
-          </p>
-        </article>
-        <article>
-          <span>04</span>
-          <h3>Eu declaro onde termina a certeza</h3>
-          <p>
-            Versão, fonte, suposição e limite ficam visíveis. Se uma norma é paga ou
-            uma ferramenta não decodifica sem DBC, isso é dito sem rodeio.
-          </p>
-        </article>
-      </div>
+      <ol class="metodo-board">
+        <li>
+          <span class="cell code">M1</span>
+          <div>
+            <h3>Encontro o que está disperso</h3>
+            <p>Normas, kernel, fabricantes, código e prática raramente fecham a história sozinhos.</p>
+          </div>
+        </li>
+        <li>
+          <span class="cell code">M2</span>
+          <div>
+            <h3>Organizo o modelo mental</h3>
+            <p>Da arquitetura ao detalhe e de volta à aplicação. O porquê vem antes do como.</p>
+          </div>
+        </li>
+        <li>
+          <span class="cell code">M3</span>
+          <div>
+            <h3>Torno a explicação executável</h3>
+            <p>Diagramas, labs e ferramentas para inspecionar, quebrar e testar.</p>
+          </div>
+        </li>
+        <li>
+          <span class="cell code">M4</span>
+          <div>
+            <h3>Declaro onde termina a certeza</h3>
+            <p>Versão, fonte, suposição e limite à vista. Sem DBC, sem inventar sinal.</p>
+          </div>
+        </li>
+      </ol>
     </section>
 
     <section class="secao-home">
       <div class="secao-cabecalho">
-        <div>
-          <h2>Onze trilhas. Um caminho progressivo.</h2>
-        </div>
+        <h2>Onze trilhas no eixo automotivo</h2>
         <p>
-          O eixo automotivo é o primeiro a receber tratamento completo. A publicação
-          avança em lotes revisáveis; as ferramentas aparecem quando ajudam a provar
-          um conceito, não para preencher catálogo.
+          Publicação em lotes revisáveis. Ferramentas só quando provam um conceito,
+          não para encher catálogo.
         </p>
       </div>
 
-      <ul class="lista">
+      <div class="board-table tracks" role="list">
         {
           trilhas.map((trilha) => (
-            <li>
-              <strong>
-                {String(trilha.numero).padStart(2, "0")} · {trilha.titulo}
-              </strong>
-              <span class="estado">
-                {trilha.publicados > 0
-                  ? `${trilha.publicados} publicado${trilha.publicados > 1 ? "s" : ""}`
-                  : "planejada"}
+            <div class="board-entry" role="listitem">
+              <span class="cell code">{String(trilha.numero).padStart(2, "0")}</span>
+              <span class="cell dest">
+                <strong>{trilha.titulo}</strong>
+                <em>{trilha.resumo}</em>
               </span>
-              <p>{trilha.resumo}</p>
-            </li>
+              <span class={`cell status ${trilha.publicados > 0 ? "on-time" : "hold"}`}>
+                {trilha.publicados > 0
+                  ? `${trilha.publicados} PUB`
+                  : "HOLD"}
+              </span>
+            </div>
           ))
         }
-      </ul>
+      </div>
     </section>
 
     <section class="secao-home">
       <div class="secao-cabecalho">
-        <div>
-          <h2>Algo para ler. Algo para executar.</h2>
-        </div>
-        <p>
-          Textos e ferramentas publicados. Rascunhos existem no repositório, mas só
-          entram aqui depois da revisão.
-        </p>
+        <h2>Embarque agora</h2>
+        <p>Textos e ferramentas publicados. Rascunhos ficam no repositório até a revisão.</p>
       </div>
 
-      <div class="grade-recursos">
+      <div class="board-table resources" role="list">
         {
           publicados.slice(0, 4).map((artigo) => (
-            <a class="recurso" href={`/automotivo/${slugDoArtigo(artigo)}/`}>
-              <span class="recurso-numero">
-                {rotuloDiataxis(artigo.data.tipoDiataxis).toUpperCase()} /{" "}
-                {artigo.data.trilha.toUpperCase()}{" "}
-                {String(artigo.data.ordem).padStart(2, "0")}
+            <a
+              class="board-entry"
+              href={`/automotivo/${slugDoArtigo(artigo)}/`}
+              role="listitem"
+            >
+              <span class="cell code">
+                {rotuloDiataxis(artigo.data.tipoDiataxis).slice(0, 3).toUpperCase()}
               </span>
-              <span class="estado">Publicado</span>
-              <h3>{artigo.data.titulo}</h3>
-              <p>{artigo.data.resumo}</p>
+              <span class="cell dest">
+                <strong>{artigo.data.titulo}</strong>
+                <em>{artigo.data.resumo}</em>
+              </span>
+              <span class="cell status on-time">PUB</span>
             </a>
           ))
         }
-        <a class="recurso" href="/ferramentas/quadro-can/">
-          <span class="recurso-numero">FERRAMENTA / CAN 01</span>
-          <span class="estado">Testada no navegador</span>
-          <h3>Explorador de quadros CAN</h3>
-          <p>Identificador, DLC, prioridade e payload, com os limites explicitados.</p>
+        <a class="board-entry" href="/ferramentas/quadro-can/" role="listitem">
+          <span class="cell code">CAN</span>
+          <span class="cell dest">
+            <strong>Explorador de quadros CAN</strong>
+            <em>Identificador, DLC, prioridade e payload, com limites explícitos.</em>
+          </span>
+          <span class="cell status on-time">LIVE</span>
         </a>
       </div>
     </section>
@@ -264,21 +273,37 @@ const trilhas = trilhasComContagem(artigos);
       <div>
         <h2>Victor Caporici</h2>
         <p class="autor-resumo">
-          Sou engenheiro de software sênior C/C++ na TOTVS. Trabalho no núcleo de
-          sistemas que carregam décadas de compatibilidade, milhares de integrações
-          e pouco espaço para quebrar quem está na ponta.
+          Engenheiro de software sênior C/C++ na TOTVS. Trabalho no núcleo de sistemas
+          com décadas de compatibilidade, milhares de integrações e pouco espaço para
+          quebrar quem está na ponta.
         </p>
         <p>
-          O Caporici Labs nasceu da mesma forma como eu resolvo problemas em
-          produção: reconstruo o contexto, encontro as fronteiras invisíveis,
-          testo as hipóteses e organizo o resultado para que outra pessoa não
-          precise começar do zero.
+          O Caporici Labs nasceu do jeito como eu resolvo produção: reconstruo o
+          contexto, marco as fronteiras, testo hipóteses e deixo o caminho legível
+          para a próxima pessoa.
         </p>
         <div class="acoes">
-          <a class="botao" href="https://github.com/Victor23HD">Ver meu GitHub</a>
+          <a class="botao" href="https://github.com/Victor23HD">GitHub</a>
           <a class="botao secundario" href="https://github.com/Victor23HD/Caporici-Labs">Código do projeto</a>
         </div>
       </div>
     </section>
   </main>
+
+  <script is:inline>
+    (function () {
+      const el = document.getElementById("board-clock");
+      if (!el) return;
+      function tick() {
+        const d = new Date();
+        el.textContent = d.toLocaleTimeString("pt-BR", {
+          hour: "2-digit",
+          minute: "2-digit",
+          hour12: false,
+        });
+      }
+      tick();
+      setInterval(tick, 15000);
+    })();
+  </script>
 </BaseLayout>

@@ -126,7 +126,7 @@ test("home não usa gradient text nem eyebrow kicker", () => {
   const home = fs.readFileSync(path.join(root, "src/pages/index.astro"), "utf8");
   assert.doesNotMatch(home, /class="eyebrow"/);
   assert.doesNotMatch(home, /background-clip:\s*text/);
-  const h1 = home.match(/<h1>[\s\S]*?<\/h1>/);
+  const h1 = home.match(/<h1\b[\s\S]*?<\/h1>/);
   assert.ok(h1, "home precisa de H1");
-  assert.doesNotMatch(h1[0], /<span/);
+  assert.doesNotMatch(h1[0], /background-clip/);
 });
