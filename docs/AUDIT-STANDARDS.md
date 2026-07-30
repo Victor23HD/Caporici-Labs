@@ -72,11 +72,15 @@ Alinhamento com `DESIGN.md`: já coincidia (Swiss docs, Plex + JetBrains, accent
 
 ## Redesign visual (2026-07-30, turno seguinte)
 
-- Motivo: auditoria anterior não alterou a identidade visual.
-- Impeccable `concept-seed.mjs --scope direction --mode persuade` → seed `f48f179b`, assigned grounded #7.
-- Challenger vencedor (audiência + clareza): `signals-instruments-split-flap-concourse`.
-- Home/docs/ferramenta refeitos no mundo split-flap; `DESIGN.md` reescrito a partir do build.
-- Site **ainda não está no ar** (sem deploy Vercel/GitHub Pages neste momento).
+### Passada split-flap (fraca)
+- Seed `f48f179b`: ficou costume, tipografia tímida.
+
+### Passada 360 — consenso Impeccable × UI/UX Pro Max
+- Ver `docs/DESIGN-CONSENSUS.md`
+- UI/UX: Exaggerated Minimalism
+- Impeccable seed `a00f0e7b` → `signals-instruments-phosphor-terminal-midnight`
+- Phosphor CRT + cursor âmbar + Azeret Mono mega em home/docs/tools
+- Site **ainda não está no ar** (precisa deploy Vercel)
 
 ## Pendências conscientes (não bloqueiam)
 
