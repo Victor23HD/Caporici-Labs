@@ -13,7 +13,7 @@ const trilhasView = trilhasComContagem(artigos);
 ---
 
 <DocsLayout
-  title="Automotivo — Caporici Labs"
+  title="Automotivo: Caporici Labs"
   description="Eixo automotivo do Caporici Labs: do mapa do software veicular até CAN, diagnóstico, Linux embarcado, safety e SDV, escrito em ordem e em português."
   artigos={artigos}
   overviewCurrent
@@ -49,8 +49,8 @@ const trilhasView = trilhasComContagem(artigos);
             </strong>
             <span class="estado">
               {trilha.publicados > 0
-                ? `— ${trilha.publicados} publicado${trilha.publicados > 1 ? "s" : ""}`
-                : "— planejada"}
+                ? `${trilha.publicados} publicado${trilha.publicados > 1 ? "s" : ""}`
+                : "planejada"}
             </span>
             <p>{trilha.resumo}</p>
             {itens.length > 0 && (
@@ -61,7 +61,7 @@ const trilhasView = trilhasComContagem(artigos);
                       {artigo.data.ordem}. {artigo.data.titulo}
                     </a>
                     {artigo.data.status !== "publicado" && (
-                      <span class="estado">— {rotuloStatus(artigo.data.status)}</span>
+                      <span class="estado">{rotuloStatus(artigo.data.status)}</span>
                     )}
                   </li>
                 ))}

@@ -3,7 +3,7 @@ import BaseLayout from "../../../layouts/BaseLayout.astro";
 ---
 
 <BaseLayout
-  title="Explorador de quadros CAN — Caporici Labs"
+  title="Explorador de quadros CAN: Caporici Labs"
   description="Monte um identificador CAN de 11 bits e um payload de até 8 bytes e veja a decomposição do quadro em hexadecimal, decimal, binário e ASCII."
   active="ferramentas"
 >
@@ -49,31 +49,31 @@ import BaseLayout from "../../../layouts/BaseLayout.astro";
       <dl class="saida">
         <div>
           <dt>Identificador em hexadecimal</dt>
-          <dd id="id-hex">—</dd>
+          <dd id="id-hex">–</dd>
         </div>
         <div>
           <dt>Identificador em decimal</dt>
-          <dd id="id-decimal">—</dd>
+          <dd id="id-decimal">–</dd>
         </div>
         <div>
           <dt>Identificador em binário</dt>
-          <dd id="id-binario">—</dd>
+          <dd id="id-binario">–</dd>
         </div>
         <div>
           <dt>DLC (tamanho dos dados)</dt>
-          <dd id="dlc">—</dd>
+          <dd id="dlc">–</dd>
         </div>
         <div>
           <dt>Prioridade na arbitragem</dt>
-          <dd id="prioridade">—</dd>
+          <dd id="prioridade">–</dd>
         </div>
         <div>
           <dt>Bytes em decimal</dt>
-          <dd id="payload-decimal">—</dd>
+          <dd id="payload-decimal">–</dd>
         </div>
         <div>
           <dt>Bytes em ASCII</dt>
-          <dd id="payload-ascii">—</dd>
+          <dd id="payload-ascii">–</dd>
         </div>
       </dl>
     </div>
@@ -96,8 +96,7 @@ import BaseLayout from "../../../layouts/BaseLayout.astro";
       <strong class="callout-label">O que esta ferramenta não faz</strong>
       <div class="callout-body">
         <p>
-          Ela não decodifica sinais. Transformar bytes crus em grandeza física —
-          rotação, temperatura, pressão — exige a definição do banco de sinais, em
+          Ela não decodifica sinais. Transformar bytes crus em grandeza física (rotação, temperatura, pressão) exige a definição do banco de sinais, em
           geral um arquivo DBC, que informa bit inicial, tamanho, endianness, escala e
           offset de cada sinal. Sem isso, qualquer interpretação de significado seria
           invenção. Também não trata identificadores estendidos de 29 bits, CAN FD com

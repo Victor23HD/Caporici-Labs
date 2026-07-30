@@ -1,6 +1,6 @@
 ---
 titulo: "Arquitetura elétrica e eletrônica do veículo"
-resumo: "Como o veículo se organiza em sensores, atuadores, ECUs, gateways e redes — e por que a topologia define o que o software pode ou não garantir."
+resumo: "Como o veículo se organiza em sensores, atuadores, ECUs, gateways e redes, e por que a topologia define o que o software pode ou não garantir."
 trilha: fundamentos
 ordem: 2
 nivel: introdutorio
@@ -15,7 +15,7 @@ objetivos:
 normas:
   - ISO 26262 (contexto de item e arquitetura)
 fontes:
-  - titulo: AUTOSAR — Overview
+  - titulo: AUTOSAR, Overview
     url: https://www.autosar.org/
     tipo: documentacao
     nota: Contexto de arquitetura de software sobre plataformas E/E.
@@ -46,12 +46,12 @@ Arquitetura elétrica/eletrônica (*E/E architecture*) é o desenho de como ener
 
 Todo projeto E/E combina, em proporções diferentes, os mesmos blocos:
 
-- **Sensor** — transforma grandeza física em sinal elétrico ou digital (posição do pedal, temperatura, rotação da roda).
-- **Atuador** — transforma decisão de software em ação física (injetor, motor de vidro, válvula de freio).
-- **ECU** — executa lógica, fecha malhas de controle e publica estado.
-- **Gateway** — conecta redes diferentes, filtra, traduz e isola.
-- **Fonte e distribuição de energia** — bateria, gerador/alternador ou HV em elétricos, fusíveis, relés e redes de alimentação.
-- **Harness** — o chicote: massa de fios, conectores e proteções que tornam o desenho caro, pesado e difícil de mudar.
+- **Sensor**, transforma grandeza física em sinal elétrico ou digital (posição do pedal, temperatura, rotação da roda).
+- **Atuador**, transforma decisão de software em ação física (injetor, motor de vidro, válvula de freio).
+- **ECU**, executa lógica, fecha malhas de controle e publica estado.
+- **Gateway**, conecta redes diferentes, filtra, traduz e isola.
+- **Fonte e distribuição de energia**, bateria, gerador/alternador ou HV em elétricos, fusíveis, relés e redes de alimentação.
+- **Harness**, o chicote: massa de fios, conectores e proteções que tornam o desenho caro, pesado e difícil de mudar.
 
 Se você só pensa em "mensagens", ignora metade do problema. A mensagem só existe porque um sensor foi lido, um processador decidiu e um meio físico conseguiu entregar a tempo.
 
@@ -59,7 +59,7 @@ Se você só pensa em "mensagens", ignora metade do problema. A mensagem só exi
 
 Historicamente, funções simples eram ligadas por fio dedicado: interruptor → lâmpada. Isso escala mal. Cada nova função adiciona cobre, peso, custo e pontos de falha.
 
-O barramento compartilhado inverte a lógica: vários nós falam no mesmo meio, multiplexando informação. CAN e LIN existem para reduzir chicote e permitir que funções compartilhem estado. Ethernet automotivo aparece quando a multiplexação clássica não entrega banda suficiente — especialmente câmeras e atualização de software.
+O barramento compartilhado inverte a lógica: vários nós falam no mesmo meio, multiplexando informação. CAN e LIN existem para reduzir chicote e permitir que funções compartilhem estado. Ethernet automotivo aparece quando a multiplexação clássica não entrega banda suficiente, especialmente câmeras e atualização de software.
 
 Três topologias aparecem o tempo todo:
 
@@ -75,8 +75,8 @@ Arquitetura zonal é, em essência, uma aposta em menos chicote longo e mais int
 
 Há duas formas comuns de agrupar funções:
 
-- **Por domínio funcional** — powertrain, chassi, carroceria, infotenimento. Útil porque requisitos e fornecedores se organizam assim.
-- **Por zona física** — dianteira esquerda, traseira direita, teto, porta. Útil porque o chicote e o comprimento do cabo se organizam assim.
+- **Por domínio funcional**, powertrain, chassi, carroceria, infotenimento. Útil porque requisitos e fornecedores se organizam assim.
+- **Por zona física**, dianteira esquerda, traseira direita, teto, porta. Útil porque o chicote e o comprimento do cabo se organizam assim.
 
 Veículos modernos misturam as duas lógicas. Você pode ter um controlador zonal na porta que agrega funções de carroceria locais, enquanto uma função de freio continua isolada por razões de safety. O software precisa saber se está falando com um vizinho de zona, um par de domínio ou um serviço central.
 
@@ -93,7 +93,7 @@ Do ponto de vista de software, isso significa que **nem toda mensagem que existe
 
 <Note title="Implicação Diátaxis">
 
-Esta página é *explanation*: ela organiza o modelo mental da topologia. Quando existir um *how-to* de inventário E/E ou um *tutorial* de modelagem de três segmentos, eles vão linkar daqui — sem misturar tipos na mesma página.
+Esta página é *explanation*: ela organiza o modelo mental da topologia. Quando existir um *how-to* de inventário E/E ou um *tutorial* de modelagem de três segmentos, eles vão linkar daqui, sem misturar tipos na mesma página.
 
 </Note>
 

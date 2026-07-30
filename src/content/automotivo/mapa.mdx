@@ -54,7 +54,7 @@ Antes de olhar um único bit de um quadro CAN, é preciso saber **quem** está c
 
 ECU significa *Electronic Control Unit*. Na prática é um computador embarcado dedicado a um trabalho: controlar injeção, decidir quando o freio libera pressão, acionar o vidro elétrico, desenhar a tela central.
 
-O ponto importante para quem vem de software de aplicação é que a ECU não é "um serviço". Ela tem um único conjunto de responsabilidades, prazo de resposta definido, e quase sempre menos memória do que uma aba de navegador. Um freio que responde em média rápido, mas ocasionalmente atrasa 200 milissegundos, é um freio defeituoso — mesmo que a média esteja ótima. O critério aqui é o **pior caso**, não a média.
+O ponto importante para quem vem de software de aplicação é que a ECU não é "um serviço". Ela tem um único conjunto de responsabilidades, prazo de resposta definido, e quase sempre menos memória do que uma aba de navegador. Um freio que responde em média rápido, mas ocasionalmente atrasa 200 milissegundos, é um freio defeituoso, mesmo que a média esteja ótima. O critério aqui é o **pior caso**, não a média.
 
 ## Por que não existe um computador só
 
@@ -105,9 +105,9 @@ CAN não tem endereço de destino. Um quadro carrega um identificador que diz *o
 
 "Programar para automotivo" descreve dois mundos bem diferentes, e saber em qual você está muda tudo: linguagem, ferramenta de build, forma de depurar e o que conta como bug aceitável.
 
-- **MCU + RTOS** — Microcontrolador com kilobytes a poucos megabytes de RAM, sem MMU, frequentemente sem alocação dinâmica depois da inicialização. C, às vezes C++ restrito. É aqui que vive a função crítica, e onde determinismo vale mais que throughput.
-- **SoC + Linux/QNX** — Processador de aplicação com sistema operacional completo, memória virtual, sistema de arquivos e rede. Infotenimento, gateway e ADAS moram aqui. C++ moderno, Python para ferramental, e problemas que você reconhece de servidor: concorrência, latência de I/O, gestão de memória.
-- **Fora do veículo** — Backend de telemetria, frota, diagnóstico remoto e atualização. Nuvem convencional, com a diferença de que o cliente é um dispositivo que perde conexão em túnel e não pode perder evento por causa disso.
+- **MCU + RTOS**, Microcontrolador com kilobytes a poucos megabytes de RAM, sem MMU, frequentemente sem alocação dinâmica depois da inicialização. C, às vezes C++ restrito. É aqui que vive a função crítica, e onde determinismo vale mais que throughput.
+- **SoC + Linux/QNX**, Processador de aplicação com sistema operacional completo, memória virtual, sistema de arquivos e rede. Infotenimento, gateway e ADAS moram aqui. C++ moderno, Python para ferramental, e problemas que você reconhece de servidor: concorrência, latência de I/O, gestão de memória.
+- **Fora do veículo**, Backend de telemetria, frota, diagnóstico remoto e atualização. Nuvem convencional, com a diferença de que o cliente é um dispositivo que perde conexão em túnel e não pode perder evento por causa disso.
 
 AUTOSAR entra nessa divisão como padronização de arquitetura de software. A variante Classic mira o mundo MCU + RTOS; a variante Adaptive mira o mundo de sistemas operacionais POSIX e comunicação orientada a serviços. Vale saber que existem e o que cada uma tenta resolver antes de encarar a especificação, que é enorme.
 
@@ -119,7 +119,7 @@ Vale conhecer os três estágios, porque vaga e código real convivem com todos 
 2. **Por domínio.** Um controlador mais potente por domínio, com módulos menores subordinados. Menos nós no barramento principal e mais software concentrado por área.
 3. **Zonal e centralizada.** Controladores organizados por região física do veículo, ligados por Ethernet, com computação concentrada em poucos nós de alto desempenho. Reduz cabeamento e permite atualizar função por software.
 
-A consequência prática para carreira: a demanda cresce onde os dois mundos se encontram — quem entende barramento determinístico e também entende Linux, rede e ciclo de atualização de software. Ninguém troca CAN por Ethernet de um dia para o outro; os dois vão coexistir por muito tempo, e alguém precisa fazer a ponte.
+A consequência prática para carreira: a demanda cresce onde os dois mundos se encontram, quem entende barramento determinístico e também entende Linux, rede e ciclo de atualização de software. Ninguém troca CAN por Ethernet de um dia para o outro; os dois vão coexistir por muito tempo, e alguém precisa fazer a ponte.
 
 ## Erros comuns de interpretação
 
@@ -136,4 +136,4 @@ Um veículo é uma rede de computadores com responsabilidades isoladas, redes he
 
 1. Por que um atraso ocasional de 200 ms pode ser aceitável em infotenimento e inaceitável em freio?
 2. Qual diferença conceitual existe entre um identificador CAN e um endereço IP?
-3. Em que mundo — MCU+RTOS ou SoC+Linux — você esperaria encontrar um gateway de telemetria moderno, e por quê?
+3. Em que mundo, MCU+RTOS ou SoC+Linux, você esperaria encontrar um gateway de telemetria moderno, e por quê?

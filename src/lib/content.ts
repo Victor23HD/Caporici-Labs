@@ -104,6 +104,6 @@ export function descricaoDiataxis(tipo: Artigo["data"]["tipoDiataxis"]): string 
     case "reference":
       return "Descrição técnica factual, com pouca interpretação.";
     case "explanation":
-      return "Contexto e modelo mental — responde ao porquê.";
+      return "Contexto e modelo mental: responde ao porquê.";
   }
 }

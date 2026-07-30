@@ -49,7 +49,7 @@ const { artigos, currentSlug, overviewCurrent = false } = Astro.props;
                     >
                       {artigo.data.ordem}. {artigo.data.titulo}
                       {artigo.data.status !== "publicado" && (
-                        <span class="estado">— {rotuloStatus(artigo.data.status)}</span>
+                        <span class="estado">{rotuloStatus(artigo.data.status)}</span>
                       )}
                     </a>
                   </li>

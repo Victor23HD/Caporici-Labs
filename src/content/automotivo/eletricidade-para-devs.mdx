@@ -15,7 +15,7 @@ objetivos:
 normas:
   - ISO 11898-2 (camada física CAN de alta velocidade)
 fontes:
-  - titulo: CAN in Automation — physical layer overview
+  - titulo: CAN in Automation, physical layer overview
     url: https://www.can-cia.org/
     tipo: documentacao
   - titulo: ISO 11898-2
@@ -70,18 +70,18 @@ Antes de caçar race condition, pergunte se o problema muda com carga elétrica,
 
 Em vez de um fio com tensão absoluta contra terra, CAN de alta velocidade usa dois fios: **CAN_H** e **CAN_L**. A informação está na *diferença* entre eles.
 
-A vantagem é rejeição de ruído comum: interferência que aparece igualmente nos dois fios tende a ser cancelada na leitura diferencial. Por isso o par trançado importa — ele ajuda o ruído a ser comum aos dois condutores.
+A vantagem é rejeição de ruído comum: interferência que aparece igualmente nos dois fios tende a ser cancelada na leitura diferencial. Por isso o par trançado importa, ele ajuda o ruído a ser comum aos dois condutores.
 
 Estados conceituais que todo desenvolvedor CAN precisa conhecer:
 
-- **recessivo** — estado "livre" do barramento, associado ao bit 1;
-- **dominante** — estado que vence o recessivo, associado ao bit 0.
+- **recessivo**, estado "livre" do barramento, associado ao bit 1;
+- **dominante**, estado que vence o recessivo, associado ao bit 0.
 
 Essa assimetria elétrica é o que permite a arbitragem sem mestre: zeros vencem uns no próprio fio.
 
 ## Terminação de 120 Ω
 
-Um barramento CAN de alta velocidade é uma linha de transmissão. Sem terminação adequada nas extremidades, o sinal reflete, distorce e gera erros de bit — especialmente com cabo longo e bitrate alto.
+Um barramento CAN de alta velocidade é uma linha de transmissão. Sem terminação adequada nas extremidades, o sinal reflete, distorce e gera erros de bit, especialmente com cabo longo e bitrate alto.
 
 Regra prática de bancada:
 
@@ -118,7 +118,7 @@ Se o controller CAN entra em *bus-off*, retransmitir a mesma mensagem em loop ap
 
 </Danger>
 
-Quando o bus-off aparece, o software ainda tem papel — mas de contenção, não de "consertar o meio":
+Quando o bus-off aparece, o software ainda tem papel, mas de contenção, não de "consertar o meio":
 
 1. detectar o estado;
 2. limitar retentativas;

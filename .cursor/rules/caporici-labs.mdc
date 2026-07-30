@@ -54,3 +54,5 @@ Frontmatter must include: titulo, resumo, trilha, ordem, nivel, status, tipoDiat
 ## Voice
 
 Developer-to-developer, calm, precise. Authorship may use first person. Never course-funnel or coach tone.
+
+When polishing prose, use `.cursor/skills/humanizer/` with `humanizer-context.md` (`--voice technical --purpose technical`). Prefer commas/colons over em-dash saturation.

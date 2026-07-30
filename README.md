@@ -74,6 +74,9 @@ Não decodifica sinais sem DBC. A lógica está em
 | [`.cursor/rules/caporici-labs.mdc`](.cursor/rules/caporici-labs.mdc) | Regras do agente |
 | `.cursor/skills/impeccable/` | Skill Impeccable |
 | `.cursor/skills/ui-ux-pro-max/` | Skill UI/UX Pro Max |
+| `.cursor/skills/humanizer/` | Skill de humanização de prosa |
+| [`humanizer-context.md`](humanizer-context.md) | Voz do projeto para o humanizer |
+| [`docs/AUDIT-STANDARDS.md`](docs/AUDIT-STANDARDS.md) | Relatório da última execução das skills |
 
 ## Padrão editorial
 

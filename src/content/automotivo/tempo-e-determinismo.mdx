@@ -19,7 +19,7 @@ fontes:
   - titulo: Documentação do SocketCAN no kernel Linux
     url: https://docs.kernel.org/networking/can.html
     tipo: documentacao
-  - titulo: FreeRTOS — Real-time concepts
+  - titulo: FreeRTOS, Real-time concepts
     url: https://www.freertos.org/Documentation/RTOS_book.html
     tipo: documentacao
   - titulo: Prática de medição de latência em sistemas embarcados
@@ -46,9 +46,9 @@ Em software de aplicação, "rápido o bastante" costuma significar boa média e
 
 Três palavras que precisam ficar separadas:
 
-- **Latência** — tempo entre um evento e a reação observável.
-- **Jitter** — variação dessa latência entre execuções.
-- **Deadline** — instante máximo em que a reação ainda é válida.
+- **Latência**, tempo entre um evento e a reação observável.
+- **Jitter**, variação dessa latência entre execuções.
+- **Deadline**, instante máximo em que a reação ainda é válida.
 
 Uma malha de controle pode tolerar latência de 5 ms com jitter de 0,2 ms e falhar com a mesma média se o jitter for de 4 ms. Média esconde cauda.
 
@@ -116,9 +116,9 @@ Se o requisito da função for 5 ms, você não tem folga. Qualquer log caro no 
 
 Mensagens e tarefas podem ser:
 
-- **periódicas** — a cada 10 ms, por exemplo;
-- **esporádicas / evento** — quando algo muda;
-- **mistas** — heartbeat periódico + evento de mudança.
+- **periódicas**, a cada 10 ms, por exemplo;
+- **esporádicas / evento**, quando algo muda;
+- **mistas**, heartbeat periódico + evento de mudança.
 
 Periódico facilita análise e detecção de silêncio. Evento economiza banda, mas complica prova de latência e monitoramento. Muitos sistemas usam periódico para sinais críticos exatamente porque a ausência vira evidência.
 
@@ -150,7 +150,7 @@ Regra prática:
 
 ## Resumo
 
-Determinismo é sobre caber no prazo quando tudo dá errado ao mesmo tempo — interferência de CPU, contenção de rede e travessia de gateway. Se você não tem orçamento ponta a ponta, você não tem controle do comportamento temporal.
+Determinismo é sobre caber no prazo quando tudo dá errado ao mesmo tempo, interferência de CPU, contenção de rede e travessia de gateway. Se você não tem orçamento ponta a ponta, você não tem controle do comportamento temporal.
 
 ## Perguntas de verificação
 

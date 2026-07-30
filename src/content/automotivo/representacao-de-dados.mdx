@@ -1,6 +1,6 @@
 ---
 titulo: "Representação de dados no embarcado automotivo"
-resumo: "Bits, endianness, campos empacotados, ponto fixo, contadores e CRC — o vocabulário que aparece em todo DBC, UDS e log de barramento."
+resumo: "Bits, endianness, campos empacotados, ponto fixo, contadores e CRC, o vocabulário que aparece em todo DBC, UDS e log de barramento."
 trilha: fundamentos
 ordem: 4
 nivel: introdutorio
@@ -59,10 +59,10 @@ Payloads automotivos raramente usam um `float` por sinal. Espaço é caro e a re
 
 Conceitos essenciais:
 
-- **start bit** — onde o sinal começa no payload;
-- **length** — quantos bits ele ocupa;
-- **signed / unsigned** — se o valor bruto admite negativo;
-- **scale e offset** — conversão de bruto para físico: `fisico = bruto * scale + offset`.
+- **start bit**, onde o sinal começa no payload;
+- **length**, quantos bits ele ocupa;
+- **signed / unsigned**, se o valor bruto admite negativo;
+- **scale e offset**, conversão de bruto para físico: `fisico = bruto * scale + offset`.
 
 Exemplo didático: um sinal de 8 bits, unsigned, scale `0.5`, offset `-40`.
 
@@ -76,8 +76,8 @@ Se você imprimir o bruto achando que já é físico, o dashboard mente com conf
 
 Há duas discussões diferentes que costumam ser misturadas:
 
-1. **Ordem dos bytes na memória / no payload** — little-endian versus big-endian.
-2. **Numeração de bits no DBC** — convenções Intel/Motorola para localizar o start bit.
+1. **Ordem dos bytes na memória / no payload**, little-endian versus big-endian.
+2. **Numeração de bits no DBC**, convenções Intel/Motorola para localizar o start bit.
 
 Um sinal multi-byte pode ter seus bytes "ao contrário" do que sua intuição de desktop espera. O erro típico:
 
@@ -116,7 +116,7 @@ Pontos práticos:
 
 ## Ponto fixo versus ponto flutuante
 
-ECUs críticas frequentemente evitam `float` em caminhos quentes por previsibilidade, custo de hardware e determinismo. Ponto fixo — inteiro com scale implícito — é comum.
+ECUs críticas frequentemente evitam `float` em caminhos quentes por previsibilidade, custo de hardware e determinismo. Ponto fixo, inteiro com scale implícito, é comum.
 
 Implicações:
 

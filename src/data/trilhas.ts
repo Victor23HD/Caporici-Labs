@@ -13,7 +13,7 @@ export const trilhas: Trilha[] = [
     numero: 0,
     titulo: "Orientação e fundamentos",
     resumo:
-      "Arquitetura E/E, ECU, eletricidade necessária, representação de dados e determinismo — o mapa mental antes do protocolo.",
+      "Arquitetura E/E, ECU, eletricidade necessária, representação de dados e determinismo, o mapa mental antes do protocolo.",
     status: "ativa",
     temas: [
       "Mapa do software veicular",
@@ -43,7 +43,7 @@ export const trilhas: Trilha[] = [
     numero: 2,
     titulo: "Ecossistema de redes clássicas",
     resumo:
-      "DBC e sinais, SocketCAN, LIN, J1939 e gateways — do byte cru à grandeza física.",
+      "DBC e sinais, SocketCAN, LIN, J1939 e gateways, do byte cru à grandeza física.",
     status: "planejada",
     temas: ["DBC", "SocketCAN", "LIN", "J1939", "Gateways"],
   },

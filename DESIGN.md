@@ -22,19 +22,19 @@ colors:
   dark-accent-secondary: "#57d5ad"
 typography:
   display:
-    fontFamily: "\"IBM Plex Sans\", ui-sans-serif, system-ui, sans-serif"
+    fontFamily: "IBM Plex Sans, ui-sans-serif, system-ui, sans-serif"
     fontSize: "clamp(2.4rem, 5vw, 4.5rem)"
     fontWeight: 600
     lineHeight: 1.02
     letterSpacing: "-0.04em"
   body:
-    fontFamily: "\"IBM Plex Sans\", ui-sans-serif, system-ui, sans-serif"
+    fontFamily: "IBM Plex Sans, ui-sans-serif, system-ui, sans-serif"
     fontSize: "17px"
     fontWeight: 400
     lineHeight: 1.65
     letterSpacing: "normal"
   mono:
-    fontFamily: "\"JetBrains Mono\", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace"
+    fontFamily: "JetBrains Mono, ui-monospace, SFMono-Regular, Menlo, Consolas, monospace"
     fontSize: "0.9em"
     fontWeight: 500
     lineHeight: 1.5
