@@ -1,0 +1,40 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+---
+
+<BaseLayout
+  title="Ferramentas — Caporici Labs"
+  description="Ferramentas de engenharia que rodam no navegador, sem instalação, e declaram os próprios limites."
+  active="ferramentas"
+>
+  <main class="page">
+    <p class="trilha"><a href="/">Caporici Labs</a> / Ferramentas</p>
+
+    <h1>Ferramentas</h1>
+    <p class="intro">
+      Cada ferramenta aqui roda inteiramente no navegador, sem envio de dados, sem
+      instalação e sem build. Todas dizem explicitamente o que não fazem, porque
+      ferramenta que finge saber mais do que sabe é pior que ferramenta nenhuma.
+    </p>
+
+    <h2>Disponível</h2>
+    <ul class="lista">
+      <li>
+        <a href="/ferramentas/quadro-can/">Explorador de quadros CAN</a>
+        <p>
+          Identificador de 11 bits e payload de até 8 bytes decompostos em
+          hexadecimal, decimal, binário e ASCII, com a prioridade de arbitragem
+          explicada.
+        </p>
+      </li>
+    </ul>
+
+    <h2>Planejadas</h2>
+    <p>
+      Na ordem em que os módulos do eixo automotivo precisarem delas: decodificador
+      de sinal a partir de definição DBC, calculadora de PGN e SPN do J1939, e um
+      estimador de carga de barramento. Nenhuma existe ainda — quando existir,
+      aparece na lista acima.
+    </p>
+  </main>
+</BaseLayout>

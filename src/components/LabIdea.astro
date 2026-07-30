@@ -1,0 +1,37 @@
+---
+interface Props {
+  laboratorio: {
+    titulo: string;
+    objetivo: string;
+    dificuldade: "basico" | "intermediario" | "avancado";
+    entradas: string;
+    saida: string;
+    riscos: string;
+  };
+}
+
+const { laboratorio } = Astro.props;
+
+const dificuldade =
+  laboratorio.dificuldade === "basico"
+    ? "Básico"
+    : laboratorio.dificuldade === "intermediario"
+      ? "Intermediário"
+      : "Avançado";
+---
+
+<aside class="lab-ideia">
+  <h2>Ideia de laboratório</h2>
+  <p>
+    <strong>{laboratorio.titulo}</strong>
+    <span class="estado">— {dificuldade}</span>
+  </p>
+  <p><strong>Objetivo:</strong> {laboratorio.objetivo}</p>
+  <p><strong>Entradas:</strong> {laboratorio.entradas}</p>
+  <p><strong>Saída verificável:</strong> {laboratorio.saida}</p>
+  <p><strong>Riscos:</strong> {laboratorio.riscos}</p>
+  <p>
+    Este bloco descreve um projeto futuro. O artigo não depende dele para ser
+    compreendido; quando o repositório existir, ele será ligado daqui.
+  </p>
+</aside>

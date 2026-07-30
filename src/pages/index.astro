@@ -1,0 +1,285 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { listarArtigos, slugDoArtigo, trilhasComContagem } from "../lib/content";
+
+const artigos = await listarArtigos();
+const publicados = artigos.filter((item) => item.data.status === "publicado");
+const trilhas = trilhasComContagem(artigos);
+---
+
+<BaseLayout
+  title="Caporici Labs — engenharia de sistemas embarcados, explicada de dev para dev"
+  description="Caporici Labs organiza, conecta e verifica conhecimento sobre sistemas embarcados críticos — automotivo, aviação, ferroviário, agrícola e náutico — de desenvolvedor para desenvolvedor."
+  active="home"
+>
+  <main class="home">
+    <section class="home-hero">
+      <div>
+        <p class="eyebrow">Engenharia crítica · organizada por Victor Caporici</p>
+        <h1>Conhecimento disperso.<br /><span>Engenharia conectada.</span></h1>
+        <p class="intro">
+          Eu pesquiso, organizo e transformo sistemas embarcados complexos em mapas,
+          explicações e ferramentas que um desenvolvedor consegue usar. Do sinal
+          elétrico à nuvem, sem esconder as decisões difíceis entre as camadas.
+        </p>
+        <div class="acoes">
+          <a class="botao" href="#areas">Explorar o mapa</a>
+          <a class="botao secundario" href="/automotivo/">Entrar no automotivo</a>
+        </div>
+      </div>
+
+      <div class="sistema-visual" aria-label="Mapa das áreas estudadas pelo Caporici Labs">
+        <div class="barramento" aria-hidden="true"></div>
+        <div class="no motor">Automotivo</div>
+        <div class="no freio">Aviação</div>
+        <div class="no central">Sistemas<br />críticos</div>
+        <div class="no cabine">Ferroviário</div>
+        <div class="no nuvem">Agro &amp;<br />náutico</div>
+      </div>
+    </section>
+
+    <div class="faixa-fatos" aria-label="Princípios do projeto">
+      <div class="fato">
+        <strong>Experiência de produção</strong>
+        <span>C/C++, runtime, legado e compatibilidade no mundo real.</span>
+      </div>
+      <div class="fato">
+        <strong>Síntese independente</strong>
+        <span>Conhecimento espalhado vira um modelo mental navegável.</span>
+      </div>
+      <div class="fato">
+        <strong>Confiança verificável</strong>
+        <span>Fonte, limite, código e teste ficam expostos.</span>
+      </div>
+    </div>
+
+    <section class="secao-home" id="areas">
+      <div class="secao-cabecalho">
+        <div>
+          <p class="eyebrow">O território</p>
+          <h2>Um mapa da engenharia embarcada.</h2>
+        </div>
+        <p>
+          Os setores mudam; os problemas fundamentais se repetem: comunicação
+          determinística, recursos limitados, segurança, diagnóstico, atualização e
+          integração com sistemas externos. O Caporici Labs conecta essas áreas em
+          vez de ensiná-las como ilhas.
+        </p>
+      </div>
+
+      <div class="grade-areas">
+        <a class="area area-destaque" href="/automotivo/">
+          <span class="area-icone">AUTO</span>
+          <div>
+            <span class="estado">Conteúdo publicado</span>
+            <h3>Automotivo</h3>
+            <p>
+              CAN, CAN FD, LIN, J1939, UDS, AUTOSAR, Linux embarcado, gateways e
+              telemetria — com {publicados.length} textos no corpus atual.
+            </p>
+          </div>
+        </a>
+        <article class="area">
+          <span class="area-icone">AIR</span>
+          <div>
+            <span class="estado">Linha de pesquisa</span>
+            <h3>Aviação</h3>
+            <p>Avionics data buses, software determinístico, particionamento e conceitos de certificação.</p>
+          </div>
+        </article>
+        <article class="area">
+          <span class="area-icone">RAIL</span>
+          <div>
+            <span class="estado">Linha de pesquisa</span>
+            <h3>Ferroviário</h3>
+            <p>Redes de bordo, controle de trens, sinalização, redundância e operação segura.</p>
+          </div>
+        </article>
+        <article class="area">
+          <span class="area-icone">AGRO</span>
+          <div>
+            <span class="estado">Linha de pesquisa</span>
+            <h3>Máquinas agrícolas</h3>
+            <p>ISOBUS, integração entre implementos, controle distribuído e telemetria de campo.</p>
+          </div>
+        </article>
+        <article class="area">
+          <span class="area-icone">SEA</span>
+          <div>
+            <span class="estado">Linha de pesquisa</span>
+            <h3>Náutico</h3>
+            <p>NMEA, instrumentação, integração de bordo e edge resiliente em conectividade limitada.</p>
+          </div>
+        </article>
+        <article class="area">
+          <span class="area-icone">CORE</span>
+          <div>
+            <span class="estado">Base transversal</span>
+            <h3>Fundamentos compartilhados</h3>
+            <p>C/C++, RTOS, Linux, concorrência, memória, protocolos, segurança e observabilidade.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="secao-home">
+      <div class="secao-cabecalho">
+        <div>
+          <p class="eyebrow">Profundidade</p>
+          <h2>Do fio à nuvem, sem saltar camadas.</h2>
+        </div>
+        <p>
+          Entender um protocolo isolado não basta. A proposta é seguir a informação
+          inteira: como nasce no sensor, disputa o barramento, atravessa o gateway,
+          vira software e finalmente chega a uma ferramenta ou serviço.
+        </p>
+      </div>
+
+      <ol class="pilha">
+        <li><span>01</span><strong>Física</strong><p>Sinal, ruído, terminação e limitações do meio.</p></li>
+        <li><span>02</span><strong>Rede</strong><p>Quadros, arbitragem, transporte e tratamento de erro.</p></li>
+        <li><span>03</span><strong>Plataforma</strong><p>MCU, RTOS, Linux, drivers, middleware e runtime.</p></li>
+        <li><span>04</span><strong>Aplicação</strong><p>Controle, diagnóstico, segurança e comportamento.</p></li>
+        <li><span>05</span><strong>Edge &amp; nuvem</strong><p>Gateway, telemetria, atualização e observabilidade.</p></li>
+      </ol>
+    </section>
+
+    <section class="secao-home" id="metodo">
+      <div class="secao-cabecalho">
+        <div>
+          <p class="eyebrow">O método</p>
+          <h2>Confiança não vem da aparência.</h2>
+        </div>
+        <p>
+          Ela vem de conseguir separar fato, interpretação e hipótese. Cada módulo
+          é construído para que outro engenheiro possa discordar, reproduzir e
+          corrigir — sem depender da minha autoridade.
+        </p>
+      </div>
+
+      <div class="grade-metodo">
+        <article>
+          <span>01</span>
+          <h3>Eu encontro o que está disperso</h3>
+          <p>
+            Normas, documentação de kernel, material de fabricantes, código e
+            experiência prática raramente contam a história completa sozinhos.
+          </p>
+        </article>
+        <article>
+          <span>02</span>
+          <h3>Eu organizo o modelo mental</h3>
+          <p>
+            A ordem parte da arquitetura, desce até o detalhe e volta à aplicação.
+            O leitor entende por que algo existe antes de decorar como funciona.
+          </p>
+        </article>
+        <article>
+          <span>03</span>
+          <h3>Eu torno a explicação executável</h3>
+          <p>
+            Diagramas, laboratórios e ferramentas transformam abstração em algo que
+            pode ser inspecionado, quebrado e testado.
+          </p>
+        </article>
+        <article>
+          <span>04</span>
+          <h3>Eu declaro onde termina a certeza</h3>
+          <p>
+            Versão, fonte, suposição e limite ficam visíveis. Se uma norma é paga ou
+            uma ferramenta não decodifica sem DBC, isso é dito sem rodeio.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section class="secao-home">
+      <div class="secao-cabecalho">
+        <div>
+          <p class="eyebrow">Corpus automotivo</p>
+          <h2>Onze trilhas. Um caminho progressivo.</h2>
+        </div>
+        <p>
+          O eixo automotivo é o primeiro a receber tratamento completo. A publicação
+          avança em lotes revisáveis; as ferramentas aparecem quando ajudam a provar
+          um conceito, não para preencher catálogo.
+        </p>
+      </div>
+
+      <ul class="lista">
+        {
+          trilhas.map((trilha) => (
+            <li>
+              <strong>
+                {String(trilha.numero).padStart(2, "0")} · {trilha.titulo}
+              </strong>
+              <span class="estado">
+                {trilha.publicados > 0
+                  ? `— ${trilha.publicados} publicado${trilha.publicados > 1 ? "s" : ""}`
+                  : "— planejada"}
+              </span>
+              <p>{trilha.resumo}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+
+    <section class="secao-home">
+      <div class="secao-cabecalho">
+        <div>
+          <p class="eyebrow">Agora no laboratório</p>
+          <h2>Algo para ler. Algo para executar.</h2>
+        </div>
+        <p>
+          Textos e ferramentas publicados. Rascunhos existem no repositório, mas só
+          entram aqui depois da revisão.
+        </p>
+      </div>
+
+      <div class="grade-recursos">
+        {
+          publicados.slice(0, 4).map((artigo) => (
+            <a class="recurso" href={`/automotivo/${slugDoArtigo(artigo)}/`}>
+              <span class="recurso-numero">
+                GUIA / {artigo.data.trilha.toUpperCase()} {String(artigo.data.ordem).padStart(2, "0")}
+              </span>
+              <span class="estado">Publicado</span>
+              <h3>{artigo.data.titulo}</h3>
+              <p>{artigo.data.resumo}</p>
+            </a>
+          ))
+        }
+        <a class="recurso" href="/ferramentas/quadro-can/">
+          <span class="recurso-numero">FERRAMENTA / CAN 01</span>
+          <span class="estado">Testada no navegador</span>
+          <h3>Explorador de quadros CAN</h3>
+          <p>Identificador, DLC, prioridade e payload — com os limites explicitados.</p>
+        </a>
+      </div>
+    </section>
+
+    <section class="secao-autor" id="autor">
+      <div class="autor-marca" aria-hidden="true">VC</div>
+      <div>
+        <p class="eyebrow">Quem organiza isto</p>
+        <h2>Victor Caporici</h2>
+        <p class="autor-resumo">
+          Sou engenheiro de software sênior C/C++ na TOTVS. Trabalho no núcleo de
+          sistemas que carregam décadas de compatibilidade, milhares de integrações
+          e pouco espaço para quebrar quem está na ponta.
+        </p>
+        <p>
+          O Caporici Labs nasceu da mesma forma como eu resolvo problemas em
+          produção: reconstruo o contexto, encontro as fronteiras invisíveis,
+          testo as hipóteses e organizo o resultado para que outra pessoa não
+          precise começar do zero.
+        </p>
+        <div class="acoes">
+          <a class="botao" href="https://github.com/Victor23HD">Ver meu GitHub</a>
+          <a class="botao secundario" href="https://github.com/Victor23HD/Caporici-Labs">Código do projeto</a>
+        </div>
+      </div>
+    </section>
+  </main>
+</BaseLayout>

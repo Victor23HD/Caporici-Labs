@@ -1,0 +1,31 @@
+---
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import "../styles/global.css";
+
+interface Props {
+  title: string;
+  description: string;
+  active?: "home" | "automotivo" | "ferramentas" | "areas" | "metodo" | "autor";
+}
+
+const { title, description, active } = Astro.props;
+---
+
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="generator" content={Astro.generator} />
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='18' fill='%23315ee7'/><rect x='48' y='18' width='18' height='64' fill='%2316a579'/></svg>" />
+    <script is:inline src="/tema.js"></script>
+  </head>
+  <body>
+    <Header active={active} />
+    <slot />
+    <Footer />
+  </body>
+</html>

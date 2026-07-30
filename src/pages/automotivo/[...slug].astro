@@ -1,0 +1,105 @@
+---
+import DocsLayout from "../../layouts/DocsLayout.astro";
+import ArticleMeta from "../../components/ArticleMeta.astro";
+import ArticleNav from "../../components/ArticleNav.astro";
+import LabIdea from "../../components/LabIdea.astro";
+import {
+  listarArtigos,
+  navegacaoArtigo,
+  rotuloStatus,
+  slugDoArtigo,
+} from "../../lib/content";
+import { render } from "astro:content";
+
+export async function getStaticPaths() {
+  const artigos = await listarArtigos();
+
+  return artigos.map((artigo) => ({
+    params: { slug: slugDoArtigo(artigo) },
+    props: { artigo },
+  }));
+}
+
+const { artigo } = Astro.props;
+const artigos = await listarArtigos();
+const { Content } = await render(artigo);
+const { anterior, proximo } = navegacaoArtigo(artigos, artigo);
+const slug = slugDoArtigo(artigo);
+---
+
+<DocsLayout
+  title={`${artigo.data.titulo} — Caporici Labs`}
+  description={artigo.data.resumo}
+  artigos={artigos}
+  currentSlug={slug}
+>
+  <p class="trilha">
+    <a href="/">Caporici Labs</a> /
+    <a href="/automotivo/">Automotivo</a> /
+    {artigo.data.titulo}
+  </p>
+
+  {
+    artigo.data.status !== "publicado" && (
+      <p class="badge-status">{rotuloStatus(artigo.data.status)} — visível em desenvolvimento</p>
+    )
+  }
+
+  <h1>{artigo.data.titulo}</h1>
+  <p class="intro">{artigo.data.resumo}</p>
+
+  <ArticleMeta artigo={artigo} />
+
+  <h2>O que você deve sair sabendo</h2>
+  <ul>
+    {artigo.data.objetivos.map((objetivo) => <li>{objetivo}</li>)}
+  </ul>
+
+  <article class="article-body">
+    <Content />
+  </article>
+
+  {
+    artigo.data.laboratorio && (
+      <LabIdea laboratorio={artigo.data.laboratorio} />
+    )
+  }
+
+  <h2>Onde isto pode falhar</h2>
+  <ul>
+    {artigo.data.limitacoes.map((item) => <li>{item}</li>)}
+  </ul>
+
+  <h2>Fontes</h2>
+  <ul>
+    {
+      artigo.data.fontes.map((fonte) => (
+        <li>
+          {fonte.url ? <a href={fonte.url}>{fonte.titulo}</a> : fonte.titulo}
+          {" — "}
+          <em>{fonte.tipo}</em>
+          {fonte.nota ? `. ${fonte.nota}` : ""}
+        </li>
+      ))
+    }
+  </ul>
+
+  {
+    artigo.data.normas.length > 0 && (
+      <>
+        <h2>Normas relacionadas</h2>
+        <p>{artigo.data.normas.join(" · ")}</p>
+      </>
+    )
+  }
+
+  <div class="meta">
+    <p>
+      Revisão {artigo.data.revisao}. Encontrou um erro?
+      <a href="https://github.com/Victor23HD/Caporici-Labs/issues">Abra uma issue</a>
+      — correção com fonte é bem-vinda.
+    </p>
+  </div>
+
+  <ArticleNav anterior={anterior} proximo={proximo} />
+</DocsLayout>

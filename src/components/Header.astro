@@ -1,0 +1,21 @@
+---
+interface Props {
+  active?: "home" | "automotivo" | "ferramentas" | "areas" | "metodo" | "autor";
+}
+
+const { active } = Astro.props;
+---
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="marca" href="/">Caporici Labs</a>
+    <nav>
+      <a href="/#areas" aria-current={active === "areas" ? "page" : undefined}>Áreas</a>
+      <a href="/automotivo/" aria-current={active === "automotivo" ? "page" : undefined}>Automotivo</a>
+      <a href="/#metodo" aria-current={active === "metodo" ? "page" : undefined}>Método</a>
+      <a href="/ferramentas/" aria-current={active === "ferramentas" ? "page" : undefined}>Ferramentas</a>
+      <a href="/#autor" aria-current={active === "autor" ? "page" : undefined}>Sobre</a>
+      <button type="button" class="tema-botao" title="Alternar tema"></button>
+    </nav>
+  </div>
+</header>

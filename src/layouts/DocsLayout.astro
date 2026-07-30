@@ -1,0 +1,28 @@
+---
+import BaseLayout from "./BaseLayout.astro";
+import Sidebar from "../components/Sidebar.astro";
+import type { Artigo } from "../lib/content";
+
+interface Props {
+  title: string;
+  description: string;
+  artigos: Artigo[];
+  currentSlug?: string;
+  overviewCurrent?: boolean;
+}
+
+const { title, description, artigos, currentSlug, overviewCurrent } = Astro.props;
+---
+
+<BaseLayout title={title} description={description} active="automotivo">
+  <div class="docs">
+    <Sidebar
+      artigos={artigos}
+      currentSlug={currentSlug}
+      overviewCurrent={overviewCurrent}
+    />
+    <div class="docs-conteudo">
+      <slot />
+    </div>
+  </div>
+</BaseLayout>
