@@ -1,30 +1,29 @@
 ---
 name: Caporici Labs
-description: Split-flap concourse board for critical embedded engineering knowledge
+description: Midnight phosphor terminal × exaggerated minimalism for embedded engineering knowledge
 colors:
-  bg: "#0a0b0d"
-  bg-soft: "#121418"
-  bg-raised: "#181b21"
-  line: "#2c3139"
-  line-strong: "#4a5160"
-  text: "#f3f0e8"
-  muted: "#a39e92"
-  accent: "#f0b429"
-  accent-soft: "#3a2e12"
-  accent-secondary: "#3dbe8c"
-  accent-contrast: "#0a0b0d"
-  danger: "#e07a7a"
-  flap: "#14171c"
-  flap-text: "#f3f0e8"
-  light-bg: "#e7e4dc"
-  light-text: "#121418"
+  bg: "#050705"
+  bg-soft: "#0b110d"
+  bg-raised: "#0f1611"
+  line: "#1c2a20"
+  line-strong: "#2f4636"
+  text: "#d9ffe6"
+  muted: "#86a892"
+  accent: "#6dff9a"
+  accent-soft: "#12301c"
+  accent-secondary: "#4fd6a0"
+  accent-contrast: "#050705"
+  amber: "#ffb020"
+  danger: "#ff8a8a"
+  light-bg: "#eef2ec"
+  light-text: "#101612"
 typography:
   display:
-    fontFamily: "Barlow Condensed, Arial Narrow, ui-sans-serif, sans-serif"
-    fontSize: "clamp(2.4rem, 6vw, 4.2rem)"
-    fontWeight: 700
-    lineHeight: 1.05
-    letterSpacing: "0.04em"
+    fontFamily: "Azeret Mono, ui-monospace, SFMono-Regular, Menlo, Consolas, monospace"
+    fontSize: "clamp(3.4rem, 12vw, 7.2rem)"
+    fontWeight: 800
+    lineHeight: 0.88
+    letterSpacing: "-0.06em"
   body:
     fontFamily: "Atkinson Hyperlegible, ui-sans-serif, system-ui, sans-serif"
     fontSize: "17px"
@@ -38,15 +37,15 @@ typography:
     lineHeight: 1.5
     letterSpacing: "normal"
 rounded:
-  sm: "3px"
-  md: "6px"
-  lg: "10px"
+  sm: "2px"
+  md: "4px"
+  lg: "6px"
   pill: "999px"
 spacing:
   sm: "8px"
   md: "16px"
   lg: "32px"
-  xl: "64px"
+  xl: "88px"
 components:
   button-primary:
     backgroundColor: "{colors.accent}"
@@ -67,63 +66,57 @@ components:
 
 ## Overview
 
-Caporici Labs wears a **split-flap departure board** visual world: matte flap faces, steel frame, amber status lamps, painted condensed destinations, green for on-time/publicado. Dark concourse is the primary night-desk scene; light mode is a daylight terminal inversion of the same grammar.
+Caporici Labs is a **phosphor midnight terminal** executed with **exaggerated minimalism**: near-black field, green bloom type, amber cursor, massive mono headlines, subtle scanlines, sparse directory listings.
 
-Seed: `f48f179b`. Challenger built: `signals-instruments-split-flap-concourse` (won audience identification + product clarity over grounded schematic-wall #7).
+Consensus: Impeccable challenger `signals-instruments-phosphor-terminal-midnight` (seed `a00f0e7b`) × UI/UX Pro Max **Exaggerated Minimalism**. Generic slate SaaS palette rejected.
 
-Home mode: Persuade. Docs/tools: Read/Operate inside the same board language.
+- Home = Persuade (boot session)
+- Docs = Read (same DNA, quieter)
+- Tools = Operate (prompt inputs, dump output)
 
 ## Colors
 
-- Neutrals are steel and flap black, not SaaS gray-lilac.
-- Amber (`accent`) marks attention, HOLD, and primary CTA lamp.
-- Green (`accent-secondary`) marks PUB / LIVE / on-time only.
-- No purple, no neon glow stacks, no cream+terracotta editorial costume.
+- Phosphor green is the brand signal and interactive accent.
+- Amber is the cursor / attention / WAIT lamp only.
+- Soft green marks OK / LIVE / published.
+- Light mode is an inverted daylight terminal paper, not a purple-gray SaaS sheet.
 
 ## Typography
 
-- **Barlow Condensed** for board destinations, nav, section titles on marketing surfaces.
-- **Atkinson Hyperlegible** for body reading.
-- **JetBrains Mono** for codes, IDs, clocks, status chips.
-- Docs headings drop forced all-caps so long Portuguese titles stay readable.
+- **Azeret Mono** for brand, nav, section prompts, flags, paths.
+- **Atkinson Hyperlegible** for body reading at night.
+- **JetBrains Mono** for payloads, IDs, code fences.
+- Hero brand type reaches ~7rem; tracking no tighter than -0.06em on mega only.
 
 ## Layout
 
-- Home hero is a full-bleed board frame, not a two-column SaaS hero.
-- Lists of domains/tracks/resources are board rows (code | destination | status).
-- Docs: sticky platform sidebar + reading column (~68ch).
-- More space above section headings than below.
+- First viewport is full-bleed phosphor field, not a boxed board card.
+- Content lists are terminal rows: `flag | path | meta`.
+- Docs: sticky file-tree sidebar + ~68ch column.
+- Large section gaps (~88px) per exaggerated minimalism.
 
 ## Elevation & Depth
 
-- Flap faces use a horizontal split highlight (lid seam), not glassmorphism.
-- Soft shadow on the board frame and tool panel only.
-- Borders over nested cards.
-
-## Components
-
-- Wordmark: flap tile `CL` + condensed Caporici Labs.
-- Primary button: amber lamp slab, uppercase condensed.
-- Callouts: soft panels, label in condensed caps, no thick side bars.
-- Tool inputs sit on flap-black fields with mono digits.
+- Bloom/glow only on phosphor brand, primary CTA, and code panels.
+- Scanline overlay is atmospheric, disabled under `prefers-reduced-motion`.
+- Borders over nested cards; no glass stacks.
 
 ## Motion
 
-- Board rows and destination flaps drop with a short rotateX cascade.
-- Respect `prefers-reduced-motion`.
-- Clock on the board refreshes quietly.
+- One authored moment: amber cursor breathing on the brand.
+- Entry bloom is optional and quiet; no scattered section animations.
+- Reduced-motion kills scanlines and cursor blink.
 
 ## Do's and Don'ts
 
 **Do**
 
-- Keep statuses honest: HOLD for research tracks, PUB only for published work.
-- Preserve Portuguese technical voice and Diátaxis purity in content.
-- Treat the board as information architecture, not decoration.
+- Keep WAIT honest for research tracks; OK/LIVE only for shipped work.
+- Preserve Portuguese technical voice and Diátaxis purity.
+- Let whitespace and scale carry hierarchy.
 
 **Don't**
 
-- Icon-card grids as the home IA.
-- Gradient text, eyebrow kickers, purple SaaS chrome.
-- Fake “Available” domains.
-- Soften HOLD into false completeness.
+- Soft SaaS card grids, purple gradients, eyebrow kickers, gradient text.
+- Costume split-flap frames that don't commit at page scale.
+- Fake completeness for unfinished domains.

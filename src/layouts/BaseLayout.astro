@@ -22,25 +22,26 @@ const { title, description, active } = Astro.props;
     <meta name="generator" content={Astro.generator} />
     <link
       rel="icon"
-      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='8' fill='%230a0b0d'/><rect x='18' y='28' width='64' height='14' fill='%23f0b429'/><rect x='18' y='50' width='40' height='14' fill='%23f5f2ea'/><rect x='18' y='72' width='52' height='10' fill='%233dbe8c'/></svg>"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23050705'/><rect x='18' y='22' width='8' height='56' fill='%236dff9a'/><rect x='34' y='40' width='8' height='38' fill='%236dff9a' opacity='.7'/><rect x='50' y='30' width='8' height='48' fill='%23ffb020'/><rect x='66' y='50' width='8' height='28' fill='%236dff9a' opacity='.45'/></svg>"
     />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Barlow+Condensed:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Azeret+Mono:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
     <script is:inline src="/tema.js"></script>
   </head>
   <body>
     <!--
-      THESIS: Knowledge modules depart on a live board — refuse the SaaS docs hero of soft cards and purple gradients.
-      OWN-WORLD: Split-flap concourse: matte black flap faces, steel frame, amber lamps, painted white condensed type, green for on-time/publicado.
-      STORY: Visitor sees Caporici Labs as the station board, picks a track (domain), boards published rows; trusts sources and limits, not marketing.
-      FIRST VIEWPORT: Full-bleed board. Brand CAPORICI LABS as flap wordmark. One destination headline. One short line. Two board CTAs. Live domain rows ticking under.
-      FORM: Challenger signals-instruments-split-flap-concourse fused over grounded #7 schematic wall; seed f48f179b; mode persuade.
+      THESIS: Critical embedded knowledge arrives like a midnight terminal session — refuse soft SaaS docs cards and timid board costumes.
+      OWN-WORLD: Phosphor CRT × exaggerated minimalism: near-black field, green bloom type, amber cursor, massive mono headlines, scanline grain, one breathing cursor.
+      STORY: Visitor boots Caporici Labs, reads the prompt, boards a track, trusts sources/limits, runs a tool when ready.
+      FIRST VIEWPORT: Full-bleed phosphor field. Huge CAPORICI LABS. One destination line with live cursor. Short lede. Two command CTAs. Sparse directory listing below.
+      FORM: Challenger signals-instruments-phosphor-terminal-midnight fused with UI/UX Exaggerated Minimalism; seed a00f0e7b; mode persuade.
       FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, and DESIGN.md
     -->
+    <div class="crt" aria-hidden="true"></div>
     <Header active={active} />
     <slot />
     <Footer />

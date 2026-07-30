@@ -36,6 +36,7 @@ test("artefatos de padrão existem", () => {
     ".cursor/skills/humanizer/SKILL.md",
     "humanizer-context.md",
     "docs/AUDIT-STANDARDS.md",
+    "docs/DESIGN-CONSENSUS.md",
     "design-system/caporici-labs/MASTER.md",
     "src/components/mdx/Note.astro",
     "src/components/mdx/Tip.astro",

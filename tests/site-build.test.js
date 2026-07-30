@@ -52,13 +52,13 @@ test("páginas expõem navegação e acessibilidade básica", () => {
 
 test("home e tipografia seguem o design system", () => {
   const home = read("index.html");
-  assert.match(home, /Barlow\+Condensed|Barlow Condensed/);
+  assert.match(home, /Azeret\+Mono|Azeret Mono/);
   assert.match(home, /Atkinson\+Hyperlegible|Atkinson Hyperlegible/);
   assert.match(home, /JetBrains\+Mono|JetBrains Mono/);
   assert.doesNotMatch(home, /class="eyebrow"/);
-  assert.match(home, /CAPORICI LABS/);
-  assert.match(home, /CONHECIMENTO DISPERSO|Conhecimento disperso/i);
-  assert.match(home, /board-hero|board-frame/);
+  assert.match(home, /CAPORICI/);
+  assert.match(home, /Conhecimento disperso/i);
+  assert.match(home, /term-hero|brand-mega/);
   assert.doesNotMatch(home, /GUIA\s*\//);
 });
 

@@ -7,8 +7,8 @@
 ---
 
 **Project:** Caporici Labs
-**Generated:** 2026-07-30 23:27:50
-**Category:** Knowledge Base/Documentation
+**Generated:** 2026-07-30 23:34:59
+**Category:** Architecture / Interior
 
 ---
 
@@ -18,13 +18,13 @@
 
 | Role | Hex | CSS Variable |
 |------|-----|--------------|
-| Primary | `#475569` | `--color-primary` |
-| Secondary | `#64748B` | `--color-secondary` |
-| CTA/Accent | `#2563EB` | `--color-cta` |
+| Primary | `#0F172A` | `--color-primary` |
+| Secondary | `#334155` | `--color-secondary` |
+| CTA/Accent | `#0369A1` | `--color-cta` |
 | Background | `#F8FAFC` | `--color-background` |
-| Text | `#1E293B` | `--color-text` |
+| Text | `#020617` | `--color-text` |
 
-**Color Notes:** Neutral grey + link blue
+**Color Notes:** High contrast navy + blue
 
 ### Typography
 
@@ -68,7 +68,7 @@
 ```css
 /* Primary Button */
 .btn-primary {
-  background: #2563EB;
+  background: #0369A1;
   color: white;
   padding: 12px 24px;
   border-radius: 8px;
@@ -85,8 +85,8 @@
 /* Secondary Button */
 .btn-secondary {
   background: transparent;
-  color: #475569;
-  border: 2px solid #475569;
+  color: #0F172A;
+  border: 2px solid #0F172A;
   padding: 12px 24px;
   border-radius: 8px;
   font-weight: 600;
@@ -125,9 +125,9 @@
 }
 
 .input:focus {
-  border-color: #475569;
+  border-color: #0F172A;
   outline: none;
-  box-shadow: 0 0 0 3px #47556920;
+  box-shadow: 0 0 0 3px #0F172A20;
 }
 ```
 
@@ -153,13 +153,13 @@
 
 ## Style Guidelines
 
-**Style:** Minimalism & Swiss Style
+**Style:** Vibrant & Block-based
 
-**Keywords:** Clean, simple, spacious, functional, white space, high contrast, geometric, sans-serif, grid-based, essential
+**Keywords:** Bold, energetic, playful, block layout, geometric shapes, high color contrast, duotone, modern, energetic
 
-**Best For:** Enterprise apps, dashboards, documentation sites, SaaS platforms, professional tools
+**Best For:** Startups, creative agencies, gaming, social media, youth-focused, entertainment, consumer
 
-**Key Effects:** Subtle hover (200-250ms), smooth transitions, sharp shadows if any, clear type hierarchy, fast loading
+**Key Effects:** Large sections (48px+ gaps), animated patterns, bold hover (color shift), scroll-snap, large type (32px+), 200-300ms
 
 ### Page Pattern
 
@@ -173,8 +173,8 @@
 
 ## Anti-Patterns (Do NOT Use)
 
-- ❌ Poor navigation
-- ❌ No search
+- ❌ Flat design without depth
+- ❌ Text-heavy pages
 
 ### Additional Forbidden Patterns
 
