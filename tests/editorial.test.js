@@ -129,5 +129,6 @@ test("home não usa gradient text nem eyebrow kicker", () => {
   assert.doesNotMatch(home, /background-clip:\s*text/);
   const h1 = home.match(/<h1\b[\s\S]*?<\/h1>/);
   assert.ok(h1, "home precisa de H1");
-  assert.doesNotMatch(h1[0], /background-clip/);
+  assert.match(h1[0], /Caporici/i);
+  assert.doesNotMatch(home, /term-boot|no course funnel|ls \.\/áreas/);
 });

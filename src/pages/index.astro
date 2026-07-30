@@ -2,7 +2,6 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import {
   listarArtigos,
-  rotuloDiataxis,
   slugDoArtigo,
   trilhasComContagem,
 } from "../lib/content";
@@ -10,6 +9,7 @@ import {
 const artigos = await listarArtigos();
 const publicados = artigos.filter((item) => item.data.status === "publicado");
 const trilhas = trilhasComContagem(artigos);
+const trilhasAtivas = trilhas.filter((t) => t.publicados > 0).length;
 
 const areas = [
   {
@@ -17,37 +17,37 @@ const areas = [
     titulo: "Automotivo",
     flag: "ok",
     href: "/automotivo/",
-    texto: `CAN · UDS · AUTOSAR · Linux embarcado · ${publicados.length} textos`,
+    texto: `${publicados.length} textos · CAN, UDS, AUTOSAR`,
   },
   {
     path: "aviacao/",
     titulo: "Aviação",
     flag: "wait",
-    texto: "Data buses, particionamento, certificação — linha de pesquisa",
+    texto: "Linha de pesquisa",
   },
   {
     path: "ferroviario/",
     titulo: "Ferroviário",
     flag: "wait",
-    texto: "Redes de bordo, sinalização, redundância — linha de pesquisa",
+    texto: "Linha de pesquisa",
   },
   {
     path: "agro/",
-    titulo: "Máquinas agrícolas",
+    titulo: "Agro",
     flag: "wait",
-    texto: "ISOBUS, implementos, telemetria de campo — linha de pesquisa",
+    texto: "Linha de pesquisa",
   },
   {
     path: "nautico/",
     titulo: "Náutico",
     flag: "wait",
-    texto: "NMEA, instrumentação, edge offline — linha de pesquisa",
+    texto: "Linha de pesquisa",
   },
   {
     path: "core/",
     titulo: "Fundamentos",
     flag: "base",
-    texto: "C/C++ · RTOS · Linux · memória · protocolos",
+    texto: "Base transversal",
   },
 ];
 ---
@@ -59,179 +59,151 @@ const areas = [
 >
   <main class="home">
     <section class="term-hero">
-      <p class="term-boot">
-        <span class="ok">ok</span> session · pt-BR · embedded systems · no course funnel
-      </p>
+      <div class="wrap hero-grid">
+        <div class="hero-copy">
+          <h1 class="brand-mega">
+            Caporici<br />Labs<span class="cursor" aria-hidden="true"></span>
+          </h1>
+          <p class="term-lede">
+            Engenharia embarcada crítica, do sinal elétrico à nuvem, com fonte,
+            limite e ferramenta à vista.
+          </p>
+          <div class="acoes">
+            <a class="botao" href="#areas">Ver áreas</a>
+            <a class="botao secundario" href="/automotivo/">Abrir automotivo</a>
+          </div>
+        </div>
 
-      <p class="brand-mega">
-        CAPORICI<br />LABS<span class="cursor" aria-hidden="true"></span>
-      </p>
-
-      <h1 class="term-h1">
-        Conhecimento disperso.<br />
-        Engenharia conectada.
-      </h1>
-
-      <p class="term-lede">
-        Eu pesquiso, organizo e verifico sistemas embarcados críticos para que um
-        desenvolvedor leia o caminho inteiro — do sinal elétrico à nuvem — com fonte,
-        limite e ferramenta à vista.
-      </p>
-
-      <div class="acoes">
-        <a class="botao" href="#areas">ls ./áreas</a>
-        <a class="botao secundario" href="/automotivo/">cd automotivo</a>
+        <aside class="hero-panel" aria-label="Status das áreas">
+          <div class="hero-panel-bar">
+            <span>áreas</span>
+            <span>{trilhasAtivas} ativa{trilhasAtivas === 1 ? "" : "s"} · {publicados.length} textos</span>
+          </div>
+          <div class="term-list compact" role="list">
+            {
+              areas.map((area) =>
+                area.href ? (
+                  <a class="term-row" href={area.href} role="listitem">
+                    <span class={`flag ${area.flag}`}>{area.flag}</span>
+                    <span class="path">{area.path}</span>
+                    <span class="meta">
+                      <strong>{area.titulo}</strong>
+                      <em>{area.texto}</em>
+                    </span>
+                  </a>
+                ) : (
+                  <div class="term-row dim" role="listitem">
+                    <span class={`flag ${area.flag}`}>{area.flag}</span>
+                    <span class="path">{area.path}</span>
+                    <span class="meta">
+                      <strong>{area.titulo}</strong>
+                      <em>{area.texto}</em>
+                    </span>
+                  </div>
+                ),
+              )
+            }
+          </div>
+        </aside>
       </div>
     </section>
 
-    <section class="secao-home" id="areas">
-      <div class="secao-cabecalho">
-        <h2><span class="prompt">$</span> ls ./áreas</h2>
-        <p>
-          Os setores mudam de nome. Os problemas se repetem. Eu conecto essas áreas
-          em vez de tratá-las como ilhas.
-        </p>
-      </div>
+    <div class="wrap home-body">
+      <section class="secao-home" id="areas">
+        <div class="secao-cabecalho">
+          <h2>Do fio à nuvem</h2>
+          <p>
+            Os setores mudam de nome; os problemas se repetem. Eu conecto as camadas
+            em vez de ensiná-las como ilhas.
+          </p>
+        </div>
 
-      <div class="term-list" role="list">
-        {
-          areas.map((area) =>
-            area.href ? (
-              <a class="term-row" href={area.href} role="listitem">
-                <span class={`flag ${area.flag}`}>{area.flag}</span>
-                <span class="path">{area.path}</span>
+        <ol class="camadas">
+          <li><strong>Física</strong><span>Sinal, ruído, terminação</span></li>
+          <li><strong>Rede</strong><span>Quadros, arbitragem, erro</span></li>
+          <li><strong>Plataforma</strong><span>MCU, RTOS, Linux</span></li>
+          <li><strong>Aplicação</strong><span>Controle e diagnóstico</span></li>
+          <li><strong>Edge</strong><span>Gateway, OTA, telemetria</span></li>
+        </ol>
+      </section>
+
+      <section class="secao-home" id="metodo">
+        <div class="secao-cabecalho">
+          <h2>Como eu trabalho</h2>
+          <p>
+            Confiança vem de separar fato, interpretação e hipótese, não de layout
+            bonito.
+          </p>
+        </div>
+
+        <ol class="metodo-limpo">
+          <li>
+            <strong>Encontro o disperso</strong>
+            <p>Normas, kernel, fabricantes e prática.</p>
+          </li>
+          <li>
+            <strong>Organizo o modelo</strong>
+            <p>Arquitetura → detalhe → aplicação.</p>
+          </li>
+          <li>
+            <strong>Marco o limite</strong>
+            <p>Fonte, versão e o que a ferramenta não faz.</p>
+          </li>
+        </ol>
+      </section>
+
+      <section class="secao-home" id="publicado">
+        <div class="secao-cabecalho">
+          <h2>Publicado</h2>
+          <p>Textos e ferramentas revisados. O restante fica no repositório.</p>
+        </div>
+
+        <div class="term-list" role="list">
+          {
+            publicados.slice(0, 4).map((artigo) => (
+              <a
+                class="term-row"
+                href={`/automotivo/${slugDoArtigo(artigo)}/`}
+                role="listitem"
+              >
+                <span class="flag ok">ok</span>
+                <span class="path">
+                  {String(artigo.data.ordem).padStart(2, "0")}
+                </span>
                 <span class="meta">
-                  <strong>{area.titulo}</strong>
-                  <em>{area.texto}</em>
+                  <strong>{artigo.data.titulo}</strong>
+                  <em>{artigo.data.resumo}</em>
                 </span>
               </a>
-            ) : (
-              <div class="term-row dim" role="listitem">
-                <span class={`flag ${area.flag}`}>{area.flag}</span>
-                <span class="path">{area.path}</span>
-                <span class="meta">
-                  <strong>{area.titulo}</strong>
-                  <em>{area.texto}</em>
-                </span>
-              </div>
-            ),
-          )
-        }
-      </div>
-    </section>
-
-    <section class="secao-home">
-      <div class="secao-cabecalho">
-        <h2><span class="prompt">$</span> traceroute --info</h2>
-        <p>
-          Siga a informação inteira: sensor → barramento → gateway → software →
-          ferramenta.
-        </p>
-      </div>
-
-      <ol class="term-stack">
-        <li><code>phy</code><strong>Física</strong><p>Sinal, ruído, terminação, limites do meio.</p></li>
-        <li><code>net</code><strong>Rede</strong><p>Quadros, arbitragem, transporte, erro.</p></li>
-        <li><code>plat</code><strong>Plataforma</strong><p>MCU, RTOS, Linux, drivers, runtime.</p></li>
-        <li><code>app</code><strong>Aplicação</strong><p>Controle, diagnóstico, comportamento.</p></li>
-        <li><code>edge</code><strong>Edge &amp; nuvem</strong><p>Gateway, telemetria, OTA, observabilidade.</p></li>
-      </ol>
-    </section>
-
-    <section class="secao-home" id="metodo">
-      <div class="secao-cabecalho">
-        <h2><span class="prompt">$</span> cat ./método.md</h2>
-        <p>
-          Confiança não vem de layout bonito. Vem de separar fato, interpretação e
-          hipótese — e deixar outro engenheiro discordar com evidência.
-        </p>
-      </div>
-
-      <ol class="term-stack metodo">
-        <li><code>m1</code><strong>Encontro o disperso</strong><p>Normas, kernel, fabricantes, código e prática.</p></li>
-        <li><code>m2</code><strong>Organizo o modelo</strong><p>Arquitetura → detalhe → aplicação. O porquê antes do como.</p></li>
-        <li><code>m3</code><strong>Torno executável</strong><p>Diagramas, labs e ferramentas para quebrar e testar.</p></li>
-        <li><code>m4</code><strong>Marco o limite</strong><p>Versão, fonte, suposição. Sem DBC, sem inventar sinal.</p></li>
-      </ol>
-    </section>
-
-    <section class="secao-home">
-      <div class="secao-cabecalho">
-        <h2><span class="prompt">$</span> tree ./automotivo</h2>
-        <p>Onze trilhas. Publicação em lotes. Ferramentas só quando provam algo.</p>
-      </div>
-
-      <div class="term-list" role="list">
-        {
-          trilhas.map((trilha) => (
-            <div class="term-row" role="listitem">
-              <span class={`flag ${trilha.publicados > 0 ? "ok" : "wait"}`}>
-                {trilha.publicados > 0 ? "ok" : "wait"}
-              </span>
-              <span class="path">{String(trilha.numero).padStart(2, "0")}/</span>
-              <span class="meta">
-                <strong>{trilha.titulo}</strong>
-                <em>{trilha.resumo}</em>
-              </span>
-            </div>
-          ))
-        }
-      </div>
-    </section>
-
-    <section class="secao-home">
-      <div class="secao-cabecalho">
-        <h2><span class="prompt">$</span> cat ./publicado</h2>
-        <p>O que já passou por revisão. Rascunhos ficam no repo.</p>
-      </div>
-
-      <div class="term-list" role="list">
-        {
-          publicados.slice(0, 4).map((artigo) => (
-            <a
-              class="term-row"
-              href={`/automotivo/${slugDoArtigo(artigo)}/`}
-              role="listitem"
-            >
-              <span class="flag ok">ok</span>
-              <span class="path">
-                {rotuloDiataxis(artigo.data.tipoDiataxis).slice(0, 3).toLowerCase()}
-              </span>
-              <span class="meta">
-                <strong>{artigo.data.titulo}</strong>
-                <em>{artigo.data.resumo}</em>
-              </span>
-            </a>
-          ))
-        }
-        <a class="term-row" href="/ferramentas/quadro-can/" role="listitem">
-          <span class="flag live">live</span>
-          <span class="path">can/</span>
-          <span class="meta">
-            <strong>Explorador de quadros CAN</strong>
-            <em>Identificador, DLC, prioridade, payload — limites explícitos.</em>
-          </span>
-        </a>
-      </div>
-    </section>
-
-    <section class="secao-autor" id="autor">
-      <div class="autor-marca" aria-hidden="true">VC</div>
-      <div>
-        <h2>Victor Caporici</h2>
-        <p class="autor-resumo">
-          Engenheiro de software sênior C/C++ na TOTVS. Núcleo de sistemas com décadas
-          de compatibilidade e pouco espaço para quebrar quem está na ponta.
-        </p>
-        <p>
-          O Caporici Labs é o jeito como eu resolvo produção: reconstruo o contexto,
-          marco fronteiras, testo hipóteses e deixo o caminho legível.
-        </p>
-        <div class="acoes">
-          <a class="botao" href="https://github.com/Victor23HD">github</a>
-          <a class="botao secundario" href="https://github.com/Victor23HD/Caporici-Labs">repo</a>
+            ))
+          }
+          <a class="term-row" href="/ferramentas/quadro-can/" role="listitem">
+            <span class="flag live">live</span>
+            <span class="path">can</span>
+            <span class="meta">
+              <strong>Explorador de quadros CAN</strong>
+              <em>Identificador, DLC e prioridade, sem inventar DBC.</em>
+            </span>
+          </a>
         </div>
-      </div>
-    </section>
+      </section>
+
+      <section class="secao-autor" id="autor">
+        <div class="autor-marca" aria-hidden="true">VC</div>
+        <div>
+          <h2>Victor Caporici</h2>
+          <p class="autor-resumo">
+            Engenheiro de software sênior C/C++ na TOTVS. Trabalho em sistemas com
+            décadas de compatibilidade e pouco espaço para quebrar quem está na ponta.
+          </p>
+          <div class="acoes">
+            <a class="botao secundario" href="https://github.com/Victor23HD">GitHub</a>
+            <a class="botao secundario" href="https://github.com/Victor23HD/Caporici-Labs">
+              Código do projeto
+            </a>
+          </div>
+        </div>
+      </section>
+    </div>
   </main>
 </BaseLayout>

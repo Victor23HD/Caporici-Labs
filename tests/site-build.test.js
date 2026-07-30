@@ -37,7 +37,7 @@ test("páginas expõem navegação e acessibilidade básica", () => {
   assert.match(home, /lang="pt-BR"/);
   assert.match(home, /Caporici Labs/);
   assert.match(home, /Victor Caporici/);
-  assert.match(home, /Eleven trilhas|Onze trilhas|Corpus automotivo/i);
+  assert.match(home, /hero-grid|Do fio à nuvem|Publicado/i);
 
   const artigo = read("automotivo/mapa/index.html");
   assert.match(artigo, /aria-label="Navegação do eixo automotivo"/);
@@ -56,10 +56,11 @@ test("home e tipografia seguem o design system", () => {
   assert.match(home, /Atkinson\+Hyperlegible|Atkinson Hyperlegible/);
   assert.match(home, /JetBrains\+Mono|JetBrains Mono/);
   assert.doesNotMatch(home, /class="eyebrow"/);
-  assert.match(home, /CAPORICI/);
-  assert.match(home, /Conhecimento disperso/i);
-  assert.match(home, /term-hero|brand-mega/);
+  assert.match(home, /Caporici/i);
+  assert.match(home, /term-hero|brand-mega|hero-grid/);
+  assert.match(home, /Ver áreas|Abrir automotivo/);
   assert.doesNotMatch(home, /GUIA\s*\//);
+  assert.doesNotMatch(home, /no course funnel/);
 });
 
 test("assets da ferramenta CAN são publicados", () => {
