@@ -218,6 +218,31 @@ pre code {
   backdrop-filter: blur(14px);
 }
 
+/* Over the cyclorama, keep chrome as stage glass — never a white paper strip */
+body:has(.cyclorama-hero) .topbar {
+  border-bottom-color: rgb(255 255 255 / 10%);
+  background: rgb(5 5 6 / 42%);
+}
+
+body:has(.cyclorama-hero) .marca,
+body:has(.cyclorama-hero) .topbar nav > a {
+  color: #f4eef2;
+}
+
+body:has(.cyclorama-hero) .topbar nav > a {
+  color: #cfc0c9;
+}
+
+body:has(.cyclorama-hero) .topbar nav > a:hover,
+body:has(.cyclorama-hero) .topbar nav > a[aria-current="page"] {
+  color: #ffffff;
+}
+
+body:has(.cyclorama-hero) .tema-botao {
+  border-color: rgb(255 215 230 / 35%);
+  color: #f4eef2;
+}
+
 .topbar-inner,
 .page,
 .sitefoot-inner {
