@@ -1,0 +1,55 @@
+---
+import {
+  descricaoDiataxis,
+  rotuloDiataxis,
+  rotuloNivel,
+  rotuloStatus,
+  type Artigo,
+} from "../lib/content";
+import { trilhaPorId } from "../data/trilhas";
+
+interface Props {
+  artigo: Artigo;
+}
+
+const { artigo } = Astro.props;
+const trilha = trilhaPorId(artigo.data.trilha);
+const data = artigo.data.atualizadoEm.toLocaleDateString("pt-BR", {
+  year: "numeric",
+  month: "long",
+});
+---
+
+<dl class="meta-grid">
+  <div>
+    <dt>Trilha</dt>
+    <dd>{trilha ? `${trilha.numero}. ${trilha.titulo}` : artigo.data.trilha}</dd>
+  </div>
+  <div>
+    <dt>Tipo Diátaxis</dt>
+    <dd>
+      {rotuloDiataxis(artigo.data.tipoDiataxis)}
+      <span class="meta-hint">: {descricaoDiataxis(artigo.data.tipoDiataxis)}</span>
+    </dd>
+  </div>
+  <div>
+    <dt>Nível</dt>
+    <dd>{rotuloNivel(artigo.data.nivel)}</dd>
+  </div>
+  <div>
+    <dt>Status</dt>
+    <dd>{rotuloStatus(artigo.data.status)}</dd>
+  </div>
+  <div>
+    <dt>Última revisão</dt>
+    <dd>{data}</dd>
+  </div>
+  {
+    artigo.data.preRequisitos.length > 0 && (
+      <div class="meta-span">
+        <dt>Pré-requisitos</dt>
+        <dd>{artigo.data.preRequisitos.join(" · ")}</dd>
+      </div>
+    )
+  }
+</dl>

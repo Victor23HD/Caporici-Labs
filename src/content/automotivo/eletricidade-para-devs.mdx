@@ -1,0 +1,145 @@
+---
+titulo: "Eletricidade para desenvolvedores embarcados"
+resumo: "O mínimo de tensão, corrente, terra, ruído e terminação que um programador precisa entender para não tratar o barramento como magia."
+trilha: fundamentos
+ordem: 3
+nivel: introdutorio
+tipoDiataxis: explanation
+preRequisitos:
+  - Arquitetura elétrica e eletrônica do veículo
+status: publicado
+objetivos:
+  - Relacionar tensão, corrente, terra e ruído com falhas que aparecem como "bug de software".
+  - Explicar por que sinalização diferencial e terminação existem em CAN.
+  - Identificar sintomas elétricos que um desenvolvedor consegue reconhecer antes de culpar o protocolo.
+normas:
+  - ISO 11898-2 (camada física CAN de alta velocidade)
+fontes:
+  - titulo: CAN in Automation, physical layer overview
+    url: https://www.can-cia.org/
+    tipo: documentacao
+  - titulo: ISO 11898-2
+    tipo: norma
+    nota: Norma paga da camada física CAN HS. Detalhes normativos específicos não são reproduzidos aqui.
+  - titulo: Prática de bancada com transceiver CAN
+    tipo: pratica
+    nota: Observações típicas de bring-up com par trançado, terminação de 120 Ω e adaptadores USB-CAN.
+limitacoes:
+  - Não substitui um curso de eletrônica ou EMC.
+  - Não ensina a projetar transceiver, PCB ou filtro.
+  - Valores citados são ordens de grandeza didáticas, não limites de projeto.
+laboratorio:
+  titulo: Bancada mínima de CAN com falha provocada
+  objetivo: Montar um segmento CAN com dois nós, terminação correta, e depois remover uma terminação para observar erros de comunicação.
+  dificuldade: intermediario
+  entradas: Duas placas com CAN, cabos, resistores de 120 Ω, adaptador de captura.
+  saida: Log mostrando frames válidos com terminação correta e aumento de erros sem ela.
+  riscos: Usar fonte limitada em corrente, nunca injetar em veículo real, respeitar polaridade CANH/CANL.
+revisao: "1.0"
+atualizadoEm: 2026-07-30
+---
+
+Muitos "bugs de protocolo" são, na verdade, problemas elétricos. Você não precisa projetar hardware, mas precisa reconhecer quando o software está sendo acusado injustamente.
+
+## Tensões que o software herda
+
+Em veículos de 12 V (passeio) e 24 V (muitos comerciais), a "rede" de alimentação não é um trilho limpo de laboratório. Há queda de tensão em partidas, picos, ruído de atuadores e diferenças de terra entre módulos.
+
+Para o software, isso aparece como:
+
+- resets inexplicáveis;
+- corrupção rara de memória ou periférico;
+- ECUs que acordam e dormem fora de ordem;
+- logs incompletos porque a alimentação caiu no meio da escrita.
+
+Se a sua lógica assume alimentação estável e escrita atômica em flash sem resiliência, ela falhará em campo mesmo com o algoritmo "certo".
+
+## Terra não é um detalhe
+
+*Ground* é o retorno da corrente. Em um veículo, terras de módulos diferentes podem não ser eletricamente idênticos em todos os instantes. Correntes de atuadores, mau contato e corrosão criam diferenças de potencial.
+
+Sintomas típicos:
+
+- comunicação intermitente que "some em movimento";
+- um nó específico falha só quando outro atuador liga;
+- medições de sensor incoerentes perto de cargas indutivas.
+
+Antes de caçar race condition, pergunte se o problema muda com carga elétrica, temperatura ou vibração. Software puro raramente depende disso; contato e terra, sim.
+
+## Por que CAN usa sinal diferencial
+
+Em vez de um fio com tensão absoluta contra terra, CAN de alta velocidade usa dois fios: **CAN_H** e **CAN_L**. A informação está na *diferença* entre eles.
+
+A vantagem é rejeição de ruído comum: interferência que aparece igualmente nos dois fios tende a ser cancelada na leitura diferencial. Por isso o par trançado importa, ele ajuda o ruído a ser comum aos dois condutores.
+
+Estados conceituais que todo desenvolvedor CAN precisa conhecer:
+
+- **recessivo**, estado "livre" do barramento, associado ao bit 1;
+- **dominante**, estado que vence o recessivo, associado ao bit 0.
+
+Essa assimetria elétrica é o que permite a arbitragem sem mestre: zeros vencem uns no próprio fio.
+
+## Terminação de 120 Ω
+
+Um barramento CAN de alta velocidade é uma linha de transmissão. Sem terminação adequada nas extremidades, o sinal reflete, distorce e gera erros de bit, especialmente com cabo longo e bitrate alto.
+
+Regra prática de bancada:
+
+- dois terminadores de 120 Ω, um em cada ponta do segmento;
+- nós intermediários sem terminação extra;
+- cabo curto demais pode "funcionar sem terminação" e ensinar o hábito errado.
+
+O clássico: protótipo na mesa funciona; no veículo, com chicote longo e mais nós, falha. A diferença costuma ser elétrica, não de firmware.
+
+## O que você consegue observar sem osciloscópio
+
+Nem sempre há osciloscópio disponível. Ainda assim, um desenvolvedor pode coletar evidências:
+
+| Sintoma | Hipótese elétrica comum | O que checar |
+| --- | --- | --- |
+| Muitos error frames / bus-off | Terminação, polaridade, bitrate, cabo | Resistência entre CANH/CANL, crimpagem, config |
+| Só um nó não fala | Alimentação, terra, transceiver | Tensão no módulo, reset, modo silent |
+| Funciona parado, falha em movimento | Contato intermitente, vibração | Conectores, strain relief |
+| Falha quando motor de vidro aciona | Ruído / acoplamento | Roteamento, blindagem, filtro |
+
+Ferramentas de software (`candump`, contadores de erro do controller) são sensores indiretos do meio físico.
+
+## Bitrate, comprimento e margem
+
+Há uma relação prática entre velocidade e comprimento do cabo: quanto mais rápido o bit, menor a tolerância a atraso de propagação e a reflexões. Por isso redes longas em veículos comerciais frequentemente usam bitrates menores que um segmento curto de powertrain.
+
+Como desenvolvedor, memorize o princípio, não uma tabela decorada: **mudar bitrate sem rever topologia é pedir inconsistência**.
+
+## O que NÃO é responsabilidade do seu `if`
+
+<Danger title="Não trate bus-off como exceção comum de aplicação">
+
+Se o controller CAN entra em *bus-off*, retransmitir a mesma mensagem em loop apertado não "conserta o fio". Tratar falha elétrica como bug de lógica é um dos erros mais caros em bring-up.
+
+</Danger>
+
+Quando o bus-off aparece, o software ainda tem papel, mas de contenção, não de "consertar o meio":
+
+1. detectar o estado;
+2. limitar retentativas;
+3. registrar evidência;
+4. recuperar conforme a estratégia do produto;
+5. investigar a causa física se for recorrente.
+
+## Erros comuns de interpretação
+
+- Culpar endianness ou DBC por perda total de frames.
+- Achar que "par trançado" é opcional em protótipo longo.
+- Colocar terminação em todos os nós "para garantir".
+- Ignorar polaridade CANH/CANL invertida.
+- Confundir ausência de ACK com bug de aplicação sem checar se há outro nó ativo no barramento.
+
+## Resumo
+
+Eletricidade define o teto do que o protocolo consegue entregar. Diferencial, terra, terminação e alimentação explicam uma fração enorme dos incidentes que parecem software. Seu diferencial como engenheiro é saber quando abrir o debugger e quando medir o fio.
+
+## Perguntas de verificação
+
+1. Por que um bit 0 pode vencer um bit 1 na arbitragem CAN?
+2. O que normalmente acontece quando um segmento CAN de alta velocidade fica sem terminação nas pontas?
+3. Cite dois sintomas que sugerem problema elétrico em vez de lógica de aplicação.

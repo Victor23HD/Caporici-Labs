@@ -1,0 +1,159 @@
+---
+titulo: "Tempo e determinismo em software automotivo"
+resumo: "Por que média de latência engana, o que é jitter, WCET e deadline, e como redes, RTOS e gateways participam do atraso de ponta a ponta."
+trilha: fundamentos
+ordem: 5
+nivel: intermediario
+tipoDiataxis: explanation
+preRequisitos:
+  - Como o software de um veículo se organiza
+  - Arquitetura elétrica e eletrônica do veículo
+status: publicado
+objetivos:
+  - Distinguir latência média, pior caso e jitter.
+  - Explicar deadline, WCET e por que prioridade de mensagem não é prioridade de thread.
+  - Montar um orçamento de tempo ponta a ponta do sensor ao atuador.
+normas:
+  - ISO 26262 (contexto de timing e safety)
+fontes:
+  - titulo: Documentação do SocketCAN no kernel Linux
+    url: https://docs.kernel.org/networking/can.html
+    tipo: documentacao
+  - titulo: FreeRTOS, Real-time concepts
+    url: https://www.freertos.org/Documentation/RTOS_book.html
+    tipo: documentacao
+  - titulo: Prática de medição de latência em sistemas embarcados
+    tipo: pratica
+    nota: Síntese didática sobre WCET, tracing e orçamento de tempo; não é guia de certificação.
+limitacoes:
+  - Não ensina análise formal de escalonamento.
+  - Não substitui evidências de timing exigidas em safety case.
+  - Números de exemplo são ilustrativos.
+laboratorio:
+  titulo: Orçamento de latência ponta a ponta
+  objetivo: Instrumentar um pipeline simulado sensor → decisão → mensagem → atuador e medir latência média, p95 e pior caso sob carga.
+  dificuldade: intermediario
+  entradas: Tarefas com atrasos injetados, publicação periódica e interferência de baixa prioridade.
+  saida: Relatório com histograma, deadline violado deliberadamente e correção por prioridade/período.
+  riscos: Não apresentar medição de laboratório como evidência de ISO 26262.
+revisao: "1.0"
+atualizadoEm: 2026-07-30
+---
+
+Em software de aplicação, "rápido o bastante" costuma significar boa média e UX aceitável. Em software automotivo, a pergunta muda: **o pior caso cabe no prazo?** Se não cabe, a função está errada mesmo quando a média brilha.
+
+## Latência, jitter e deadline
+
+Três palavras que precisam ficar separadas:
+
+- **Latência**, tempo entre um evento e a reação observável.
+- **Jitter**, variação dessa latência entre execuções.
+- **Deadline**, instante máximo em que a reação ainda é válida.
+
+Uma malha de controle pode tolerar latência de 5 ms com jitter de 0,2 ms e falhar com a mesma média se o jitter for de 4 ms. Média esconde cauda.
+
+## WCET: o inimigo útil
+
+WCET (*Worst-Case Execution Time*) é uma estimativa ou medida do pior tempo de execução de um trecho. Em MCU determinística, aproximar WCET é difícil, mas possível. Em Linux geral, a cauda depende de interrupções, cache, paginação, concorrência e I/O.
+
+Implicações práticas:
+
+- caminhos críticos evitam alocação dinâmica, locks longos e syscalls imprevisíveis;
+- medir só no happy path é autoengano;
+- carga de interferência precisa fazer parte do teste.
+
+Se você só cronometra o algoritmo no desktop com `-O3` e cache quente, você mediu uma ficção confortável.
+
+## Prioridade de thread ≠ prioridade de mensagem
+
+No RTOS, prioridades de tarefa decidem quem corre na CPU. No CAN, a prioridade emerge do identificador no barramento. São mecanismos diferentes.
+
+Cenário clássico:
+
+- a tarefa de freio é a mais prioritária na CPU da ECU A;
+- mas a mensagem que ela precisa ler tem identificador alto (baixa prioridade de arbitragem) e perde para tráfego denso;
+- a CPU está "ótima" e a função ainda estoura deadline porque o dado não chegou.
+
+Orçamento de tempo precisa incluir **rede**, não só CPU.
+
+<Warning title="Prioridade de CPU não salva mensagem atrasada">
+
+Uma tarefa de freio pode ser a mais prioritária no RTOS e ainda estourar deadline se o identificador CAN dela perder arbitragem para tráfego denso. Meça o caminho inteiro.
+
+</Warning>
+
+## Orçamento ponta a ponta
+
+Considere uma função simplificada: pedal → ECU → mensagem → ECU de freio → atuador.
+
+O atraso total inclui, no mínimo:
+
+1. amostragem do sensor e filtragem;
+2. espera até a tarefa rodar;
+3. execução da lógica;
+4. enfileiramento no controller de rede;
+5. arbitragem e transmissão;
+6. possível travessia de gateway;
+7. recepção, validação e tarefa receptora;
+8. atuação física.
+
+Cada etapa come o deadline. Uma otimização local que reduz 50 µs na CPU e adiciona 2 ms de buffering no gateway é regressão.
+
+Tabela didática de orçamento:
+
+| Etapa | Orçamento exemplo |
+| --- | --- |
+| Amostragem + filtro | 1,0 ms |
+| Tarefa produtora | 0,5 ms |
+| Fila + TX CAN | 1,5 ms |
+| Gateway | 1,0 ms |
+| Tarefa receptora + atuação | 1,0 ms |
+| **Total** | **5,0 ms** |
+
+Se o requisito da função for 5 ms, você não tem folga. Qualquer log caro no caminho crítico é risco de produto.
+
+## Periódico versus evento
+
+Mensagens e tarefas podem ser:
+
+- **periódicas**, a cada 10 ms, por exemplo;
+- **esporádicas / evento**, quando algo muda;
+- **mistas**, heartbeat periódico + evento de mudança.
+
+Periódico facilita análise e detecção de silêncio. Evento economiza banda, mas complica prova de latência e monitoramento. Muitos sistemas usam periódico para sinais críticos exatamente porque a ausência vira evidência.
+
+## Relógios e sincronização
+
+"Agora" não é global por padrão. Cada ECU tem seu clock. Sem sincronização, timestamps de logs e deadlines distribuídos mentem.
+
+Em redes Ethernet automotivas, mecanismos como gPTP existem para alinhar tempo. Em CAN clássico, a sincronização costuma ser mais fraca ou indireta (mensagens de tempo, contadores, ciclos de aplicação).
+
+Consequência: correlacionar logs de duas ECUs sem base de tempo comum produz caça a fantasma.
+
+## Linux no caminho crítico?
+
+Linux aparece em gateways, ADAS e infotenimento. Ele pode ser tornardo mais previsível com PREEMPT_RT, isolamento de CPU, afinidade de interrupções e cuidado extremo com I/O. Ainda assim, não é um RTOS clássico de MCU.
+
+Regra prática:
+
+- função com deadline rígido e safety alto tende a MCU/RTOS;
+- Linux brilha em throughput, ecossistema e serviços;
+- a fronteira entre os dois é decisão de arquitetura, não preferência de linguagem.
+
+## Erros comuns de interpretação
+
+- Otimizar média e ignorar p99/pior caso.
+- Medir latência só com barramento vazio.
+- Confundir prioridade de tarefa com prioridade de identificador CAN.
+- Adicionar buffer "para suavizar" sem recalcular deadline.
+- Usar timestamp de parede não sincronizado para provar ordem causal entre ECUs.
+
+## Resumo
+
+Determinismo é sobre caber no prazo quando tudo dá errado ao mesmo tempo, interferência de CPU, contenção de rede e travessia de gateway. Se você não tem orçamento ponta a ponta, você não tem controle do comportamento temporal.
+
+## Perguntas de verificação
+
+1. Por que jitter alto pode quebrar uma malha mesmo com boa latência média?
+2. Como uma mensagem de baixa prioridade no CAN pode invalidar uma tarefa de alta prioridade no RTOS?
+3. Quais etapas você incluiria num orçamento sensor → atuador além do tempo de CPU da lógica?

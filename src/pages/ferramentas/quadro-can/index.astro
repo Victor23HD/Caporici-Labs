@@ -1,0 +1,119 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+---
+
+<BaseLayout
+  title="Explorador de quadros CAN: Caporici Labs"
+  description="Monte um identificador CAN de 11 bits e um payload de até 8 bytes e veja a decomposição do quadro em hexadecimal, decimal, binário e ASCII."
+  active="ferramentas"
+>
+  <main class="page">
+    <p class="trilha">
+      <a href="/">Caporici Labs</a> /
+      <a href="/ferramentas/">Ferramentas</a> / Explorador de quadros CAN
+    </p>
+
+    <h1>Explorador de quadros CAN</h1>
+    <p class="intro">
+      Escreva um identificador de 11 bits e até 8 bytes de dados. A ferramenta
+      mostra como esse quadro se decompõe e o que a prioridade de arbitragem
+      significa. Tudo acontece no seu navegador.
+    </p>
+
+    <div class="ferramenta">
+      <form id="form-quadro" novalidate>
+        <label for="identificador">Identificador (hexadecimal, 11 bits)</label>
+        <input
+          id="identificador"
+          name="identificador"
+          value="0x18F"
+          autocomplete="off"
+          spellcheck="false"
+        />
+        <p class="dica">De 0x000 a 0x7FF. O prefixo 0x é opcional.</p>
+
+        <label for="payload">Dados (bytes em hexadecimal)</label>
+        <input
+          id="payload"
+          name="payload"
+          value="0A 1B 2C 3D"
+          autocomplete="off"
+          spellcheck="false"
+        />
+        <p class="dica">Dois dígitos por byte, separados por espaço. Até 8 bytes.</p>
+
+        <button type="submit">Decompor quadro</button>
+        <p class="erro" id="erro" role="status" aria-live="polite"></p>
+      </form>
+
+      <dl class="saida">
+        <div>
+          <dt>Identificador em hexadecimal</dt>
+          <dd id="id-hex">–</dd>
+        </div>
+        <div>
+          <dt>Identificador em decimal</dt>
+          <dd id="id-decimal">–</dd>
+        </div>
+        <div>
+          <dt>Identificador em binário</dt>
+          <dd id="id-binario">–</dd>
+        </div>
+        <div>
+          <dt>DLC (tamanho dos dados)</dt>
+          <dd id="dlc">–</dd>
+        </div>
+        <div>
+          <dt>Prioridade na arbitragem</dt>
+          <dd id="prioridade">–</dd>
+        </div>
+        <div>
+          <dt>Bytes em decimal</dt>
+          <dd id="payload-decimal">–</dd>
+        </div>
+        <div>
+          <dt>Bytes em ASCII</dt>
+          <dd id="payload-ascii">–</dd>
+        </div>
+      </dl>
+    </div>
+
+    <h2>Por que o identificador define a prioridade</h2>
+    <p>
+      Em CAN, quando dois nós começam a transmitir ao mesmo tempo, a disputa é
+      resolvida pelo próprio nível elétrico do barramento, bit a bit, durante o
+      envio do identificador. O bit dominante vence o recessivo, e o nó que perde
+      para de transmitir e tenta de novo depois. Como o bit dominante corresponde ao
+      valor zero, <strong>identificador numericamente menor tem prioridade
+      maior</strong>. Não existe escalonador decidindo isso: a decisão é física.
+    </p>
+    <p>
+      A consequência prática é que a atribuição de identificadores em um projeto é
+      uma decisão de projeto de tempo real, não uma numeração arbitrária.
+    </p>
+
+    <aside class="callout callout-note" role="note">
+      <strong class="callout-label">O que esta ferramenta não faz</strong>
+      <div class="callout-body">
+        <p>
+          Ela não decodifica sinais. Transformar bytes crus em grandeza física (rotação, temperatura, pressão) exige a definição do banco de sinais, em
+          geral um arquivo DBC, que informa bit inicial, tamanho, endianness, escala e
+          offset de cada sinal. Sem isso, qualquer interpretação de significado seria
+          invenção. Também não trata identificadores estendidos de 29 bits, CAN FD com
+          payload de até 64 bytes, cálculos de CRC nem os campos de controle e ACK.
+        </p>
+      </div>
+    </aside>
+
+    <div class="meta">
+      <p>
+        Executa inteiramente no navegador; nenhum dado é enviado para servidor. A
+        lógica de decomposição fica em <code>core.js</code> e é coberta por testes
+        automatizados no repositório.
+      </p>
+    </div>
+  </main>
+
+  <script is:inline src="/ferramentas/quadro-can/core.js"></script>
+  <script is:inline src="/ferramentas/quadro-can/app.js"></script>
+</BaseLayout>

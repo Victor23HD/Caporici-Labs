@@ -1,27 +1,93 @@
 # Caporici Labs
 
-Developer-first laboratories for automotive and mission-critical software.
+Documentação técnica independente sobre software embarcado, escrita em português,
+de desenvolvedor para desenvolvedor. Padrões automotivos são caros, longos e
+escritos para comitês; aqui eles são traduzidos para o modelo mental que alguém
+que programa precisa ter antes de encarar a norma.
 
-## Automotive Lab 001 — CAN Frame Explorer
+## Stack
 
-The first public demo turns a raw 11-bit CAN identifier and 8-byte payload into
-an inspectable frame. It explains arbitration priority and shows the payload in
-hexadecimal, decimal, binary, and ASCII without pretending to decode signals
-that require a DBC file.
+- [Astro](https://astro.build/) para site estático
+- Conteúdo em MDX com metadados editoriais e tipos Diátaxis
+- Ferramentas no navegador sem dependências de runtime
+- Tema claro/escuro com preferência do sistema
 
-Open `index.html` directly in a browser. No build step or dependencies are
-required.
+## Desenvolvimento
 
-## Direction
+```bash
+npm install
+npm run dev
+```
 
-This repository will grow into a practical automotive engineering hub covering:
+```bash
+npm run build
+npm test
+```
 
-- CAN and CAN FD
-- SAE J1939 and heavy-vehicle telemetry
-- Linux/C++ at the edge
-- DBC decoding and diagnostic workflows
-- MQTT pipelines from vehicle to cloud
-- AUTOSAR and functional-safety maps
+## Corpus automotivo
 
-The goal is not to replace standards. It is to make the path from a standard to
-a working developer mental model shorter.
+O eixo automotivo é publicado em 11 trilhas progressivas. O primeiro lote cobre
+fundamentos:
+
+1. Como o software de um veículo se organiza
+2. Arquitetura elétrica e eletrônica do veículo
+3. Eletricidade para desenvolvedores embarcados
+4. Representação de dados no embarcado automotivo
+5. Tempo e determinismo em software automotivo
+
+Textos ficam em `src/content/automotivo/`. Trilhas ficam em `src/data/trilhas.ts`.
+
+### Estados editoriais
+
+| Status | Significado |
+| --- | --- |
+| `rascunho` | Em escrita; visível só em desenvolvimento |
+| `revisao` | Aguardando leitura/discussão; visível só em desenvolvimento |
+| `publicado` | Aparece na versão pública do site |
+
+## Contrato de um artigo
+
+Todo texto declara:
+
+- trilha, ordem, nível e pré-requisitos
+- objetivos de aprendizagem
+- fontes tipadas (`norma`, `documentacao`, `pratica`, `secundaria`)
+- limitações explícitas
+- ideia de laboratório futuro (quando fizer sentido)
+- resumo e perguntas de verificação
+
+## Ferramentas
+
+### Explorador de quadros CAN
+
+`/ferramentas/quadro-can/` decompõe um identificador de 11 bits e até 8 bytes.
+Não decodifica sinais sem DBC. A lógica está em
+`public/ferramentas/quadro-can/core.js` e é coberta por testes.
+
+## Padrões do projeto
+
+| Artefato | Função |
+| --- | --- |
+| [`PRODUCT.md`](PRODUCT.md) | Verdade de produto (Impeccable) |
+| [`DESIGN.md`](DESIGN.md) | Sistema visual (Impeccable / UI·UX Pro Max) |
+| [`docs/EDITORIAL.md`](docs/EDITORIAL.md) | Diátaxis + contrato MDX |
+| [`.cursor/rules/caporici-labs.mdc`](.cursor/rules/caporici-labs.mdc) | Regras do agente |
+| `.cursor/skills/impeccable/` | Skill Impeccable |
+| `.cursor/skills/ui-ux-pro-max/` | Skill UI/UX Pro Max |
+| `.cursor/skills/humanizer/` | Skill de humanização de prosa |
+| [`humanizer-context.md`](humanizer-context.md) | Voz do projeto para o humanizer |
+| [`docs/AUDIT-STANDARDS.md`](docs/AUDIT-STANDARDS.md) | Relatório da última execução das skills |
+
+## Padrão editorial
+
+Toda afirmação relevante aponta para uma fonte. Quando a fonte é uma norma paga,
+isso é dito explicitamente. Toda ferramenta declara o que não faz. Toda página
+responde:
+
+> Como isso foi verificado, contra qual versão, e onde pode estar errado?
+
+Conteúdo usa Diátaxis (`tipoDiataxis`) e MDX só para callouts aprovados
+(`Note`, `Tip`, `Warning`, `Danger`).
+
+Este material não substitui SAE, ISO, CiA ou AUTOSAR. Ele existe para você
+chegar nesses documentos já entendendo o que está lendo.

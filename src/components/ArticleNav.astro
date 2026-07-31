@@ -1,0 +1,31 @@
+---
+import { slugDoArtigo, type Artigo } from "../lib/content";
+
+interface Props {
+  anterior?: Artigo;
+  proximo?: Artigo;
+}
+
+const { anterior, proximo } = Astro.props;
+---
+
+<nav class="nav-artigos" aria-label="Navegação entre artigos">
+  {
+    anterior ? (
+      <a href={`/automotivo/${slugDoArtigo(anterior)}/`}>
+        <span>Anterior</span>
+        {anterior.data.titulo}
+      </a>
+    ) : (
+      <div></div>
+    )
+  }
+  {
+    proximo ? (
+      <a class="direita" href={`/automotivo/${slugDoArtigo(proximo)}/`}>
+        <span>Próximo</span>
+        {proximo.data.titulo}
+      </a>
+    ) : null
+  }
+</nav>

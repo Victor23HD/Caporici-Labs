@@ -1,0 +1,58 @@
+---
+description: Caporici Labs editorial, Diátaxis, MDX, and anti-slop standards
+globs:
+  - src/**/*
+  - PRODUCT.md
+  - DESIGN.md
+  - README.md
+alwaysApply: true
+---
+
+# Caporici Labs standards
+
+Read `PRODUCT.md` and `DESIGN.md` before changing UI or content.
+
+## Diátaxis
+
+Every automotivo article MUST set `tipoDiataxis` to exactly one of:
+
+- `explanation` — understand why / model mental (default for foundations)
+- `tutorial` — learning-oriented guided lesson that creates a successful first experience
+- `howto` — task-oriented steps for a competent reader with a real goal
+- `reference` — factual, complete, low-interpretation technical description
+
+Do not mix types on one page. Link across types instead.
+
+## Markdown / MDX
+
+- Prefer Markdown prose. Use MDX only for approved primitives: `Note`, `Tip`, `Warning`, `Danger`.
+- Blank line before/after headings, lists, tables, code fences, and callouts.
+- No raw HTML callouts (`div class="obs"`). No emoji-as-icons.
+- Escape literal `{` / `<` in MDX when they are text, not JSX.
+- Code fences need a language tag (`text` if none fits).
+- Portuguese first. On first use of a technical term, give Portuguese then English original.
+
+## Editorial contract
+
+Frontmatter must include: titulo, resumo, trilha, ordem, nivel, status, tipoDiataxis, objetivos, fontes, limitacoes, revisao, atualizadoEm.
+
+- `fontes[].tipo`: `norma` | `documentacao` | `pratica` | `secundaria`
+- Paid standards: mark clearly; never pretend line-by-line consultation without it
+- Optional `laboratorio` is an idea, not a shipped repo promise
+- Production publishes only `status: publicado`
+
+## UI / Impeccable craft floor (project-specific)
+
+- Mode: docs/articles = Read; home = Persuade-lite that still reads as documentation
+- No purple gradients, glass stacks, metric-stat heroes, icon-card IA
+- No gradient text; no thick colored left borders as callout identity
+- Headings carry weight — avoid eyebrow/kicker labels above H1 in articles
+- Interactive elements need hover + `:focus-visible`
+- Respect `prefers-reduced-motion`
+- Keep measure ~68ch; IBM Plex Sans + JetBrains Mono
+
+## Voice
+
+Developer-to-developer, calm, precise. Authorship may use first person. Never course-funnel or coach tone.
+
+When polishing prose, use `.cursor/skills/humanizer/` with `humanizer-context.md` (`--voice technical --purpose technical`). Prefer commas/colons over em-dash saturation.

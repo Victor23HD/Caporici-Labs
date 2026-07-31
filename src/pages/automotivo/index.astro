@@ -1,0 +1,88 @@
+---
+import DocsLayout from "../../layouts/DocsLayout.astro";
+import {
+  artigosDaTrilha,
+  listarArtigos,
+  rotuloStatus,
+  slugDoArtigo,
+  trilhasComContagem,
+} from "../../lib/content";
+
+const artigos = await listarArtigos();
+const trilhasView = trilhasComContagem(artigos);
+---
+
+<DocsLayout
+  title="Automotivo: Caporici Labs"
+  description="Eixo automotivo do Caporici Labs: do mapa do software veicular até CAN, diagnóstico, Linux embarcado, safety e SDV, escrito em ordem e em português."
+  artigos={artigos}
+  overviewCurrent
+>
+  <p class="trilha"><a href="/">Caporici Labs</a> / Automotivo</p>
+
+  <h1>Automotivo</h1>
+  <p class="intro">
+    Um veículo moderno é uma rede distribuída de computadores que precisa
+    responder em tempo determinístico, sobreviver a ruído elétrico e continuar
+    funcionando quando parte dela falha. Este eixo explica essa rede na ordem
+    em que ela faz sentido para quem programa.
+  </p>
+
+  <h2>A ordem importa</h2>
+  <p>
+    Quase todo material sobre CAN começa pelo formato do quadro. Isso funciona
+    para quem já sabe onde o quadro se encaixa e confunde todo mundo que não
+    sabe. Aqui a sequência começa pela arquitetura, desce até o fio, e só então
+    sobe de volta para protocolo, diagnóstico, plataforma e nuvem.
+  </p>
+
+  <h2>Trilhas do corpus</h2>
+  <ul class="lista">
+    {
+      trilhasView.map((trilha) => {
+        const itens = artigosDaTrilha(artigos, trilha.id);
+
+        return (
+          <li>
+            <strong>
+              {String(trilha.numero).padStart(2, "0")} · {trilha.titulo}
+            </strong>
+            <span class="estado">
+              {trilha.publicados > 0
+                ? `${trilha.publicados} publicado${trilha.publicados > 1 ? "s" : ""}`
+                : "planejada"}
+            </span>
+            <p>{trilha.resumo}</p>
+            {itens.length > 0 && (
+              <ul>
+                {itens.map((artigo) => (
+                  <li>
+                    <a href={`/automotivo/${slugDoArtigo(artigo)}/`}>
+                      {artigo.data.ordem}. {artigo.data.titulo}
+                    </a>
+                    {artigo.data.status !== "publicado" && (
+                      <span class="estado">{rotuloStatus(artigo.data.status)}</span>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            )}
+            {itens.length === 0 && (
+              <p>
+                Temas planejados: {trilha.temas.join(" · ")}.
+              </p>
+            )}
+          </li>
+        );
+      })
+    }
+  </ul>
+
+  <h2>Ferramentas ligadas a este eixo</h2>
+  <ul class="lista">
+    <li>
+      <a href="/ferramentas/quadro-can/">Explorador de quadros CAN</a>
+      <p>Decomposição de um quadro de 11 bits direto no navegador.</p>
+    </li>
+  </ul>
+</DocsLayout>

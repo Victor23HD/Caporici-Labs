@@ -1,0 +1,70 @@
+---
+import { trilhas } from "../data/trilhas";
+import {
+  artigosDaTrilha,
+  rotuloStatus,
+  slugDoArtigo,
+  type Artigo,
+} from "../lib/content";
+
+interface Props {
+  artigos: Artigo[];
+  currentSlug?: string;
+  overviewCurrent?: boolean;
+}
+
+const { artigos, currentSlug, overviewCurrent = false } = Astro.props;
+---
+
+<nav class="docs-nav" aria-label="Navegação do eixo automotivo">
+  <strong>Automotivo</strong>
+  <ol>
+    <li>
+      <a href="/automotivo/" aria-current={overviewCurrent ? "page" : undefined}>
+        Visão geral
+      </a>
+    </li>
+  </ol>
+
+  {
+    trilhas.map((trilha) => {
+      const itens = artigosDaTrilha(artigos, trilha.id);
+
+      return (
+        <div>
+          <strong>
+            {String(trilha.numero).padStart(2, "0")} · {trilha.titulo}
+          </strong>
+          {itens.length > 0 ? (
+            <ol>
+              {itens.map((artigo) => {
+                const slug = slugDoArtigo(artigo);
+                const current = slug === currentSlug;
+
+                return (
+                  <li>
+                    <a
+                      href={`/automotivo/${slug}/`}
+                      aria-current={current ? "page" : undefined}
+                    >
+                      {artigo.data.ordem}. {artigo.data.titulo}
+                      {artigo.data.status !== "publicado" && (
+                        <span class="estado">{rotuloStatus(artigo.data.status)}</span>
+                      )}
+                    </a>
+                  </li>
+                );
+              })}
+            </ol>
+          ) : (
+            <ul>
+              {trilha.temas.map((tema) => (
+                <li class="pendente">{tema}</li>
+              ))}
+            </ul>
+          )}
+        </div>
+      );
+    })
+  }
+</nav>
