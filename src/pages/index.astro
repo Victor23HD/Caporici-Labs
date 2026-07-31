@@ -147,40 +147,6 @@ const trilhasAtivas = trilhas.filter((t) => t.publicados > 0).length;
         </div>
       </section>
 
-      <section class="secao-home" id="publicado">
-        <div class="secao-cabecalho">
-          <h2>Publicado</h2>
-          <p>Textos e ferramentas revisados.</p>
-        </div>
-
-        <div class="pub-lista" role="list">
-          {
-            publicados.slice(0, 4).map((artigo) => (
-              <a
-                class="pub-linha"
-                href={`/automotivo/${slugDoArtigo(artigo)}/`}
-                role="listitem"
-              >
-                <span class="pub-ordem">
-                  {String(artigo.data.ordem).padStart(2, "0")}
-                </span>
-                <span class="pub-corpo">
-                  <strong>{artigo.data.titulo}</strong>
-                  <em>{artigo.data.resumo}</em>
-                </span>
-              </a>
-            ))
-          }
-          <a class="pub-linha" href="/ferramentas/quadro-can/" role="listitem">
-            <span class="pub-ordem">CAN</span>
-            <span class="pub-corpo">
-              <strong>Explorador de quadros CAN</strong>
-              <em>Identificador, DLC e prioridade — sem inventar DBC.</em>
-            </span>
-          </a>
-        </div>
-      </section>
-
       <section class="secao-autor" id="autor">
         <div class="autor-marca" aria-hidden="true">VC</div>
         <div>
