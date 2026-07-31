@@ -1,14 +1,38 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import {
-  listarArtigos,
-  trilhasComContagem,
-} from "../lib/content";
+import { listarArtigos } from "../lib/content";
 
 const artigos = await listarArtigos();
 const publicados = artigos.filter((item) => item.data.status === "publicado");
-const trilhas = trilhasComContagem(artigos);
-const trilhasAtivas = trilhas.filter((t) => t.publicados > 0).length;
+
+const areas = [
+  {
+    titulo: "Automotivo",
+    estado: "aberto",
+    texto: `${publicados.length} textos · CAN, UDS, AUTOSAR`,
+    href: "/automotivo/",
+  },
+  {
+    titulo: "Aviação",
+    estado: "pesquisa",
+    texto: "Linha de pesquisa",
+  },
+  {
+    titulo: "Ferroviário",
+    estado: "pesquisa",
+    texto: "Linha de pesquisa",
+  },
+  {
+    titulo: "Agro",
+    estado: "pesquisa",
+    texto: "Linha de pesquisa",
+  },
+  {
+    titulo: "Náutico",
+    estado: "pesquisa",
+    texto: "Linha de pesquisa",
+  },
+];
 ---
 
 <BaseLayout
@@ -111,38 +135,27 @@ const trilhasAtivas = trilhas.filter((t) => t.publicados > 0).length;
       <section class="secao-home" id="areas">
         <div class="secao-cabecalho">
           <h2>Áreas</h2>
-          <p>
-            Automotivo é o eixo aberto ({trilhasAtivas} trilha com conteúdo).
-            O restante permanece pesquisa até haver corpus de verdade.
-          </p>
         </div>
 
-        <div class="area-lista" role="list">
-          <a class="area-linha" href="/automotivo/" role="listitem">
-            <span class="estado-pill aberto">aberto</span>
-            <span class="area-titulo">Automotivo</span>
-            <span class="area-texto">{publicados.length} textos · CAN, UDS, AUTOSAR</span>
-          </a>
-          <div class="area-linha dim" role="listitem">
-            <span class="estado-pill pesquisa">pesquisa</span>
-            <span class="area-titulo">Aviação</span>
-            <span class="area-texto">Linha de pesquisa</span>
-          </div>
-          <div class="area-linha dim" role="listitem">
-            <span class="estado-pill pesquisa">pesquisa</span>
-            <span class="area-titulo">Ferroviário</span>
-            <span class="area-texto">Linha de pesquisa</span>
-          </div>
-          <div class="area-linha dim" role="listitem">
-            <span class="estado-pill pesquisa">pesquisa</span>
-            <span class="area-titulo">Agro</span>
-            <span class="area-texto">Linha de pesquisa</span>
-          </div>
-          <div class="area-linha dim" role="listitem">
-            <span class="estado-pill pesquisa">pesquisa</span>
-            <span class="area-titulo">Náutico</span>
-            <span class="area-texto">Linha de pesquisa</span>
-          </div>
+        <div class="area-grid" role="list">
+          {
+            areas.map((area) =>
+              area.href ? (
+                <a class={`area-card ${area.estado}`} href={area.href} role="listitem">
+                  <span class={`estado-pill ${area.estado}`}>{area.estado}</span>
+                  <strong class="area-titulo">{area.titulo}</strong>
+                  <p class="area-texto">{area.texto}</p>
+                  <span class="area-seta" aria-hidden="true">→</span>
+                </a>
+              ) : (
+                <div class={`area-card ${area.estado}`} role="listitem">
+                  <span class={`estado-pill ${area.estado}`}>{area.estado}</span>
+                  <strong class="area-titulo">{area.titulo}</strong>
+                  <p class="area-texto">{area.texto}</p>
+                </div>
+              ),
+            )
+          }
         </div>
       </section>
 
