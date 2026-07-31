@@ -37,7 +37,7 @@ test("páginas expõem navegação e acessibilidade básica", () => {
   assert.match(home, /lang="pt-BR"/);
   assert.match(home, /Caporici Labs/);
   assert.match(home, /Victor Caporici/);
-  assert.match(home, /portal-hero|portal-card|Como eu sintetizo/i);
+  assert.match(home, /portal-hero|portal-card|Áreas/i);
 
   const artigo = read("automotivo/mapa/index.html");
   assert.match(artigo, /aria-label="Navegação do eixo automotivo"/);
