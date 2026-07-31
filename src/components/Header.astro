@@ -8,16 +8,45 @@ const { active } = Astro.props;
 
 <header class="topbar">
   <div class="topbar-inner">
+    <button
+      type="button"
+      class="nav-toggle"
+      aria-expanded="false"
+      aria-controls="nav-principal"
+      aria-label="Abrir menu"
+    >
+      <span></span><span></span><span></span>
+    </button>
+
     <a class="marca" href="/">
+      <span class="marca-mark" aria-hidden="true">C</span>
       <span class="marca-nome">Caporici Labs</span>
     </a>
-    <nav aria-label="Principal">
-      <a href="/#sintese" aria-current={active === "metodo" ? "page" : undefined}>Síntese</a>
-      <a href="/automotivo/" aria-current={active === "automotivo" ? "page" : undefined}>Automotivo</a>
-      <a href="/#areas" aria-current={active === "areas" ? "page" : undefined}>Áreas</a>
+
+    <nav id="nav-principal" aria-label="Principal">
+      <a href="/automotivo/" aria-current={active === "automotivo" ? "page" : undefined}>Docs</a>
       <a href="/ferramentas/" aria-current={active === "ferramentas" ? "page" : undefined}>Ferramentas</a>
+      <a href="/#sintese" aria-current={active === "metodo" ? "page" : undefined}>Síntese</a>
       <a href="/#autor" aria-current={active === "autor" ? "page" : undefined}>Sobre</a>
-      <button type="button" class="tema-botao" title="Alternar tema"></button>
+      <a class="nav-ext" href="https://github.com/Victor23HD/Caporici-Labs" rel="noopener">GitHub</a>
     </nav>
+
+    <div class="topbar-actions">
+      <button type="button" class="tema-botao" title="Alternar tema"></button>
+    </div>
   </div>
 </header>
+
+<script is:inline>
+  (function () {
+    const botao = document.querySelector(".nav-toggle");
+    const nav = document.getElementById("nav-principal");
+    if (!botao || !nav) return;
+    botao.addEventListener("click", () => {
+      const aberto = botao.getAttribute("aria-expanded") === "true";
+      botao.setAttribute("aria-expanded", aberto ? "false" : "true");
+      botao.setAttribute("aria-label", aberto ? "Abrir menu" : "Fechar menu");
+      document.body.classList.toggle("nav-aberta", !aberto);
+    });
+  })();
+</script>

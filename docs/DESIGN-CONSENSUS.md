@@ -1,48 +1,37 @@
-# Design consensus — Cyclorama Dawn
+# Design consensus — Docs portal (TOTVSTec pattern, Caporici identity)
 
-Date: 2026-07-30  
-Skills: Impeccable + UI/UX Pro Max  
-Branch: `cursor/corpus-automotivo-dd7a`
+Date: 2026-07-31  
+Reference: https://totvs.github.io/totvstec-doc/  
+Constraint: same design pattern, **no TOTVS visual identity**
 
-## Problem with the previous world
+## What we copy from the reference
 
-Phosphor terminal × exaggerated minimalism only convinced people who already like terminals. It did not sell Victor’s mechanism: synthesizing scattered, confusing sources into a progressive engineering corpus.
+- Dark fixed navbar + thin glowing accent underbar
+- Light (or inverted) paper body with subtle technical grid
+- Centered brand hero + short lede
+- Three large interactive section cards with left color rails
+- Docs / Tools / Code as primary entries
+- Clean Swiss/minimal developer-portal tone
 
-## User pin
+## What we explicitly do **not** copy
 
-Candidate worlds named by Victor:
+- TOTVS logo / wordmark
+- TOTVS green brand
+- TLPP product marks on cards
+- “plataforma” eyebrow kicker (Impeccable absolute ban)
+- TOTVSTec naming
 
-1. Gravity Rain Garden — collect runoff / filter chaos (gathering metaphor). Quality bar board unavailable (404). Risk: wellness soft look.
-2. **Stagecraft Theater Lighting Cyclorama Dawn** — horizon as interface; night → cobalt → rose → dawn. Quality bar board + hero available.
+## Caporici substitutions
 
-**Committed world:** `stagecraft-theater-lighting-cyclorama-dawn`  
-Rain Garden declined for missing craft bar and softer category risk. Gathering metaphor lives in Portuguese copy and the synthesis section, not as a second visual identity.
+| Reference | Caporici |
+|---|---|
+| TOTVSTec | Caporici Labs |
+| Cyan TOTVS cue | Caporici blue `#3B82F6` |
+| Flip cards DOCS/TOOLS/GITHUB | Links Docs / Ferramentas / Código |
+| Inter-like UI | Sora + Public Sans |
+| Search ctrl-K | Deferred (no fake search) |
 
-Seed `f0e1e513` acknowledged; user pin beats the roll.
+## Skills
 
-## UI/UX Pro Max lean
-
-- Pattern: portfolio / storytelling (work and method first)
-- Style: exaggerated minimalism (scale + space, not chrome)
-- Reject: generic SaaS blue, icon-card IA, fake stats
-- Typography from Pro Max editorial serif pairs rejected (Playfair/Inter/Newsreader cluster); world-native faces win: Big Shoulders Stencil Display + Big Shoulders Display + Public Sans; JetBrains Mono for payloads only
-
-## Modes
-
-| Surface | Mode | Job |
-|---|---|---|
-| Home | Persuade | Sell synthesis potential + gathering of scattered knowledge |
-| Docs | Read | Quiet cyclorama DNA, reading measure |
-| Tools | Operate | Cue labels, clear inputs/outputs, honest limits |
-
-## First viewport contract
-
-Full-bleed cyclorama dawn image. Hero-level **Caporici Labs**. One headline: synthesis. One lede. Two CTAs low in the frame. No chips, stats, or terminal directory costume.
-
-## Proof sections
-
-1. **Síntese** — reunir → sintetizar → marcar limite  
-2. **Camadas** — physical path from wire to cloud  
-3. **Áreas** — Automotivo open; research tracks honest  
-4. **Publicado** — real articles + CAN tool  
-5. **Autor** — Victor Caporici
+- Impeccable: user-pinned reference beats prior Cyclorama world
+- UI/UX Pro Max: Documentation Landing × Swiss Minimalism

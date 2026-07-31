@@ -37,7 +37,7 @@ test("páginas expõem navegação e acessibilidade básica", () => {
   assert.match(home, /lang="pt-BR"/);
   assert.match(home, /Caporici Labs/);
   assert.match(home, /Victor Caporici/);
-  assert.match(home, /cyclorama-hero|sintetizo|Já dá para ler/i);
+  assert.match(home, /portal-hero|portal-card|Como eu sintetizo/i);
 
   const artigo = read("automotivo/mapa/index.html");
   assert.match(artigo, /aria-label="Navegação do eixo automotivo"/);
@@ -52,18 +52,19 @@ test("páginas expõem navegação e acessibilidade básica", () => {
 
 test("home e tipografia seguem o design system", () => {
   const home = read("index.html");
-  assert.match(home, /Big\+Shoulders\+Stencil\+Display|Big Shoulders Stencil Display/);
-  assert.match(home, /Big\+Shoulders\+Display|Big Shoulders Display/);
+  assert.match(home, /Sora/);
   assert.match(home, /Public\+Sans|Public Sans/);
   assert.match(home, /JetBrains\+Mono|JetBrains Mono/);
   assert.doesNotMatch(home, /class="eyebrow"/);
   assert.match(home, /Caporici Labs/i);
-  assert.match(home, /cyclorama-hero|brand-mega/);
-  assert.match(home, /sintetizo o que a internet espalha/i);
-  assert.match(home, /Ver como sintetizo|Entrar no automotivo/);
+  assert.match(home, /portal-hero|portal-card/);
+  assert.match(home, /Documentação, síntese e ferramentas/i);
+  assert.match(home, />Docs<|>Ferramentas<|>Código</);
   assert.doesNotMatch(home, /GUIA\s*\//);
   assert.doesNotMatch(home, /no course funnel/);
-  assert.doesNotMatch(home, /Azeret|Atkinson Hyperlegible|term-hero|marca-prompt/);
+  assert.doesNotMatch(home, /TOTVSTec|TLPP/);
+  assert.doesNotMatch(home, /totvs\.github|img\/totvs/i);
+  assert.doesNotMatch(home, /cyclorama|Big Shoulders|Azeret|term-hero/);
 });
 
 test("assets da ferramenta CAN são publicados", () => {

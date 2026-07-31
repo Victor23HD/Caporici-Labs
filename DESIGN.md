@@ -1,39 +1,27 @@
 ---
 name: Caporici Labs
-description: Stagecraft cyclorama dawn for engineering knowledge synthesis
+description: Developer docs portal — dark chrome, grid paper, section cards
 colors:
-  night: "#050506"
-  cobalt: "#0A2BFF"
-  rose-gather: "#D24BFF"
-  rose-light: "#FF7BAE"
-  dawn-wash: "#FFD7E6"
-  day: "#FFFFFF"
-  bg: "#07070A"
-  bg-soft: "#101018"
-  bg-raised: "#14141E"
-  line: "#2A2A38"
-  line-strong: "#4A4A5C"
-  text: "#F4EEF2"
-  muted: "#C4B4BE"
-  accent: "#FF7BAE"
-  accent-secondary: "#6D8CFF"
-  amber: "#FFB36A"
-  danger: "#FF8A8A"
-  light-bg: "#F7F2F5"
-  light-text: "#121018"
+  nav: "#0B1220"
+  cue: "#3B82F6"
+  bg: "#F4F6F9"
+  bg-raised: "#FFFFFF"
+  line: "#D5DDE8"
+  text: "#0F172A"
+  muted: "#475569"
+  accent: "#1D4ED8"
+  docs: "#2563EB"
+  tools: "#0F766E"
+  code: "#334155"
+  amber: "#B45309"
+  danger: "#B91C1C"
 typography:
   display:
-    fontFamily: "Big Shoulders Display, Arial Narrow, Impact, sans-serif"
-    fontSize: "clamp(1.55rem, 3vw, 2.25rem)"
-    fontWeight: 700
-    lineHeight: 1.05
-    letterSpacing: "-0.02em"
-  stencil:
-    fontFamily: "Big Shoulders Stencil Display, Big Shoulders Display, sans-serif"
-    fontSize: "clamp(3rem, 9vw, 5.6rem)"
-    fontWeight: 800
-    lineHeight: 0.92
-    letterSpacing: "0.02em"
+    fontFamily: "Sora, ui-sans-serif, system-ui, sans-serif"
+    fontSize: "clamp(1.4rem, 2.6vw, 1.9rem)"
+    fontWeight: 650
+    lineHeight: 1.15
+    letterSpacing: "-0.03em"
   body:
     fontFamily: "Public Sans, ui-sans-serif, system-ui, sans-serif"
     fontSize: "17px"
@@ -47,97 +35,91 @@ typography:
     lineHeight: 1.5
     letterSpacing: "normal"
 rounded:
-  sm: "3px"
-  md: "4px"
-  lg: "6px"
+  sm: "6px"
+  md: "10px"
   pill: "999px"
 spacing:
   sm: "8px"
   md: "16px"
   lg: "32px"
-  xl: "88px"
+  xl: "72px"
 components:
   button-primary:
-    backgroundColor: "linear-gradient(110deg, {colors.cobalt}, {colors.rose-gather} 55%, {colors.rose-light})"
-    textColor: "{colors.day}"
-    rounded: "{rounded.pill}"
-    padding: "12px 22px"
+    backgroundColor: "{colors.accent}"
+    textColor: "#FFFFFF"
+    rounded: "{rounded.sm}"
+    padding: "10px 18px"
   button-secondary:
     backgroundColor: "transparent"
     textColor: "{colors.text}"
-    rounded: "{rounded.pill}"
-    padding: "12px 22px"
-  callout:
-    backgroundColor: "{colors.bg-soft}"
+    rounded: "{rounded.sm}"
+    padding: "10px 18px"
+  portal-card:
+    backgroundColor: "{colors.bg-raised}"
     textColor: "{colors.text}"
     rounded: "{rounded.md}"
-    padding: "14px 16px"
+    padding: "24px 22px"
 ---
 
 ## Overview
 
-Caporici Labs is **stagecraft cyclorama dawn**: a night-to-day horizon field (cobalt → rose → dawn wash) that sells synthesis — clarity emerging from scattered noise — not terminal cosplay.
+Caporici Labs follows a **developer documentation portal** pattern inspired by [TOTVSTec docs](https://totvs.github.io/totvstec-doc/) — dark navbar, paper+grid body, centered brand hero, interactive section cards — **without** TOTVS logo, green brand, TLPP marks, or “plataforma” eyebrow.
 
-User-pinned world `stagecraft-theater-lighting-cyclorama-dawn` (Rain Garden alternate declined). UI/UX Pro Max leans portfolio storytelling × exaggerated minimalism; generic SaaS and phosphor costume rejected.
+UI/UX Pro Max: FAQ/Documentation Landing × Swiss Minimalism. Cyclorama dawn and phosphor terminal worlds are retired.
 
-- Home = Persuade (full-bleed cyclorama, synthesis thesis)
-- Docs = Read (same DNA, quieter)
-- Tools = Operate (cue labels, honest outputs)
+- Home = Persuade (portal landing)
+- Docs = Read (sidebar + measure)
+- Tools = Operate
 
 ## Colors
 
-- Night `#050506` owns the stage floor.
-- Cobalt and rose are the cue lights — committed at page scale in the hero wash and primary CTA gradient.
-- Dawn wash / day are horizon highlights and light text on the hero.
-- Amber is attention / research-wait only; danger stays diagnostic.
-- Light theme inverts to paper with rose accent, keeping the same cue language.
+- Near-black navbar `#0B1220` with Caporici blue cue line `#3B82F6` (not TOTVS cyan/green identity).
+- Paper body `#F4F6F9` with subtle engineering grid.
+- Section rails: Docs blue, Tools teal, Código slate — category coding, Caporici-owned.
+- Light-first; dark theme inverts surfaces while keeping dark chrome.
 
 ## Typography
 
-- **Big Shoulders Stencil Display** for brand, cue labels, primary CTAs.
-- **Big Shoulders Display** for section headlines.
-- **Public Sans** for body reading.
-- **JetBrains Mono** only for payloads, IDs, and code.
-- Brand type reaches ~5.6rem; tracking stays readable (no tighter than -0.02em on display).
+- **Sora** for brand and headings.
+- **Public Sans** for body (Inter / IBM Plex avoided).
+- **JetBrains Mono** for code and IDs only.
 
 ## Layout
 
-- First viewport is full-bleed cyclorama photography + wash, not a boxed hero card.
-- Controls and CTAs sit low in the hero frame so the field can breathe.
-- Body sections use horizon rules and multi-column strips, not icon-card grids.
+- Sticky dark navbar; hamburger on narrow screens.
+- Centered hero: brand title + one lede (no eyebrow kicker).
+- Three interactive portal cards as primary IA.
 - Docs: sticky sidebar + ~68ch column.
-- Large section gaps (~88px).
+- Section gaps ~72px.
 
 ## Elevation & Depth
 
-- Film grain overlay is atmospheric; disabled under reduced motion only for animation, grain may remain subtle.
-- Soft rose glow on primary CTA; shadows carry offset + blur.
-- Borders over nested cards; no glass stacks as structure.
+- Soft offset shadows on cards and docs nav.
+- Hover lifts cards slightly (`translateY(-3px)`).
+- Grid is atmosphere, not content.
 
 ## Shapes
 
-- Pill CTAs match the world’s activate controls.
-- Content lists and callouts stay small-radius rectangles (`4px` / `6px`).
-- Favicon is a miniature cyclorama + monolith cutout.
+- Card radius 10px; controls 6px; theme toggle pill.
+- Left accent rail (5px) only on interactive portal cards — earned by the TOTVSTec reference pattern.
 
 ## Components
 
-- Primary button: cobalt→rose gradient pill, stencil uppercase.
-- Secondary button: ghost pill with dawn-edge border.
-- Synthesis steps / layers / area rows: ruled lists, not cards-of-icons.
-- Callouts keep label + body; tip/warn/danger via cue color on the label.
+- Primary button: solid accent, small radius.
+- Portal cards: white/raised surface, icon, uppercase title, description, category rail.
+- Callouts: raised panels with uppercase cue labels.
 
 ## Do's and Don'ts
 
 **Do**
 
-- Sell gathering + synthesis in Portuguese, first person where authorship matters.
-- Keep research tracks labeled until real content exists.
-- Let the cyclorama field carry atmosphere; keep body quieter for reading.
+- Keep Caporici Labs as the hero brand signal.
+- Sell synthesis in body sections under the portal cards.
+- Stay honest about research tracks.
 
 **Don't**
 
-- Terminal prompts, scanline CRT costume, phosphor green brand.
-- Purple SaaS landing defaults disconnected from this world’s cue lights.
-- Eyebrow kickers, gradient text, fake stats, icon-card information architecture.
-- Soft Rain Garden wellness look as a second identity.
+- TOTVS logo, green, TLPP icons, or “TOTVSTec” naming.
+- Eyebrow kickers above the brand title.
+- Phosphor terminal / cyclorama theatrical costume.
+- Icon-only card grids without a real destination.
