@@ -2,7 +2,6 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import {
   listarArtigos,
-  slugDoArtigo,
   trilhasComContagem,
 } from "../lib/content";
 
@@ -148,18 +147,50 @@ const trilhasAtivas = trilhas.filter((t) => t.publicados > 0).length;
       </section>
 
       <section class="secao-autor" id="autor">
-        <div class="autor-marca" aria-hidden="true">VC</div>
-        <div>
-          <h2>Victor Caporici</h2>
-          <p class="autor-resumo">
-            Engenheiro de software sênior C/C++. Este laboratório é independente:
-            a síntese que eu faço ao pesquisar sistemas embarcados críticos,
-            publicada com fonte e limite.
-          </p>
-          <div class="acoes">
-            <a class="botao secundario" href="https://github.com/Victor23HD">GitHub</a>
-            <a class="botao" href="/automotivo/">Abrir docs</a>
-          </div>
+        <div class="autor-rule" aria-hidden="true"></div>
+
+        <div class="autor-avatar-ring">
+          <img
+            class="autor-foto"
+            src="/images/profile.jpg"
+            alt="Victor Caporici"
+            width="400"
+            height="400"
+            loading="lazy"
+            decoding="async"
+          />
+        </div>
+
+        <h2 class="autor-nome">
+          Victor Caporici
+          <span class="autor-sep" aria-hidden="true">•</span>
+          Engenheiro de Software
+          <span class="autor-sep" aria-hidden="true">•</span>
+          C/C++
+        </h2>
+
+        <p class="autor-resumo">
+          Este laboratório é independente: a síntese que eu faço ao pesquisar
+          sistemas embarcados críticos — do sinal elétrico à nuvem — publicada
+          com fonte e limite.
+        </p>
+
+        <div class="autor-acoes">
+          <a
+            class="botao"
+            href="https://victor23hd.github.io/Victor23HD/pt/"
+            rel="noopener"
+          >
+            Site pessoal
+          </a>
+          <a
+            class="botao secundario"
+            href="https://github.com/Victor23HD"
+            rel="noopener"
+          >
+            GitHub
+          </a>
+          <a class="botao secundario" href="/automotivo/">Abrir docs</a>
         </div>
       </section>
     </div>
